@@ -37,8 +37,8 @@ INSTALLED_APPS = [
     "django.contrib.sessions",
     "django.contrib.messages",
     "django.contrib.staticfiles",
-    "data",
-    "interfaces.management_commands",
+    "project.data",
+    # "project.interfaces",
 ]
 
 MIDDLEWARE = [
@@ -86,7 +86,7 @@ DATABASES = {
         "ENGINE": "django.db.backends.postgresql",
         "NAME": "weddingplanner",
         "USER": "mg",
-        "PASSWORD": "mg",  # setup env file
+        # "PASSWORD": "mg",  # setup env file
         "HOST": "localhost",
         "PORT": "5432",  # default PostgreSQL port
     }
