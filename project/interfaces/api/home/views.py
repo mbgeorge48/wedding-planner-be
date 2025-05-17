@@ -1,12 +1,17 @@
-from rest_framework.generics import RetrieveAPIView
+from rest_framework.views import APIView
 from project.data import models
+from rest_framework.response import Response
 
 
-class HomeInfoView(RetrieveAPIView):
-    def get():
-        return None
+class HomeInfoView(APIView):
+    def get(self, request, *args, **kwargs):
+        wedding = models.Wedding.objects.get()
 
-    # queryset = models.Wedding.objects.get()
+        wedding_data = {
+            "id": wedding.id,
+            "bride": wedding.bride.firstname,
+            "groom": wedding.groom.firstname,
+            "date": wedding.date,
+        }
 
-    # def get_queryset(self):
-    #     return super().get_queryset()
+        return Response(wedding_data)

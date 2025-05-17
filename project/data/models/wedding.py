@@ -20,16 +20,23 @@ class Wedding(models.Model):
         default=None,
         related_name="groom",
     )
-    venue = models.ForeignKey("data.Venue", on_delete=models.CASCADE, default=None)
+    venue = models.ForeignKey(
+        "data.Venue", on_delete=models.CASCADE, default=None, null=True
+    )
 
     date = models.DateField()
     start_time = models.TimeField()
     description = models.TextField(blank=True)
 
-    # def save(self, *args, **kwargs):
-    #     if not self.pk and models.Wedding.objects.exists():
-    #         raise Exception("Only one Wedding instance is allowed.")
-    #     super().save(*args, **kwargs)
+    def save(self, *args, **kwargs):
+        if not self.pk and models.Wedding.objects.exists():
+            raise Exception("Only one Wedding instance is allowed.")
+        super().save(*args, **kwargs)
+
+    def create(self, *args, **kwargs):
+        if not self.pk and models.Wedding.objects.exists():
+            raise Exception("Only one Wedding instance is allowed.")
+        super().save(*args, **kwargs)
 
     def __str__(self):
-        return f"{self.bride.firstname} & {self.groom.firstname}'s Wedding at {self.venue.name}"
+        return f"{self.bride.firstname} & {self.groom.firstname}'s Wedding"
