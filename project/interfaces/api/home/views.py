@@ -3,7 +3,10 @@ from project.data import models
 
 
 class HomeInfoView(RetrieveAPIView):
-    queryset = models.Wedding.objects.get()
+    def get():
+        return None
 
-    def get_queryset(self):
-        return super().get_queryset()
+    # queryset = models.Wedding.objects.get()
+
+    # def get_queryset(self):
+    #     return super().get_queryset()

@@ -8,9 +8,19 @@ class Wedding(models.Model):
     created = models.DateTimeField(auto_now_add=True, db_index=True)
     modified = models.DateTimeField(auto_now=True)
 
-    bride = models.ForeignKey("data.Person", on_delete=models.PROTECT)
-    groom = models.ForeignKey("data.Person", on_delete=models.PROTECT)
-    venue = models.ForeignKey("data.Venue", on_delete=models.SET_NULL)
+    bride = models.ForeignKey(
+        "data.Person",
+        on_delete=models.PROTECT,
+        default=None,
+        related_name="bride",
+    )
+    groom = models.ForeignKey(
+        "data.Person",
+        on_delete=models.PROTECT,
+        default=None,
+        related_name="groom",
+    )
+    venue = models.ForeignKey("data.Venue", on_delete=models.CASCADE, default=None)
 
     date = models.DateField()
     start_time = models.TimeField()

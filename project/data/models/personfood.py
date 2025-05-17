@@ -9,8 +9,8 @@ class PersonFood(models.Model):
     created = models.DateTimeField(auto_now_add=True, db_index=True)
     modified = models.DateTimeField(auto_now=True)
 
-    person = models.ForeignKey("data.Person", on_delete=models.CASCADE)
-    food = models.ForeignKey("data.Food", on_delete=models.CASCADE)
+    person = models.ForeignKey("data.Person", on_delete=models.CASCADE, default=None)
+    food = models.ForeignKey("data.Food", on_delete=models.CASCADE, default=None)
 
     class Meta:
         ordering = ["-created"]
