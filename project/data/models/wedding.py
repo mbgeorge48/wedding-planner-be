@@ -4,7 +4,7 @@ from django.db import models
 
 
 class Wedding(models.Model):
-    id = models.UUIDField(primary_key=True, default=uuid.uuid, editable=False)
+    id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     created = models.DateTimeField(auto_now_add=True, db_index=True)
     modified = models.DateTimeField(auto_now=True)
 
@@ -15,6 +15,11 @@ class Wedding(models.Model):
     date = models.DateField()
     start_time = models.TimeField()
     description = models.TextField(blank=True)
+
+    # def save(self, *args, **kwargs):
+    #     if not self.pk and models.Wedding.objects.exists():
+    #         raise Exception("Only one Wedding instance is allowed.")
+    #     super().save(*args, **kwargs)
 
     def __str__(self):
         return f"{self.bride.firstname} & {self.groom.firstname}'s Wedding at {self.venue.name}"

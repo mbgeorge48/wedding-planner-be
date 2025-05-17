@@ -4,7 +4,7 @@ from django.db import models
 
 
 class Venue(models.Model):
-    id = models.UUIDField(primary_key=True, default=uuid.uuid, editable=False)
+    id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     created = models.DateTimeField(auto_now_add=True, db_index=True)
     modified = models.DateTimeField(auto_now=True)
 
@@ -13,7 +13,7 @@ class Venue(models.Model):
     address_line1 = models.CharField("Address Line 1", max_length=255)
     address_line2 = models.CharField("Address Line 2", max_length=255, blank=True)
     city = models.CharField(max_length=100)
-    county = models.CharField("Country", max_length=100, blank=True)
+    county = models.CharField(max_length=100, blank=True)
     postcode = models.CharField(max_length=20)
     country = models.CharField(max_length=100, default="UK", blank=True)
     phone_number = models.CharField(max_length=20, blank=True)
