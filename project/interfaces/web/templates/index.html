@@ -1,0 +1,27 @@
+{% extends "base.html" %}
+
+{% block content %}
+<h1>{{bride}} and {{groom}}'s wedding on {{date}}</h1>
+
+<button 
+    hx-get="{% url 'web:load_time' %}" 
+    hx-target="#time-container" 
+    hx-swap="innerHTML">
+    Load Server Time
+</button>
+
+<ul>
+<li>
+    {{bride}}
+</li>
+<li>
+    {{groom}}
+</li>
+<li>
+    {{date}}
+</li>
+
+</ul>
+
+<div id="time-container"></div>
+{% endblock %}
