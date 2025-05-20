@@ -18,6 +18,8 @@ class Person(models.Model):
     firstname = models.CharField(max_length=255)
     lastname = models.CharField(max_length=255)
     email = models.EmailField()
+    phone = models.CharField(max_length=20, blank=True)
+    address = models.CharField(max_length=255, blank=True)
 
     type = models.CharField(
         max_length=50,
@@ -25,7 +27,32 @@ class Person(models.Model):
         null=False,
         blank=True,
     )
-    has_rsvp = models.BooleanField(default=False)
+
+    invited_to_ceremony = models.BooleanField(default=False)
+    has_rsvp_ceremony = models.BooleanField(default=False)
+
+    invited_to_reception = models.BooleanField(default=False)
+    has_rsvp_reception = models.BooleanField(default=False)
+
+    relationships = models.ManyToManyField(
+        "self",
+        through="data.PersonGroup",
+        symmetrical=False,
+        related_name="related_people",
+    )
+
+    has_plus_one = models.BooleanField(default=False)
+    plus_one_name = models.CharField(max_length=255, blank=True)
+
+    children = models.IntegerField(default=0)
+    pets = models.IntegerField(default=0)
+
+    dietary_requirements = models.ManyToManyField(
+        "data.Food", through="data.PersonFood", related_name="person"
+    )
+    photo_groups = models.ManyToManyField(
+        "data.PhotoGroup", through="data.PersonPhotoGroup", related_name="person"
+    )
 
     class Meta:
         ordering = ["firstname"]

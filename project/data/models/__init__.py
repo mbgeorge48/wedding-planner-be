@@ -1,13 +1,19 @@
 from .food import Food
 from .person import Person
 from .personfood import PersonFood
-from .wedding import Wedding
+from .persongroup import PersonGroup
+from .personphotogroup import PersonPhotoGroup
+from .photogroup import PhotoGroup
 from .venue import Venue
+from .wedding import Wedding
 
 __all__ = [
     "Food",
     "Person",
     "PersonFood",
-    "Wedding",
+    "PersonGroup",
+    "PersonPhotoGroup",
+    "PhotoGroup",
     "Venue",
+    "Wedding",
 ]
