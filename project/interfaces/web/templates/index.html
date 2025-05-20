@@ -1,27 +1,52 @@
 {% extends "base.html" %}
-
+{% load custom_filters %}
 {% block content %}
-<h1>{{bride}} and {{groom}}'s wedding on {{date}}</h1>
+{% load static %}
 
-<button 
-    hx-get="{% url 'web:load_time' %}" 
-    hx-target="#time-container" 
-    hx-swap="innerHTML">
-    Load Server Time
-</button>
+<main   
+    id="home"
+    class="relative min-h-screen flex items-center justify-center"
+    >
+    <div
+        class="absolute inset-0 bg-[url('{% static "background-image.jpg" %}')] bg-cover bg-center"
+    />
 
-<ul>
-<li>
-    {{bride}}
-</li>
-<li>
-    {{groom}}
-</li>
-<li>
-    {{date}}
-</li>
+    <div class="absolute inset-0 bg-black/20 pt-16"/>
 
-</ul>
+    <div class="container mx-auto px-4 md:px-6 z-10">
+        <div class="max-w-3xl mx-auto text-center animate-fade-in">
+            <h2
+                class="font-serif text-white text-4xl md:text-5xl lg:text-6xl font-medium mb-3"
+            >
+                {{bride}} & {{groom}}
+            </h2>
 
-<div id="time-container"></div>
+            <p class="text-white text-lg md:text-xl font-serif italic mb-6">
+                are getting married
+            </p>
+
+            <div class="font-sans text-white text-lg md:text-xl mb-8">
+                {{ date|ordinal_date }}
+            </div>
+
+            <div class="mb-10">
+                timer container {% comment %}
+                <CountdownTimer weddingDate="{weddingDate}" /> {% endcomment %}
+            </div>
+
+            <div class="flex flex-col sm:flex-row justify-center gap-4">
+                <button
+                    class="bg-wedding-gold text-white hover:bg-wedding-charcoal transition-colors"
+                >
+                    View Details
+                </button>
+                <button
+                    class="bg-white text-wedding-charcoal hover:bg-wedding-blush transition-colors"
+                >
+                    RSVP Now
+                </button>
+            </div>
+        </div>
+    </div>
+</main>
 {% endblock %}

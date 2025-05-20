@@ -1,15 +1,20 @@
+{% load static %}
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <title>{% block title %}HTMX Site{% endblock %}</title>
     <script src="https://unpkg.com/htmx.org@1.9.10"></script>
+    {% comment %} Consider doing this via postcss {% endcomment %}
+    <script src="https://cdn.tailwindcss.com"></script> 
 </head>
-<body>
-        {% include "components/header.html" %}
-           <main>
-        {% block content %}{% endblock %}
-    </main>
+
+
+<body class="bg-white min-h-screen">
+
+    {% include "components/header.html" %}
+    {% block content %}{% endblock %}
 
 </body>
 </html>
