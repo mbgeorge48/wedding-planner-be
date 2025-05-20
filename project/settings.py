@@ -38,6 +38,7 @@ INSTALLED_APPS = [
     "django.contrib.messages",
     "django.contrib.staticfiles",
     "project.data",
+    "project.interfaces.web",
     "rest_framework",
 ]
 
@@ -70,7 +71,11 @@ TEMPLATES = [
 
 WSGI_APPLICATION = "project.wsgi.application"
 
+STATIC_URL = "/static/"
 
+STATICFILES_DIRS = [
+    BASE_DIR / "project" / "interfaces" / "web" / "static",
+]
 # Database
 # https://docs.djangoproject.com/en/5.2/ref/settings/#databases
 
