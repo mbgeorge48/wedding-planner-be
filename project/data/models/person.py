@@ -11,16 +11,22 @@ class Person(models.Model):
         IMMEDIATEFAMILY = "IMMEDIATEFAMILY", "Immediate Family"
         BRIDEGROOM = "BRIDEGROOM", "Bride/Groom"
 
+    class Priority(models.IntegerChoices):
+        1
+        2
+        3
+
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     created = models.DateTimeField(auto_now_add=True, db_index=True)
     modified = models.DateTimeField(auto_now=True)
 
     firstname = models.CharField(max_length=255)
     lastname = models.CharField(max_length=255)
-    email = models.EmailField()
+    email = models.EmailField(blank=True)
     phone = models.CharField(max_length=20, blank=True)
     address = models.CharField(max_length=255, blank=True)
 
+    priority = models.IntegerField(choices=Priority, default=1)
     type = models.CharField(
         max_length=50,
         choices=Type.choices,

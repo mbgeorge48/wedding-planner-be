@@ -13,10 +13,10 @@ def home(request):
     }
 
     context = {
-        "page_title": "Welcome to the Wedding Planner",
-        "guest_count": 42,
-        "show_banner": True,
+        "page_title": "Welcome to the Wedding Planner",  # placeholders
+        "guest_count": 42,  # placeholders
+        "show_banner": True,  # placeholders
         **wedding_data,
     }
-    print(context)
+
     return render(request, "index.html", context)
