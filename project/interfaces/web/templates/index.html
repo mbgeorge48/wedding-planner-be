@@ -1,5 +1,5 @@
 {% extends "base.html" %}
-{% load custom_filters %}
+
 {% block content %}
 {% load static %}
 
@@ -15,7 +15,7 @@
 
     <div class="container mx-auto px-4 md:px-6 z-10">
         <div class="max-w-3xl mx-auto text-center animate-fade-in">
-            <h2
+            {% comment %} <h2
                 class="font-serif text-white text-4xl md:text-5xl lg:text-6xl font-medium mb-3"
             >
                 {{bride}} & {{groom}}
@@ -28,10 +28,14 @@
             <div class="font-sans text-white text-lg md:text-xl mb-8">
                 {{ date|ordinal_date }}
             </div>
+            <div class="font-sans text-white text-lg md:text-xl mb-8">
+                {{ date|date:"E d, Y" }}
+            </div> {% endcomment %}
+            {% include "components/home/heading.html" with bride=bride groom=groom date=date %}
+
 
             <div class="mb-10">
-                timer container {% comment %}
-                <CountdownTimer weddingDate="{weddingDate}" /> {% endcomment %}
+                {% include "components/timer.html" with date=date %}
             </div>
 
             <div class="flex flex-col sm:flex-row justify-center gap-4">
