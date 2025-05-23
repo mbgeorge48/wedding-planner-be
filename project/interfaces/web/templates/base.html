@@ -4,7 +4,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>{% block title %}HTMX Site{% endblock %}</title>
+    <title>{% block title %}HTMX Site{% endblock title %} - Eleri & Matt's wedding </title>
     <script src="https://unpkg.com/htmx.org@1.9.10"></script>
     {% comment %} Consider doing this via postcss {% endcomment %}
     <script src="https://cdn.tailwindcss.com"></script>
@@ -15,7 +15,7 @@
 <body class="bg-white min-h-screen font-serif">
 
     {% include "components/header.html" %}
-    {% block content %}{% endblock %}
+    {% block content %}{% endblock content %}
 
 </body>
 </html>
