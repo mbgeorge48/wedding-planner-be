@@ -1,12 +1,21 @@
 {% extends "base.html" %}
-
-{% block content %}
 {% load static %}
-
-<main
-    id="rsvp"
-    class="relative min-h-screen flex items-center justify-center"
->
-    Nothing to see here yet
-</main>
-{% endblock %}
+{% block title %}
+    RSVP
+{% endblock title %}
+{% block content %}
+    <main id="rsvp"
+          class="relative min-h-screen flex items-center justify-center">
+        {% if name %}
+            <p>hello {{ name }}</p>
+        {% else %}
+            <h2>Enter RSVP Invite Code</h2>
+            <form method="post">
+                {% csrf_token %}
+                <input type="password" name="code" placeholder="Enter code">
+                <button type="submit">Continue</button>
+                {% if error %}<p class="text-red">{{ error }}</p>{% endif %}
+            </form>
+        {% endif %}
+    </main>
+{% endblock content %}
