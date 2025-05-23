@@ -1,56 +1,16 @@
 {% extends "base.html" %}
-
-{% block content %}
 {% load static %}
-
-<main   
-    id="home"
-    class="relative min-h-screen flex items-center justify-center"
-    >
-    <div
-        class="absolute inset-0 bg-[url('{% static "background-image.jpg" %}')] bg-cover bg-center"
-    />
-
-    <div class="absolute inset-0 bg-black/20 pt-16"/>
-
-    <div class="container mx-auto px-4 md:px-6 z-10">
-        <div class="max-w-3xl mx-auto text-center animate-fade-in">
-            {% comment %} <h2
-                class="font-serif text-white text-4xl md:text-5xl lg:text-6xl font-medium mb-3"
-            >
-                {{bride}} & {{groom}}
-            </h2>
-
-            <p class="text-white text-lg md:text-xl font-serif italic mb-6">
-                are getting married
-            </p>
-
-            <div class="font-sans text-white text-lg md:text-xl mb-8">
-                {{ date|ordinal_date }}
-            </div>
-            <div class="font-sans text-white text-lg md:text-xl mb-8">
-                {{ date|date:"E d, Y" }}
-            </div> {% endcomment %}
-            {% include "components/home/heading.html" with bride=bride groom=groom date=date %}
-
-
-            <div class="mb-10">
-                {% include "components/timer.html" with date=date %}
-            </div>
-
-            <div class="flex flex-col sm:flex-row justify-center gap-4">
-                <button
-                    class="bg-wedding-gold text-white hover:bg-wedding-charcoal transition-colors"
-                >
-                    View Details
-                </button>
-                <button
-                    class="bg-white text-wedding-charcoal hover:bg-wedding-blush transition-colors"
-                >
-                    RSVP Now
-                </button>
+{% block content %}
+    <main id="home"
+          class="relative min-h-screen flex items-center justify-center">
+        <div class="absolute inset-0 bg-[url('{% static "background-image.jpg" %}')] bg-cover bg-center" />
+        <div class="absolute inset-0 bg-black/20 pt-16" />
+        <div class="container mx-auto px-4 md:px-6 z-10">
+            <div class="max-w-3xl mx-auto text-center animate-fade-in space-y-10">
+                {% include "components/home/heading.html" with bride=bride groom=groom date=date %}
+                {% include "components/home/timer.html" with date=date %}
+                {% include "components/common/button.html" with text="RSVP Now" href="/rsvp" %}
             </div>
         </div>
-    </div>
-</main>
-{% endblock %}
+    </main>
+{% endblock content %}

@@ -1,18 +1,4 @@
 {% load custom_filters %}
-
-<h1
-    class="font-serif text-white text-4xl md:text-5xl lg:text-6xl font-medium mb-1"
->
-    {{bride}} & {{groom}}
-</h1>
-
-    <p class="text-white text-lg md:text-xl font-serif italic mb-6">
-    are getting married
-</p>
-
-<div class="font-sans text-white text-lg md:text-xl mb-8">
-    {{ date|ordinal_date }}
-</div>
-{% comment %} <div class="font-sans text-white text-lg md:text-xl mb-8">
-    {{ date|date:"E d, Y" }}
-</div> {% endcomment %}
+<h1 class="font-serif text-white text-4xl md:text-5xl lg:text-6xl font-medium mb-1">{{ bride }} & {{ groom }}</h1>
+<p class="text-white text-lg md:text-xl font-serif italic mb-6">are getting married</p>
+<div class="font-sans text-white text-lg md:text-xl mb-8">{{ date|ordinal_date }}</div>
