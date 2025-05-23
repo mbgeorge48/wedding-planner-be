@@ -1,10 +1,14 @@
-<header style="background: #f8f9fa; padding: 1rem; border-bottom: 1px solid #ddd;">
-  <div style="max-width: 960px; margin: 0 auto; display: flex; justify-content: space-between; align-items: center;">
-    <h1 style="margin: 0; font-size: 1.25rem;">My Wedding Planner</h1>
-    <nav>
-      <a href="/" style="margin-right: 1rem; text-decoration: none; color: #333;">Home</a>
-      <a href="/guests" style="margin-right: 1rem; text-decoration: none; color: #333;">Guests</a>
-      <a href="/schedule" style="text-decoration: none; color: #333;">Schedule</a>
-    </nav>
-  </div>
+{% url 'web:home' as home_url %}
+{% url 'web:rsvp' as rsvp_url %}
+{% url 'web:schedule' as schedule_url %}
+<header class="bg-neutral-100 backdrop-blur-sm shadow-md text-black/80 text-xl font-semibold p-4 flex">
+  <nav class="md:ml-auto my-0 mx-auto md:mx-0 space-x-4"
+       x-data="{ path: window.location.pathname }">
+    <a href="{{ home_url }}"
+       :class="path === '/' ? 'font-bold underline underline-offset-4 decoration-wavy' : 'hover:text-blue-400'">Home</a>
+    <a href="{{ rsvp_url }}"
+       :class="path === '/rsvp' ? 'font-bold underline underline-offset-4 decoration-wavy' : 'hover:text-blue-400'">RSVP</a>
+    <a href="{{ schedule_url }}"
+       :class="path === '/schedule' ? 'font-bold underline underline-offset-4 decoration-wavy' : 'hover:text-blue-400'">Schedule</a>
+  </nav>
 </header>
