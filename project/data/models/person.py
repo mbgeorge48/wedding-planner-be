@@ -20,6 +20,8 @@ class Person(models.Model):
     created = models.DateTimeField(auto_now_add=True, db_index=True)
     modified = models.DateTimeField(auto_now=True)
 
+    invite_code = models.CharField(max_length=10, unique=True, null=True)
+
     firstname = models.CharField(max_length=255)
     lastname = models.CharField(max_length=255)
     email = models.EmailField(blank=True)
