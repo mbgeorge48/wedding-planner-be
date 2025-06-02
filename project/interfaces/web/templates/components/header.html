@@ -7,8 +7,7 @@
        x-data="{ path: window.location.pathname }">
     <a href="{{ home_url }}"
        :class="path === '/' ? 'font-bold underline underline-offset-4 decoration-double' : 'hover:text-blue-400'">Home</a>
-    <a href="{{ rsvp_url }}"
-       :class="path === '/rsvp' ? 'font-bold underline underline-offset-4 decoration-double' : 'hover:text-blue-400'">RSVP</a>
+    <a href="{{ rsvp_url }}" :class="path.includes('rsvp') ? 'font-bold underline underline-offset-4 decoration-double' : 'hover:text-blue-400'">RSVP</a>
     <a href="{{ schedule_url }}"
        :class="path === '/schedule' ? 'font-bold underline underline-offset-4 decoration-double' : 'hover:text-blue-400'">Schedule</a>
     {% comment %} <a href="{{ faqs_url }}"

@@ -5,17 +5,19 @@
 {% endblock title %}
 {% block content %}
     <main id="rsvp"
-          class="relative min-h-screen flex items-center justify-center">
+          class="flex items-center justify-center font-serif w-full ">
         {% if name %}
             <p>hello {{ name }}</p>
-        {% else %}
-            <h2>Enter RSVP Invite Code</h2>
             <form method="post">
                 {% csrf_token %}
-                <input type="password" name="code" placeholder="Enter code">
-                <button type="submit">Continue</button>
-                {% if error %}<p class="text-red">{{ error }}</p>{% endif %}
+                <input type="hidden" name="action" value="signout">
+                <button type="submit">Signout</button>
             </form>
+        {% else %}
+        <div class="md:m-6 md:w-auto w-full">
+            {% include "components/rsvp/signin_form.html" %}
+            
+        </div>
         {% endif %}
     </main>
 {% endblock content %}
