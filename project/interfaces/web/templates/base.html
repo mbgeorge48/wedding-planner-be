@@ -1,21 +1,22 @@
 {% load static %}
-
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>{% block title %}HTMX Site{% endblock title %} - Eleri & Matt's wedding </title>
-    <script src="https://unpkg.com/htmx.org@1.9.10"></script>
-    {% comment %} Consider doing this via postcss {% endcomment %}
-    <script src="https://cdn.tailwindcss.com"></script>
-    <script src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js" defer></script>
-</head>
-
-
-<body class="bg-white min-h-screen font-serif">
-
-    {% include "components/header.html" %}
-    {% block content %}{% endblock content %}
-
-</body>
+    <head>
+        <meta charset="UTF-8">
+        <title>
+            {% block title %}
+                HTMX Site
+            {% endblock title %}
+        - Eleri & Matt's wedding </title>
+        <script src="https://unpkg.com/htmx.org@1.9.10"></script>
+        {% comment %} Consider doing this via postcss {% endcomment %}
+        <script src="https://cdn.tailwindcss.com"></script>
+        <script src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"
+                defer></script>
+    </head>
+    <body class="min-h-screen font-serif bg-cyan-700">
+        {% include "components/header.html" %}
+        {% block content %}
+        {% endblock content %}
+    </body>
 </html>
