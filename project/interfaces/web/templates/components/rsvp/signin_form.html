@@ -7,22 +7,27 @@
             }
   });
 </script>
-<form method="post"
-      class="flex flex-col items-center font-serif space-y-6 p-6 md:rounded-lg text-black/80 bg-white/80 backdrop-blur-sm shadow-md md:mx-4">
-    <h2 class="text-2xl md:text-4xl lg:text-5xl font-semibold text-center">Enter RSVP Invite Code</h2>
+<div>
+  <div class="text-center mb-8">
+    <h2 class="text-5xl font-semibold mb-4">RSVP</h2>
+    <p>Please log in to submit your RSVP</p>
+  </div>
+  <form method="post"
+        class="flex flex-col items-center font-serif space-y-6 text-black/80 bg-white/80 md:mx-4">
     {% csrf_token %}
     <div class="flex flex-col font-semibold w-full">
-        <label for="firstname" class="font-sans">First name:</label>
-        <input id="firstname" name="firstname" class="border border-cyan-700" />
+      <label for="firstname" class="font-sans">First name</label>
+      <input id="firstname" name="firstname" class="border" />
     </div>
     <div class="flex flex-col font-semibold w-full">
-        <label for="code" class="font-sans">Invite code:</label>
-        <input id="code"
-               type="text"
-               name="code"
-               maxlength="10"
-               class="border border-cyan-700 tracking-widest" />
+      <label for="code" class="font-sans">Invite code</label>
+      <input id="code"
+             type="text"
+             name="code"
+             maxlength="10"
+             class="border tracking-widest" />
     </div>
-    <button type="submit">Continue</button>
+    <button type="submit" class="w-full bg-cyan-400 text-white hover:bg-black">Continue</button>
     {% if error %}<p class="text-red">{{ error }}</p>{% endif %}
-</form>
+  </form>
+</div>

@@ -5,7 +5,7 @@
 {% endblock title %}
 {% block content %}
     <main id="rsvp"
-          class="flex items-center justify-center font-serif w-full ">
+          class="flex m-6 items-center justify-center font-serif w-full">
         {% if name %}
             <p>hello {{ name }}</p>
             <form method="post">
@@ -14,7 +14,8 @@
                 <button type="submit">Signout</button>
             </form>
         {% else %}
-        <div class="md:m-6 md:w-auto w-full">
+        <div class="border max-w-md">
+
             {% include "components/rsvp/signin_form.html" %}
             
         </div>
