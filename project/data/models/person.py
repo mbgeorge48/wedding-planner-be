@@ -12,9 +12,9 @@ class Person(models.Model):
         BRIDEGROOM = "BRIDEGROOM", "Bride/Groom"
 
     class Priority(models.IntegerChoices):
-        1
-        2
-        3
+        LOW = 3, "Low"
+        MEDIUM = 2, "Medium"
+        HIGH = 1, "High"
 
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     created = models.DateTimeField(auto_now_add=True, db_index=True)
@@ -28,7 +28,7 @@ class Person(models.Model):
     phone = models.CharField(max_length=20, blank=True)
     address = models.CharField(max_length=255, blank=True)
 
-    priority = models.IntegerField(choices=Priority, default=1)
+    priority = models.IntegerField(choices=Priority, default=Priority.HIGH)
     type = models.CharField(
         max_length=50,
         choices=Type.choices,
