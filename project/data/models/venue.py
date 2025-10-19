@@ -4,9 +4,21 @@ from django.db import models
 
 
 class Venue(models.Model):
+    class Type(models.TextChoices):
+        CEREMONY = "CEREMONY", "Ceremony"
+        RECEPTION = "RECEPTION", "Reception"
+        HOTEL = "HOTEL", "HOTEL"
+
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     created = models.DateTimeField(auto_now_add=True, db_index=True)
     modified = models.DateTimeField(auto_now=True)
+
+    type = models.CharField(
+        max_length=50,
+        choices=Type.choices,
+        null=False,
+        blank=True,
+    )
 
     name = models.CharField(max_length=255)
     description = models.TextField(blank=True)

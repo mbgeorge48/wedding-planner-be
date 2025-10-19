@@ -20,8 +20,19 @@ class Wedding(models.Model):
         default=None,
         related_name="groom",
     )
-    venue = models.ForeignKey(
-        "data.Venue", on_delete=models.CASCADE, default=None, null=True
+    ceremony_venue = models.ForeignKey(
+        "data.Venue",
+        on_delete=models.CASCADE,
+        related_name="ceremony_wedding",
+        null=True,
+        blank=True,
+    )
+    reception_venue = models.ForeignKey(
+        "data.Venue",
+        on_delete=models.CASCADE,
+        related_name="reception_wedding",
+        null=True,
+        blank=True,
     )
 
     date = models.DateField()
