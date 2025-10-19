@@ -1,6 +1,10 @@
 import uuid
 
 from django.db import models
+from django.db.models.signals import post_save
+from django.dispatch import receiver
+
+from project.actions.generate_rsvp_code import generate_code
 
 
 class Person(models.Model):
@@ -25,8 +29,8 @@ class Person(models.Model):
     firstname = models.CharField(max_length=255)
     lastname = models.CharField(max_length=255)
     email = models.EmailField(blank=True)
-    phone = models.CharField(max_length=20, blank=True)
-    address = models.CharField(max_length=255, blank=True)
+    phone = models.CharField(max_length=20, blank=True, null=True)
+    address = models.CharField(max_length=255, blank=True, null=True)
 
     priority = models.IntegerField(choices=Priority, default=Priority.HIGH)
     type = models.CharField(
@@ -67,3 +71,10 @@ class Person(models.Model):
 
     def __str__(self):
         return f"{self.firstname} {self.lastname}, {self.get_type_display()}"
+
+
+@receiver(post_save, sender=Person)
+def assign_invite_code(sender, instance, created, **kwargs):
+    if created and not instance.invite_code:
+        instance.invite_code = generate_code(instance.id)
+        instance.save()
