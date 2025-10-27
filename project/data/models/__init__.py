@@ -4,6 +4,7 @@ from .personfood import PersonFood
 from .persongroup import PersonGroup
 from .personphotogroup import PersonPhotoGroup
 from .photogroup import PhotoGroup
+from .rsvp import RSVP
 from .venue import Venue
 from .wedding import Wedding
 
@@ -14,6 +15,7 @@ __all__ = [
     "PersonGroup",
     "PersonPhotoGroup",
     "PhotoGroup",
+    "RSVP",
     "Venue",
     "Wedding",
 ]
