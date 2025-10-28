@@ -17,11 +17,12 @@
     {% csrf_token %}
     <div class="flex flex-col font-semibold w-full">
       <label for="firstname" class="font-sans">First name</label>
-      <input id="firstname" name="firstname" class="border" />
+      <input id="firstname" value="{{ prefill.firstname }}" name="firstname" class="border" />
     </div>
     <div class="flex flex-col font-semibold w-full">
       <label for="code" class="font-sans">Invite code</label>
       <input id="code"
+      value="{{ prefill.code }}"
              type="text"
              name="code"
              maxlength="10"

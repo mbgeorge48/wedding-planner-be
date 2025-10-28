@@ -11,7 +11,16 @@ class RSVPView(View):
     template_name = "rsvp.html"
 
     def get(self, request):
-        return render(request, self.template_name)
+        code = request.GET.get("code", "").strip().upper()
+        firstname = request.GET.get("firstname", "").strip().title()
+
+        context = {
+            "prefill": {
+                "code": code,
+                "firstname": firstname,
+            }
+        }
+        return render(request, self.template_name, context)
 
     def post(self, request):
         code = request.POST.get("code", "").strip().upper()
@@ -42,21 +51,27 @@ class RSVPFormView(View):
     template_name = "rsvp.html"
 
     def get(self, request):
-        return render(request, self.template_name)
-
-    def post(self, request):
         code = request.session.get("guest_code")
         guest = models.Person.objects.filter(invite_code=code).first()
 
-        if request.method == "POST":
-            action = request.POST.get("action")
-            if action == "signout":
-                request.session.flush()
-                return redirect("rsvp")
-
         if not guest:
             return redirect("rsvp")
-        return render(request, "rsvp.html", {"name": guest.firstname})
+
+        return render(request, self.template_name, {"name": guest.firstname})
+
+    def post(self, request):
+        action = request.POST.get("action")
+        if action == "signout":
+            request.session.flush()
+            return redirect("rsvp")
+
+        # If user somehow POSTs without session, redirect
+        code = request.session.get("guest_code")
+        guest = models.Person.objects.filter(invite_code=code).first()
+        if not guest:
+            return redirect("rsvp")
+
+        return render(request, self.template_name, {"name": guest.firstname})
 
     # class RSVPForm(forms.ModelForm):
     #     class Meta:
