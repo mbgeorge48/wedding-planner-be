@@ -1,6 +1,11 @@
-from .home import home
-from .time import load_time
-from .rsvp import rsvp, rsvp_form
-from .schedule import schedule
+from .home import HomeView
+from .rsvp import RSVPView, RSVPFormView
+from .schedule import ScheduleView
 
-__all__ = ["home", "load_time", "rsvp", "rsvp_form", "schedule"]
+__all__ = [
+    "admin",
+    "HomeView",
+    "RSVPView",
+    "RSVPFormView",
+    "ScheduleView",
+]

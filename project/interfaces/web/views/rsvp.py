@@ -4,47 +4,59 @@ from project.data import models
 from django.core import exceptions
 
 
-def rsvp(request):
-    if request.method == "POST":
-        code = request.POST.get("code").strip().upper()
-        firstname = request.POST.get("firstname").strip().upper()
+from django.views import View
+
+
+class RSVPView(View):
+    template_name = "rsvp.html"
+
+    def get(self, request):
+        return render(request, self.template_name)
+
+    def post(self, request):
+        code = request.POST.get("code", "").strip().upper()
+        firstname = request.POST.get("firstname", "").strip().upper()
+
         try:
-            guest = models.Person.objects.filter(
+            models.Person.objects.filter(
                 invite_code=code, firstname__iexact=firstname
             ).get()
         except exceptions.MultipleObjectsReturned:
             return render(
-                request, "rsvp.html", {"error": "Multiple users found, contact MG"}
+                request,
+                self.template_name,
+                {"error": "Multiple users found, contact MG"},
             )
         except exceptions.ObjectDoesNotExist:
             return render(
                 request,
-                "rsvp.html",
+                self.template_name,
                 {"error": "No user matching that name and invite code found"},
             )
 
-        if guest:
-            request.session["guest_code"] = code
-            return redirect("rsvp_form")
-        else:
-            return render(request, "rsvp.html", {"error": "Invalid code"})
-
-    return render(request, "rsvp.html")
+        request.session["guest_code"] = code
+        return redirect("rsvp_form")
 
 
-def rsvp_form(request):
-    code = request.session.get("guest_code")
-    guest = models.Person.objects.filter(invite_code=code).first()
+class RSVPFormView(View):
+    template_name = "rsvp.html"
 
-    if request.method == "POST":
-        action = request.POST.get("action")
-        if action == "signout":
-            request.session.flush()
+    def get(self, request):
+        return render(request, self.template_name)
+
+    def post(self, request):
+        code = request.session.get("guest_code")
+        guest = models.Person.objects.filter(invite_code=code).first()
+
+        if request.method == "POST":
+            action = request.POST.get("action")
+            if action == "signout":
+                request.session.flush()
+                return redirect("rsvp")
+
+        if not guest:
             return redirect("rsvp")
-
-    if not guest:
-        return redirect("rsvp")
-    return render(request, "rsvp.html", {"name": guest.firstname})
+        return render(request, "rsvp.html", {"name": guest.firstname})
 
     # class RSVPForm(forms.ModelForm):
     #     class Meta:

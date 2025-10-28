@@ -1,12 +1,10 @@
 from django.urls import path
-from .views import home, load_time, rsvp, rsvp_form, schedule
+from .views import HomeView, RSVPView, RSVPFormView, ScheduleView
 
-# app_name = "web"
 
 urlpatterns = [
-    path("", home, name="home"),
-    path("rsvp", rsvp, name="rsvp"),
-    path("rsvp/form", rsvp_form, name="rsvp_form"),
-    path("schedule", schedule, name="schedule"),
-    path("load-time/", load_time, name="load_time"),
+    path("", HomeView.as_view(), name="home"),
+    path("rsvp", RSVPView.as_view(), name="rsvp"),
+    path("rsvp/form", RSVPFormView.as_view(), name="rsvp_form"),
+    path("schedule", ScheduleView.as_view(), name="schedule"),
 ]

@@ -23,5 +23,5 @@ from project import settings
 
 urlpatterns = [
     path("", include("project.interfaces.web.urls")),
-    path("admin/", admin.site.urls),
+    path("django-admin/", admin.site.urls),
 ] + static(settings.STATIC_URL, document_root=settings.STATICFILES_DIRS[0])
