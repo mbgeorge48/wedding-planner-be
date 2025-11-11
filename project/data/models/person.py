@@ -12,13 +12,8 @@ class Person(models.Model):
         STANDARD = "STANDARD", "Standard"
         BRIDESMAID = "BRIDESMAID", "Bridesmaid"
         GROOMSMEN = "GROOMSMEN", "Groomsmen"
-        IMMEDIATEFAMILY = "IMMEDIATEFAMILY", "Immediate Family"
-        BRIDEGROOM = "BRIDEGROOM", "Bride/Groom"
-
-    class Priority(models.IntegerChoices):
-        LOW = 3, "Low"
-        MEDIUM = 2, "Medium"
-        HIGH = 1, "High"
+        IMMEDIATE_FAMILY = "IMMEDIATE_FAMILY", "Immediate Family"
+        BRIDE_GROOM = "BRIDE_GROOM", "Bride/Groom"
 
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     created = models.DateTimeField(auto_now_add=True, db_index=True)
@@ -28,11 +23,8 @@ class Person(models.Model):
 
     firstname = models.CharField(max_length=255)
     lastname = models.CharField(max_length=255)
-    email = models.EmailField(blank=True)
-    phone = models.CharField(max_length=20, blank=True, null=True)
-    address = models.CharField(max_length=255, blank=True, null=True)
+    email = models.CharField(max_length=255, null=True)
 
-    priority = models.IntegerField(choices=Priority, default=Priority.HIGH)
     type = models.CharField(
         max_length=50,
         choices=Type.choices,
@@ -41,10 +33,8 @@ class Person(models.Model):
     )
 
     invited_to_ceremony = models.BooleanField(default=False)
-    # has_rsvp_ceremony = models.BooleanField(default=False)
 
     invited_to_reception = models.BooleanField(default=False)
-    # has_rsvp_reception = models.BooleanField(default=False)
 
     relationships = models.ManyToManyField(
         "self",
@@ -61,9 +51,6 @@ class Person(models.Model):
     allowed_to_stay_in_yurt = models.BooleanField(default=False)
     allowed_to_stay_night_after_reception = models.BooleanField(default=False)
 
-    # dietary_requirements = models.ManyToManyField(
-    # #     "data.Food", through="data.PersonFood", related_name="person"
-    # )
     photo_groups = models.ManyToManyField(
         "data.PhotoGroup", through="data.PersonPhotoGroup", related_name="person"
     )
