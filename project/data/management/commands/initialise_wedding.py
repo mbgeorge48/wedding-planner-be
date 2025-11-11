@@ -1,4 +1,3 @@
-# library/management/commands/create_book.py
 from django.core.management.base import BaseCommand
 from project.actions.person import create_person
 from project.actions.venue import create_venue
