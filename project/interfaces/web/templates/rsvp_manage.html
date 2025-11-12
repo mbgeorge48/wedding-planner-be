@@ -1,0 +1,25 @@
+{% extends "base.html" %}
+{% load static %}
+{% block title %}
+    RSVP
+{% endblock title %}
+{% block content %}
+    <main id="rsvp-manage"
+          class="flex m-6 items-center justify-center font-serif w-full">
+        {% if name %}
+            <p>hello {{ name }}</p>
+            <p>{{ guest_code }}</p>
+            <form method="post">
+                {% csrf_token %}
+                <input type="hidden" name="action" value="signout">
+                <button type="submit">Signout</button>
+            </form>
+        {% else %}
+        <div class="border max-w-md">
+
+            {% include "components/rsvp/rsvp_table.html" %}
+            
+        </div>
+        {% endif %}
+    </main>
+{% endblock content %}

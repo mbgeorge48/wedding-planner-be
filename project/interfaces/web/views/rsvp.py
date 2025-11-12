@@ -69,9 +69,19 @@ class RSVPFormView(View):
         code = request.session.get("guest_code")
         guest = models.Person.objects.filter(invite_code=code).first()
         if not guest:
-            return redirect("rsvp")
+            return redirect(
+                "rsvp",
+                {"error": "unable to find guest with that code/name combination"},
+            )
 
-        return render(request, self.template_name, {"name": guest.firstname})
+        return render(
+            request,
+            self.template_name,
+            {
+                "name": guest.firstname,
+                "guest_code": request.session.get("guest_code"),
+            },
+        )
 
     # class RSVPForm(forms.ModelForm):
     #     class Meta:
@@ -87,3 +97,32 @@ class RSVPFormView(View):
     #     form = RSVPForm(instance=guest)
 
     # return render(request, "rsvp_form.html", {"form": form, "guest": guest})
+
+
+class RSVPManageView(View):
+    template_name = "rsvp_manage.html"
+
+    def get(self, request):
+        code = request.session.get("guest_code")
+
+        guest = models.Person.objects.filter(
+            invite_code=code, type=models.Person.Type.BRIDE_GROOM.value
+        ).first()
+
+        if not guest:
+            return redirect(
+                "rsvp",
+                {"error": "unable to find guest with that code/name combination"},
+            )
+
+        rsvp_data = models.RSVP.objects.all()
+
+        return render(
+            request,
+            self.template_name,
+            {
+                "name": guest.firstname,
+                "guest_code": request.session.get("guest_code"),
+                "rsvp_data": rsvp_data,
+            },
+        )
