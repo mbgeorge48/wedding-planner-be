@@ -1,5 +1,7 @@
 {% extends "base.html" %}
 {% load static %}
+{% load button_tag %}
+
 {% block title %}
     Home
 {% endblock title %}
@@ -12,7 +14,9 @@
             <div class="max-w-3xl mx-auto text-center animate-fade-in space-y-10">
                 {% include "components/home/heading.html" with bride=bride groom=groom date=date %}
                 {% include "components/home/timer.html" with date=date %}
-                {% include "components/common/button.html" with text="RSVP Now" href="/rsvp" %}
+                {% url 'rsvp_form' as rsvp_url %}
+                {% button text="RSVP Now" href=rsvp_url %}
+
             </div>
         </div>
     </main>

@@ -1,3 +1,5 @@
+{% load button_tag %}
+
 <script>
       document.addEventListener("DOMContentLoaded", function () {
           const urlParams = new URLSearchParams(window.location.search);
@@ -28,7 +30,8 @@
              maxlength="10"
              class="border tracking-widest" />
     </div>
-    <button type="submit" class="w-full bg-cyan-400 text-white hover:bg-black">Continue</button>
+    {% button text="Continue" type="submit" %}
+
     {% if error %}<p class="text-red">{{ error }}</p>{% endif %}
   </form>
 </div>

@@ -6,19 +6,15 @@
 {% block content %}
     <main id="rsvp"
           class="flex m-6 items-center justify-center font-serif w-full">
-        {% if name %}
-            <p>hello {{ name }}</p>
+        {% if guest_code %}
+            <p>Hello {{ name }}</p>
             <form method="post">
                 {% csrf_token %}
                 <input type="hidden" name="action" value="signout">
                 <button type="submit">Signout</button>
             </form>
         {% else %}
-        <div class="border max-w-md">
-
             {% include "components/rsvp/signin_form.html" %}
-            
-        </div>
         {% endif %}
     </main>
 {% endblock content %}

@@ -1,3 +1,15 @@
-<a href="{{ href }}" class="inline-block px-4 py-2 rounded-md bg-blue-600 text-white hover:bg-blue-700 transition font-medium text-center">
-  {{ text }}
-</a>
+{% if href %}
+  <a
+    href="{{ href }}"
+    class="inline-block px-4 py-2 rounded-md bg-blue-600 text-white hover:bg-blue-700 transition font-medium text-center"
+  >
+    {{ text }}
+  </a>
+{% else %}
+  <button
+    type="{{ type|default:'button' }}"
+    class="inline-block px-4 py-2 rounded-md bg-blue-600 text-white hover:bg-blue-700 transition font-medium text-center"
+  >
+    {{ text }}
+  </button>
+{% endif %}
