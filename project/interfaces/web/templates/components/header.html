@@ -2,6 +2,7 @@
 {% url 'rsvp' as rsvp_url %}
 {% url 'schedule' as schedule_url %}
 {% comment %} {% url 'faqs' as faqs_url %} {% endcomment %}
+
 <header class="bg-neutral-100 backdrop-blur-sm shadow-md text-black/80 text-xl font-semibold p-4 flex">
   <nav class="md:ml-auto my-0 mx-auto md:mx-0 space-x-4"
        x-data="{ path: window.location.pathname }">
@@ -11,6 +12,6 @@
     <a href="{{ schedule_url }}"
        :class="path === '/schedule' ? 'font-bold underline underline-offset-4 decoration-double' : 'hover:text-blue-400'">Schedule</a>
     {% comment %} <a href="{{ faqs_url }}"
-       :class="path === '/faqs' ? 'font-bold underline underline-offset-4 decoration-double' : 'hover:text-blue-400'">Schedule</a> {% endcomment %}
+       :class="path === '/faqs' ? 'font-bold underline underline-offset-4 decoration-double' : 'hover:text-blue-400'">FAQs</a> {% endcomment %}
   </nav>
 </header>

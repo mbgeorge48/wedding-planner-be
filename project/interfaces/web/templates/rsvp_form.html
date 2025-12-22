@@ -1,0 +1,25 @@
+{% extends "base.html" %}
+{% load static %}
+{% block title %}
+    RSVP
+{% endblock title %}
+{% load button_tag %}
+{% block content %}
+    <main class="flex m-6 items-center justify-center font-serif w-full">
+        <div class="flex items-center justify-center">
+            <div class="flex flex-col items-center gap-4 text-center">
+                <h2 class="text-lg md:text-xl font-serif italic mb-6">Hello {{ name }}</h2>
+                <form method="post" action="{% url 'signout' %}">
+                    {% csrf_token %}
+                    {% button text="Signout" type="submit" %}
+                </form>
+            </div>
+        </div>
+        {% comment %} <form method="post" class="flex flex-col items-center font-serif space-y-6 text-black/80 bg-white/80 md:mx-4">
+            {% csrf_token %}
+            {% include "components/rsvp/form/basics.html" %}
+            {% button text="Continue" type="submit" %}
+            {% if error %}<p class="text-red">{{ error }}</p>{% endif %}
+        </form> {% endcomment %}
+    </main>
+{% endblock content %}

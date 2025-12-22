@@ -1,3 +1,5 @@
+from django.shortcuts import redirect
+from django.views import View
 from django.views.generic import TemplateView
 from project.data import models
 
@@ -9,7 +11,7 @@ class HomeView(TemplateView):
         context = super().get_context_data(**kwargs)
 
         wedding = models.Wedding.objects.first()
-        if wedding:
+        if wedding and wedding.bride and wedding.groom:
             context.update(
                 {
                     "id": wedding.id,
@@ -29,3 +31,9 @@ class HomeView(TemplateView):
         )
 
         return context
+
+
+class SignoutView(View):
+    def post(self, request):
+        request.session.flush()
+        return redirect("rsvp")

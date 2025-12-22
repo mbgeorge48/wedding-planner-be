@@ -59,7 +59,7 @@ class Person(models.Model):
         ordering = ["firstname"]
 
     def __str__(self):
-        return f"{self.firstname} {self.lastname}, {self.get_type_display()}"
+        return f"{self.firstname} {self.lastname}, {self.type.title}"
 
 
 @receiver(post_save, sender=Person)

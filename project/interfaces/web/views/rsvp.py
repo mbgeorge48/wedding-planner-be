@@ -48,7 +48,7 @@ class RSVPView(View):
 
 
 class RSVPFormView(View):
-    template_name = "rsvp.html"
+    template_name = "rsvp_form.html"
 
     def get(self, request):
         code = request.session.get("guest_code")
@@ -57,13 +57,17 @@ class RSVPFormView(View):
         if not guest:
             return redirect("rsvp")
 
-        return render(request, self.template_name, {"name": guest.firstname})
+        data = {
+            "invited_to_ceremony": guest.invited_to_ceremony,
+            "invited_to_reception": guest.invited_to_reception,
+            "allowed_plus_one": guest.allowed_plus_one,
+            "allowed_to_stay_onsite": guest.allowed_to_stay_onsite,
+            "allowed_to_stay_in_yurt": guest.allowed_to_stay_in_yurt,
+            "allowed_to_stay_night_after_reception": guest.allowed_to_stay_night_after_reception,
+        }
+        return render(request, self.template_name, {"name": guest.firstname, **data})
 
     def post(self, request):
-        action = request.POST.get("action")
-        if action == "signout":
-            request.session.flush()
-            return redirect("rsvp")
 
         # If user somehow POSTs without session, redirect
         code = request.session.get("guest_code")
@@ -77,10 +81,7 @@ class RSVPFormView(View):
         return render(
             request,
             self.template_name,
-            {
-                "name": guest.firstname,
-                "guest_code": request.session.get("guest_code"),
-            },
+            {"name": guest.firstname},
         )
 
     # class RSVPForm(forms.ModelForm):
@@ -105,14 +106,14 @@ class RSVPManageView(View):
     def get(self, request):
         code = request.session.get("guest_code")
 
-        guest = models.Person.objects.filter(
+        admin = models.Person.objects.filter(
             invite_code=code, type=models.Person.Type.BRIDE_GROOM.value
         ).first()
 
-        if not guest:
+        if not admin:
             return redirect(
                 "rsvp",
-                {"error": "unable to find guest with that code/name combination"},
+                {"error": "incorrect permissions to access the manage page"},
             )
 
         rsvp_data = models.RSVP.objects.all()
@@ -121,7 +122,7 @@ class RSVPManageView(View):
             request,
             self.template_name,
             {
-                "name": guest.firstname,
+                "name": admin.firstname,
                 "guest_code": request.session.get("guest_code"),
                 "rsvp_data": rsvp_data,
             },

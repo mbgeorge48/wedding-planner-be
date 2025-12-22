@@ -16,7 +16,7 @@ class RSVP(models.Model):
 
     class TravelBetweenVenues(models.TextChoices):
         YES = "YES", "Yes, interested in options"
-        NO = "NO", "No thanks"
+        NO = "NO", "No, thanks"
         UNSURE = "UNSURE", "Not sure"
 
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
@@ -58,7 +58,4 @@ class RSVP(models.Model):
     )
 
     class Meta:
-        ordering = ["-created"]
-
-    def __str__(self):
-        return f"{self.guest.firstname} {self.guest.lastname}"
+        ordering = ["guest__lastname"]
