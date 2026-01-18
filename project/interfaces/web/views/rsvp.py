@@ -127,3 +127,14 @@ class RSVPManageView(View):
                 "rsvp_data": rsvp_data,
             },
         )
+
+
+class PlusOneStateView(View):
+    def get(self, request):
+        plus_one = request.GET.get("plus_one") == "true"
+
+        return render(
+            request,
+            "components/rsvp/form/partials/plus_one_fields.html",
+            {"plus_one": plus_one},
+        )

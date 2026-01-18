@@ -1,5 +1,5 @@
 from .home import HomeView, SignoutView
-from .rsvp import RSVPView, RSVPFormView, RSVPManageView
+from .rsvp import RSVPView, RSVPFormView, RSVPManageView, PlusOneStateView
 from .schedule import ScheduleView
 
 __all__ = [
@@ -10,4 +10,5 @@ __all__ = [
     "ScheduleView",
     "RSVPManageView",
     "SignoutView",
+    "PlusOneStateView",
 ]

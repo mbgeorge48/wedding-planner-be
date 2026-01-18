@@ -1,18 +1,33 @@
-
-  <div class="text-center mb-8">
-    <h2 class="text-5xl font-semibold mb-4">Contact Details</h2>
-    <p>You don't need to, but if you want enter your phone or email so we can contact you if we need to</p>
-  </div>
-  {% comment %} <form method="post"
-        class="flex flex-col items-center font-serif space-y-6 text-black/80 bg-white/80 md:mx-4">
-    {% csrf_token %} {% endcomment %}
-    <div class="flex flex-col font-semibold w-full">
-      <label for="firstname" class="font-sans">Email Address</label>
-      <input id="firstname" name="firstname" class="border" />
-    </div>
-    <div class="flex flex-col font-semibold w-full">
-      <label for="firstname" class="font-sans">Phone Number</label>
-      <input id="firstname" name="firstname" class="border" />
-    </div>
-   
-
+<div class=" mb-4">
+  <h2 class="text-xl font-semibold">Contact Details</h2>
+  <p class="text-sm">You don't need to, but if you want enter your phone or email so we can contact you if we need to</p>
+</div>
+<div class="space-y-4">
+  {% include "components/common/form_input.html" with name="email" label="Email address" type="email" %}
+  {% include "components/common/form_input.html" with name="phone" label="Phone Number" type="tel" %}
+</div>
+{% if allowed_plus_one %}
+  <label class="flex items-center gap-2">
+    <input type="checkbox"
+           name="plus_one"
+           value="true"
+           hx-get="{% url 'plus-one-state' %}"
+           hx-trigger="change"
+           hx-target="this"
+           hx-swap="none" />
+    <span>Yes, I'm bringing a plus one</span>
+  </label>
+  <div id="plus-one-name-container" class="hidden"></div>
+{% endif %}
+{% if invited_to_ceremony %}
+  <label class="flex items-center gap-2">
+    <input type="checkbox" name="can_come_to_ceremony" value="true" />
+    <span>Can you come to the wedding ceremony in Bala?</span>
+  </label>
+{% endif %}
+{% if invited_to_reception %}
+  <label class="flex items-center gap-2">
+    <input type="checkbox" name="can_come_to_reception" value="true" />
+    <span>Can you come to the wedding reception in Owestry?</span>
+  </label>
+{% endif %}
