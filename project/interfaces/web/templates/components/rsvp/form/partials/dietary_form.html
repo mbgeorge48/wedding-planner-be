@@ -1,0 +1,73 @@
+{% comment %} <div class="space-y-3">
+    {% for value, label in food_categories %}
+        {% if value != "NONE" %}
+            <label class="flex items-center gap-2">
+                <input type="checkbox"
+                       name="{{ prefix }}dietary_categories"
+                       value="{{ value }}"
+                       id="{{ prefix }}dietary-{{ value|lower }}-checkbox" />
+                <span>{{ label }}</span>
+            </label>
+            {% if value == "OTHER" %}
+                <input type="text"
+                       name="{{ prefix }}dietary_other_detail"
+                       placeholder="Please specify"
+                       class="input ml-6"
+                       id="{{ prefix }}dietary-other-detail"
+                       disabled />
+            {% endif %}
+        {% endif %}
+    {% endfor %}
+</div>
+<script>
+  const otherCheckbox = document.getElementById("{{ prefix }}dietary-other-checkbox");
+  const otherInput = document.getElementById("{{ prefix }}dietary-other-detail");
+
+  otherCheckbox.addEventListener("change", () => {
+    otherInput.disabled = !otherCheckbox.checked;
+    if (!otherCheckbox.checked) {
+      otherInput.value = "";
+    }
+  });
+</script> {% endcomment %}
+
+
+<div class="space-y-3">
+  <!-- debug output -->
+  <p>Debug: {{ food_categories|length }} categories</p>
+
+  {% for value, label in food_categories %}
+    <p>{{ value }} - {{ label }}</p>  <!-- debug each category -->
+    
+    {% if value != "NONE" %}
+      <label class="flex items-center gap-2">
+        <input type="checkbox"
+               name="{{ prefix }}dietary_categories"
+               value="{{ value }}"
+               id="{{ prefix }}dietary-{{ value|lower }}-checkbox" />
+        <span>{{ label }}</span>
+      </label>
+
+      {% if value == "OTHER" %}
+        <input type="text"
+               name="{{ prefix }}dietary_other_detail"
+               placeholder="Please specify"
+               class="input ml-6"
+               id="{{ prefix }}dietary-other-detail"
+               disabled />
+      {% endif %}
+    {% endif %}
+  {% endfor %}
+</div>
+
+<script>
+  const otherCheckbox = document.getElementById({{ prefix }}+"dietary-other-checkbox");
+  const otherInput = document.getElementById({{ prefix }}+"dietary-other-detail");
+
+  otherCheckbox.addEventListener("change", () => {
+    otherInput.disabled = !otherCheckbox.checked;
+    if (!otherCheckbox.checked) {
+      otherInput.value = "";
+    }
+  });
+</script>

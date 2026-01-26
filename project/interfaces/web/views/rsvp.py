@@ -1,4 +1,3 @@
-# from django import forms
 from django.shortcuts import redirect, render
 from project.data import models
 from django.core import exceptions
@@ -64,6 +63,7 @@ class RSVPFormView(View):
             "allowed_to_stay_onsite": guest.allowed_to_stay_onsite,
             "allowed_to_stay_in_yurt": guest.allowed_to_stay_in_yurt,
             "allowed_to_stay_night_after_reception": guest.allowed_to_stay_night_after_reception,
+            "food_categories": models.Food.Category.choices,
         }
         return render(request, self.template_name, {"name": guest.firstname, **data})
 
@@ -126,15 +126,4 @@ class RSVPManageView(View):
                 "guest_code": request.session.get("guest_code"),
                 "rsvp_data": rsvp_data,
             },
-        )
-
-
-class PlusOneStateView(View):
-    def get(self, request):
-        plus_one = request.GET.get("plus_one") == "true"
-
-        return render(
-            request,
-            "components/rsvp/form/partials/plus_one_fields.html",
-            {"plus_one": plus_one},
         )

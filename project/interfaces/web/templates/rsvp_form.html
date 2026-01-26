@@ -18,8 +18,12 @@
                   class="flex flex-col space-y-6 text-black/80 bg-white/80 px-4 py-6">
                 {% csrf_token %}
                 {% include "components/rsvp/form/basics.html" %}
-                {% comment %} This will move to the dietary section later {% endcomment %}
-                <div id="plus-one-dietary-container"></div>
+                {% if invited_to_reception %}
+                    {% include "components/rsvp/form/dietary.html" %}
+                {% endif %}
+                {% comment %} Need an else to say something else if you can't stay onsite {% endcomment %}
+                {% include "components/rsvp/form/accommodation.html" %}
+
                 {% button text="Continue" type="submit" %}
                 {% if error %}<p class="text-red">{{ error }}</p>{% endif %}
             </form>
