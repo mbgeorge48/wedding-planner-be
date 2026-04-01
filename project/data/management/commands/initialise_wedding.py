@@ -1,7 +1,8 @@
 from django.core.management.base import BaseCommand
+
 from project.actions.person import create_person
 from project.actions.venue import create_venue
-from project.data.models import Wedding, Venue
+from project.data.models import Venue, Wedding
 
 
 class Command(BaseCommand):

@@ -1,9 +1,8 @@
-from django.shortcuts import redirect, render
-from project.data import models
 from django.core import exceptions
-
-
+from django.shortcuts import redirect, render
 from django.views import View
+
+from project.data import models
 
 
 class RSVPView(View):

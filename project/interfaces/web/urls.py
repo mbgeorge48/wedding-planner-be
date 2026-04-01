@@ -1,14 +1,14 @@
 from django.urls import path
+
 from .views import (
     HomeView,
-    RSVPView,
+    PlusOneStateView,
     RSVPFormView,
     RSVPManageView,
-    SignoutView,
-    PlusOneStateView,
+    RSVPView,
     ScheduleView,
+    SignoutView,
 )
-
 
 urlpatterns = [
     path("", HomeView.as_view(), name="home"),

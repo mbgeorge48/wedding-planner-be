@@ -1,7 +1,7 @@
 from django.shortcuts import render
-from project.data import models
-
 from django.views import View
+
+from project.data import models
 
 
 class PlusOneStateView(View):

@@ -1,7 +1,9 @@
-from django.core.management.base import BaseCommand
-from project.actions.person import create_person
-import os
 import csv
+import os
+
+from django.core.management.base import BaseCommand
+
+from project.actions.person import create_person
 
 required_keys = [
     "firstname",

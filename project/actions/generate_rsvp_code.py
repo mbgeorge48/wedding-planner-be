@@ -1,5 +1,6 @@
-from project.data import models
 from random import randint
+
+from project.data import models
 
 
 def generate_code(person_id: str):
