@@ -1,0 +1,19 @@
+#!/bin/bash
+
+set -e
+
+# Move to the project root (one level up from the script)
+cd "$(dirname "$0")/.."
+
+# Define the specific directories to target
+PROJECT_ROOT="project"
+TARGET_DIRS="$PROJECT_ROOT/interfaces $PROJECT_ROOT/data $PROJECT_ROOT/actions"
+
+echo "Running isort..."
+isort --profile black $TARGET_DIRS
+
+echo "Running black..."
+black $TARGET_DIRS
+
+echo "Running flake8..."
+flake8 $TARGET_DIRS
