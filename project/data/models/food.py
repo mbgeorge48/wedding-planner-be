@@ -24,7 +24,7 @@ class Food(models.Model):
         null=False,
         blank=True,
     )
-    detail = models.CharField(max_length=255)
+    detail = models.CharField(max_length=255, blank=True, null=False)
 
     class Meta:
         ordering = ["-created"]

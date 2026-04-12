@@ -4,6 +4,7 @@ from django.views import View
 
 from project.data import models
 from project.interfaces.web.forms.basics import BasicsForm
+from project.interfaces.web.forms.dietary import DietaryForm
 
 
 class RSVPView(View):
@@ -200,13 +201,11 @@ class BasicsView(View):
                 rsvp_data["plus_one_lastname"] = rsvp.plus_one.lastname
                 rsvp_data["plus_one_email"] = rsvp.plus_one.email
 
-        context = {**rsvp_data, **data}
-        print(context)
-        return render(request, "components/rsvp/form/basics.html", context)
+        data = {**data, **rsvp_data}
+        return render(request, "components/rsvp/form/basics.html", data)
 
     def post(self, request):
         form = BasicsForm(request.POST)
-
 
         if form.is_valid():
             person = models.Person.objects.get(
@@ -216,7 +215,6 @@ class BasicsView(View):
             person.phone = form.cleaned_data["phone"]
             person.save()
 
-            print("form", form.cleaned_data["plus_one"])
             rsvp, _ = models.RSVP.objects.get_or_create(guest=person)
             rsvp.can_come_to_ceremony = form.cleaned_data["can_come_to_ceremony"]
             rsvp.can_come_to_reception = form.cleaned_data["can_come_to_reception"]
@@ -249,21 +247,107 @@ class DietaryView(View):
         code = request.session.get("guest_code")
         guest = models.Person.objects.filter(invite_code=code).first()
         wedding = models.Wedding.objects.first()
-        rsvp_data = models.RSVP.objects.filter(guest=guest).get()
+        rsvp = models.RSVP.objects.filter(guest=guest).get()
 
         if not guest or not (
             wedding and wedding.ceremony_venue and wedding.reception_venue
         ):
             return redirect("rsvp")
 
+        selected_categories = list(
+            rsvp.dietary_requirements.values_list("category", flat=True)
+        )
+        other_food = rsvp.dietary_requirements.filter(
+            category=models.Food.Category.OTHER
+        ).first()
+        selected_other_detail = other_food.detail if other_food else ""
+
+        plus_one_selected_categories = []
+        if rsvp.plus_one:
+            plus_one_rsvp = models.RSVP.objects.filter(guest=rsvp.plus_one).first()
+            if plus_one_rsvp:
+                plus_one_selected_categories = list(
+                    plus_one_rsvp.dietary_requirements.values_list(
+                        "category", flat=True
+                    )
+                )
+                plus_one_other_food = plus_one_rsvp.dietary_requirements.filter(
+                    category=models.Food.Category.OTHER
+                ).first()
+                plus_one_selected_other_detail = (
+                    plus_one_other_food.detail if plus_one_other_food else ""
+                )
+
+        rsvp_data = {}
+        if rsvp:
+            rsvp_data["selected_categories"] = selected_categories
+            rsvp_data["selected_other_detail"] = selected_other_detail
+            rsvp_data["plus_one_selected_categories"] = plus_one_selected_categories
+            rsvp_data["plus_one_selected_other_detail"] = plus_one_selected_other_detail
 
         data = {
             "food_categories": models.Food.Category.choices,
-            "has_plus_one": rsvp_data.plus_one is not None,
+            "has_plus_one": rsvp.plus_one is not None,
+            **rsvp_data,
         }
         return render(request, "components/rsvp/form/dietary.html", data)
 
     def post(self, request):
+        code = request.session.get("guest_code")
+        guest = models.Person.objects.filter(invite_code=code).first()
+        rsvp = models.RSVP.objects.filter(guest=guest).get()
+        form = DietaryForm(request.POST, has_plus_one=bool(rsvp.plus_one))
+
+        if form.is_valid():
+            categories = form.cleaned_data["dietary_categories"]
+            other_detail = form.cleaned_data["dietary_other_detail"]
+
+            foods = []
+            for category in categories:
+                if category == "OTHER":
+                    food, _ = models.Food.objects.get_or_create(
+                        category=category,
+                        detail=other_detail,
+                    )
+                else:
+                    food, _ = models.Food.objects.get_or_create(
+                        category=category,
+                        detail="",
+                    )
+                foods.append(food)
+
+            rsvp.dietary_requirements.set(foods)
+            rsvp.save()
+
+            if rsvp.plus_one:
+                plus_one_rsvp, _ = models.RSVP.objects.get_or_create(
+                    guest=rsvp.plus_one,
+                    defaults={
+                        "can_come_to_ceremony": rsvp.can_come_to_ceremony,
+                        "can_come_to_reception": rsvp.can_come_to_reception,
+                    },
+                )
+                plus_one_categories = form.cleaned_data["plus_one_dietary_categories"]
+                plus_one_other_detail = form.cleaned_data[
+                    "plus_one_dietary_other_detail"
+                ]
+                plus_one_foods = []
+                for category in plus_one_categories:
+                    if category == "OTHER":
+                        food, _ = models.Food.objects.get_or_create(
+                            category=category,
+                            detail=plus_one_other_detail,
+                        )
+                    else:
+                        food, _ = models.Food.objects.get_or_create(
+                            category=category,
+                            detail="",
+                        )
+                    plus_one_foods.append(food)
+
+                plus_one_rsvp.dietary_requirements.set(plus_one_foods)
+                plus_one_rsvp.save()
+
         return redirect("rsvp_accommodation")
 
 

@@ -11,5 +11,5 @@ class BasicsForm(forms.Form):
     plus_one = forms.BooleanField(required=False)
     plus_one_firstname = forms.CharField(required=False)
     plus_one_lastname = forms.CharField(required=False)
-    plus_one_email= forms.EmailField(required=False)
+    plus_one_email = forms.EmailField(required=False)
     plus_one_phone = forms.CharField(required=False)
