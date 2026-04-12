@@ -30,9 +30,17 @@ class RSVP(models.Model):
         related_name="guest",
     )
 
-    can_come_to_ceremony = models.BooleanField(blank=True)
-    can_come_to_reception = models.BooleanField(blank=True)
+    can_come_to_ceremony = models.BooleanField(blank=True, null=True)
+    can_come_to_reception = models.BooleanField(blank=True, null=True)
     dietary_requirements = models.ManyToManyField("data.Food", blank=True)
+
+    plus_one = models.OneToOneField(
+        "data.Person",
+        on_delete=models.SET_NULL,
+        null=True,
+        blank=True,
+        related_name="plus_one_of",
+    )
 
     staying_preference = models.CharField(
         max_length=50,
@@ -41,7 +49,7 @@ class RSVP(models.Model):
         blank=True,
     )
 
-    staying_night_after_reception = models.BooleanField(blank=True)
+    staying_night_after_reception = models.BooleanField(blank=True, null=True)
     evening_meal_day_after_reception = models.CharField(
         max_length=50,
         choices=DayAfterReceptionMeal.choices,
