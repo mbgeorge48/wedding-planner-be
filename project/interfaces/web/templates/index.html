@@ -1,7 +1,6 @@
 {% extends "base.html" %}
 {% load static %}
 {% load button_tag %}
-
 {% block title %}
     {{ bride }} & {{ groom }}'s Wedding
 {% endblock title %}
@@ -16,7 +15,6 @@
                 {% include "components/home/timer.html" with date=date %}
                 {% url 'rsvp_form' as rsvp_url %}
                 {% button text="RSVP Now" href=rsvp_url %}
-
             </div>
         </div>
     </main>

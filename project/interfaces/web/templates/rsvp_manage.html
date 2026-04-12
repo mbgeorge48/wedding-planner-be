@@ -15,11 +15,7 @@
                 <button type="submit">Signout</button>
             </form>
         {% else %}
-        <div class="border max-w-md">
-
-            {% include "components/rsvp/rsvp_table.html" %}
-            
-        </div>
+            <div class="border max-w-md">{% include "components/rsvp/rsvp_table.html" %}</div>
         {% endif %}
     </main>
 {% endblock content %}

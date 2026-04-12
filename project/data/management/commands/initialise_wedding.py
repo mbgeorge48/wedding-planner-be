@@ -2,7 +2,7 @@ from django.core.management.base import BaseCommand
 
 from project.actions.person import create_person
 from project.actions.venue import create_venue
-from project.data.models import Venue, Wedding,Person
+from project.data.models import Person, Venue, Wedding
 
 
 class Command(BaseCommand):
@@ -20,7 +20,10 @@ class Command(BaseCommand):
         email = input("Enter the email: ")
         # Code for generating invite codes
         bride, _ = create_person(
-            firstname=firstname, lastname=lastname, email=email, type=Person.Type.BRIDE_GROOM
+            firstname=firstname,
+            lastname=lastname,
+            email=email,
+            type=Person.Type.BRIDE_GROOM,
         )
 
         # groom
@@ -32,7 +35,10 @@ class Command(BaseCommand):
         email = input("Enter the email: ")
         # Code for generating invite codes
         groom, _ = create_person(
-            firstname=firstname, lastname=lastname, email=email, type=Person.Type.BRIDE_GROOM
+            firstname=firstname,
+            lastname=lastname,
+            email=email,
+            type=Person.Type.BRIDE_GROOM,
         )
 
         def get_venue_info():
@@ -51,7 +57,9 @@ class Command(BaseCommand):
                 address_line1=address_line1,
                 city=city,
                 postcode=postcode,
-                type=Venue.Type.RECEPTION if type_choice != "c" else Venue.Type.CEREMONY,
+                type=(
+                    Venue.Type.RECEPTION if type_choice != "c" else Venue.Type.CEREMONY
+                ),
             )
 
         get_venue_info()

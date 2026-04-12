@@ -3,23 +3,21 @@
     allocate the yurts fairly and make sure no one shares outside their family
     or friend group. Where would you like to stay?
 </div>
-
-{% if allowed_to_stay_onsite %} {% if allowed_to_stay_in_yurt %}
-<input type="radio" id="yurt" name="accommodation" value="yurt" />
-<label for="yurt">I'd like to stay in a yurt (if available)</label>
+{% if allowed_to_stay_onsite %}
+    {% if allowed_to_stay_in_yurt %}
+        <input type="radio" id="yurt" name="accommodation" value="yurt" />
+        <label for="yurt">I'd like to stay in a yurt (if available)</label>
+    {% endif %}
+    <input type="radio" id="camp" name="accommodation" value="camp" />
+    <label for="camp">I'll be camping</label>
+    <input type="radio" id="offsite" name="accommodation" value="offsite" />
+    <label for="offsite">I'll book my own accommodation nearby</label>
 {% endif %}
-<input type="radio" id="camp" name="accommodation" value="camp" />
-<label for="camp">I'll be camping</label>
-<input type="radio" id="offsite" name="accommodation" value="offsite" />
-<label for="offsite">I'll book my own accommodation nearby</label>
-{% endif %}
-
 {% if allowed_to_stay_night_after_reception %}
-We have the option to stay the night after the reception, Would you like to stay the night after the reception?
-{% comment %} fix wording {% endcomment %}
-  <label class="flex items-center gap-2">
-    <input type="checkbox" name="stay_night_after_reception" value="true" />
-    <span>Yes please!</span>
-  </label>
-
+    We have the option to stay the night after the reception, Would you like to stay the night after the reception?
+    {% comment %} fix wording {% endcomment %}
+    <label class="flex items-center gap-2">
+        <input type="checkbox" name="stay_night_after_reception" value="true" />
+        <span>Yes please!</span>
+    </label>
 {% endif %}

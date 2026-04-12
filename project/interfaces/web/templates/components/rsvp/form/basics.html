@@ -1,33 +1,33 @@
 <div class=" mb-4">
-  <h2 class="text-xl font-semibold">Contact Details</h2>
-  <p class="text-sm">You don't need to, but if you want enter your phone or email so we can contact you if we need to</p>
+    <h2 class="text-xl font-semibold">Contact Details</h2>
+    <p class="text-sm">You don't need to, but if you want enter your phone or email so we can contact you if we need to</p>
 </div>
 <div class="space-y-4">
-  {% include "components/common/form_input.html" with name="email" label="Email address" type="email" %}
-  {% include "components/common/form_input.html" with name="phone" label="Phone Number" type="tel" %}
+    {% include "components/common/form_input.html" with name="email" label="Email address" type="email" %}
+    {% include "components/common/form_input.html" with name="phone" label="Phone Number" type="tel" %}
 </div>
 {% if allowed_plus_one %}
-  <label class="flex items-center gap-2">
-    <input type="checkbox"
-           name="plus_one"
-           value="true"
-           hx-get="{% url 'plus-one-state' %}"
-           hx-trigger="change"
-           hx-target="this"
-           hx-swap="none" />
-    <span>Yes, I'm bringing a plus one</span>
-  </label>
-  <div id="plus-one-name-container" class="hidden"></div>
+    <label class="flex items-center gap-2">
+        <input type="checkbox"
+               name="plus_one"
+               value="true"
+               hx-get="{% url 'plus-one-state' %}"
+               hx-trigger="change"
+               hx-target="this"
+               hx-swap="none" />
+        <span>Yes, I'm bringing a plus one</span>
+    </label>
+    <div id="plus-one-name-container" class="hidden"></div>
 {% endif %}
 {% if invited_to_ceremony %}
-  <label class="flex items-center gap-2">
-    <input type="checkbox" name="can_come_to_ceremony" value="true" />
-    <span>Can you come to the wedding ceremony in Bala?</span>
-  </label>
+    <label class="flex items-center gap-2">
+        <input type="checkbox" name="can_come_to_ceremony" value="true" />
+        <span>Can you come to the wedding ceremony in Bala?</span>
+    </label>
 {% endif %}
 {% if invited_to_reception %}
-  <label class="flex items-center gap-2">
-    <input type="checkbox" name="can_come_to_reception" value="true" />
-    <span>Can you come to the wedding reception in Owestry?</span>
-  </label>
+    <label class="flex items-center gap-2">
+        <input type="checkbox" name="can_come_to_reception" value="true" />
+        <span>Can you come to the wedding reception in Owestry?</span>
+    </label>
 {% endif %}

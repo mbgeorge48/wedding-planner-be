@@ -1,5 +1,4 @@
 {% load button_tag %}
-
 <script>
       document.addEventListener("DOMContentLoaded", function () {
           const urlParams = new URLSearchParams(window.location.search);
@@ -10,28 +9,30 @@
   });
 </script>
 <div>
-  <div class="text-center mb-8">
-    <h2 class="text-5xl font-semibold mb-4">RSVP</h2>
-    <p>Please log in to submit your RSVP</p>
-  </div>
-  <form method="post"
-        class="flex flex-col items-center font-serif space-y-6 text-black/80 bg-white/80 md:mx-4">
-    {% csrf_token %}
-    <div class="flex flex-col font-semibold w-full">
-      <label for="firstname" class="font-sans">First name</label>
-      <input id="firstname" value="{{ prefill.firstname }}" name="firstname" class="border" />
+    <div class="text-center mb-8">
+        <h2 class="text-5xl font-semibold mb-4">RSVP</h2>
+        <p>Please log in to submit your RSVP</p>
     </div>
-    <div class="flex flex-col font-semibold w-full">
-      <label for="code" class="font-sans">Invite code</label>
-      <input id="code"
-      value="{{ prefill.code }}"
-             type="text"
-             name="code"
-             maxlength="10"
-             class="border tracking-widest" />
-    </div>
-    {% button text="Continue" type="submit" %}
-
-    {% if error %}<p class="text-red">{{ error }}</p>{% endif %}
-  </form>
+    <form method="post"
+          class="flex flex-col items-center font-serif space-y-6 text-black/80 bg-white/80 md:mx-4">
+        {% csrf_token %}
+        <div class="flex flex-col font-semibold w-full">
+            <label for="firstname" class="font-sans">First name</label>
+            <input id="firstname"
+                   value="{{ prefill.firstname }}"
+                   name="firstname"
+                   class="border" />
+        </div>
+        <div class="flex flex-col font-semibold w-full">
+            <label for="code" class="font-sans">Invite code</label>
+            <input id="code"
+                   value="{{ prefill.code }}"
+                   type="text"
+                   name="code"
+                   maxlength="10"
+                   class="border tracking-widest" />
+        </div>
+        {% button text="Continue" type="submit" %}
+        {% if error %}<p class="text-red">{{ error }}</p>{% endif %}
+    </form>
 </div>
