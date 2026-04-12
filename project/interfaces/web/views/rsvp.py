@@ -27,7 +27,7 @@ class RSVPView(View):
 
     def post(self, request):
         code = request.POST.get("code", "").strip().upper()
-        firstname = request.POST.get("firstname", "").strip().upper()
+        firstname = request.POST.get("firstname", "").strip()
 
         try:
             models.Person.objects.filter(
@@ -52,92 +52,92 @@ class RSVPView(View):
         return redirect("rsvp_form")
 
 
-class RSVPFormView(View):
-    template_name = "rsvp_form.html"
+# class RSVPFormView(View):
+#     template_name = "rsvp_form.html"
 
-    def get(self, request):
-        code = request.session.get("guest_code")
-        guest = models.Person.objects.filter(invite_code=code).first()
-        wedding = models.Wedding.objects.first()
+#     def get(self, request):
+#         code = request.session.get("guest_code")
+#         guest = models.Person.objects.filter(invite_code=code).first()
+#         wedding = models.Wedding.objects.first()
 
-        if not guest or not (
-            wedding and wedding.ceremony_venue and wedding.reception_venue
-        ):
-            return redirect("rsvp")
+#         if not guest or not (
+#             wedding and wedding.ceremony_venue and wedding.reception_venue
+#         ):
+#             return redirect("rsvp")
 
-        data = {
-            "invited_to_ceremony": guest.invited_to_ceremony,
-            "invited_to_reception": guest.invited_to_reception,
-            "allowed_plus_one": guest.allowed_plus_one,
-            "allowed_to_stay_onsite": guest.allowed_to_stay_onsite,
-            "allowed_to_stay_in_yurt": guest.allowed_to_stay_in_yurt,
-            "allowed_to_stay_night_after_reception": guest.allowed_to_stay_night_after_reception,
-            "food_categories": models.Food.Category.choices,
-            "ceremony_venue": wedding.ceremony_venue.name,
-            "reception_venue": wedding.reception_venue.name,
-        }
-        return render(request, self.template_name, {"name": guest.firstname, **data})
+#         data = {
+#             "invited_to_ceremony": guest.invited_to_ceremony,
+#             "invited_to_reception": guest.invited_to_reception,
+#             "allowed_plus_one": guest.allowed_plus_one,
+#             "allowed_to_stay_onsite": guest.allowed_to_stay_onsite,
+#             "allowed_to_stay_in_yurt": guest.allowed_to_stay_in_yurt,
+#             "allowed_to_stay_night_after_reception": guest.allowed_to_stay_night_after_reception,
+#             "food_categories": models.Food.Category.choices,
+#             "ceremony_venue": wedding.ceremony_venue.name,
+#             "reception_venue": wedding.reception_venue.name,
+#         }
+#         return render(request, self.template_name, {"name": guest.firstname, **data})
 
-    def post(self, request):
+#     def post(self, request):
 
-        # If user somehow POSTs without session, redirect
-        code = request.session.get("guest_code")
-        guest = models.Person.objects.filter(invite_code=code).first()
-        if not guest:
-            return redirect(
-                "rsvp",
-                {"error": "unable to find guest with that code/name combination"},
-            )
+#         # If user somehow POSTs without session, redirect
+#         code = request.session.get("guest_code")
+#         guest = models.Person.objects.filter(invite_code=code).first()
+#         if not guest:
+#             return redirect(
+#                 "rsvp",
+#                 {"error": "unable to find guest with that code/name combination"},
+#             )
 
-        return render(
-            request,
-            self.template_name,
-            {"name": guest.firstname},
-        )
+#         return render(
+#             request,
+#             self.template_name,
+#             {"name": guest.firstname},
+#         )
 
 
-class RSVPContactView(View):
-    template_name = "rsvp_form.html"
+# class RSVPContactView(View):
+#     template_name = "rsvp_form.html"
 
-    def get(self, request):
-        code = request.session.get("guest_code")
-        guest = models.Person.objects.filter(invite_code=code).first()
-        wedding = models.Wedding.objects.first()
+#     def get(self, request):
+#         code = request.session.get("guest_code")
+#         guest = models.Person.objects.filter(invite_code=code).first()
+#         wedding = models.Wedding.objects.first()
 
-        if not guest or not (
-            wedding and wedding.ceremony_venue and wedding.reception_venue
-        ):
-            return redirect("rsvp")
+#         if not guest or not (
+#             wedding and wedding.ceremony_venue and wedding.reception_venue
+#         ):
+#             return redirect("rsvp")
 
-        data = {
-            "invited_to_ceremony": guest.invited_to_ceremony,
-            "invited_to_reception": guest.invited_to_reception,
-            "allowed_plus_one": guest.allowed_plus_one,
-            "allowed_to_stay_onsite": guest.allowed_to_stay_onsite,
-            "allowed_to_stay_in_yurt": guest.allowed_to_stay_in_yurt,
-            "allowed_to_stay_night_after_reception": guest.allowed_to_stay_night_after_reception,
-            "food_categories": models.Food.Category.choices,
-            "ceremony_venue": wedding.ceremony_venue.name,
-            "reception_venue": wedding.reception_venue.name,
-        }
-        return render(request, self.template_name, {"name": guest.firstname, **data})
+#         data = {
+#             "invited_to_ceremony": guest.invited_to_ceremony,
+#             "invited_to_reception": guest.invited_to_reception,
+#             "allowed_plus_one": guest.allowed_plus_one,
+#             "allowed_to_stay_onsite": guest.allowed_to_stay_onsite,
+#             "allowed_to_stay_in_yurt": guest.allowed_to_stay_in_yurt,
+#             "allowed_to_stay_night_after_reception": guest.allowed_to_stay_night_after_reception,
+#             "food_categories": models.Food.Category.choices,
+#             "ceremony_venue": wedding.ceremony_venue.name,
+#             "reception_venue": wedding.reception_venue.name,
+#         }
+#         return render(request, self.template_name, {"name": guest.firstname, **data})
 
-    def post(self, request):
+#     def post(self, request):
 
-        # If user somehow POSTs without session, redirect
-        code = request.session.get("guest_code")
-        guest = models.Person.objects.filter(invite_code=code).first()
-        if not guest:
-            return redirect(
-                "rsvp",
-                {"error": "unable to find guest with that code/name combination"},
-            )
+#         # If user somehow POSTs without session, redirect
+#         code = request.session.get("guest_code")
+#         guest = models.Person.objects.filter(invite_code=code).first()
+#         if not guest:
+#             return redirect(
+#                 "rsvp",
+#                 {"error": "unable to find guest with that code/name combination"},
+#             )
 
-        return render(
-            request,
-            self.template_name,
-            {"name": guest.firstname},
-        )
+#         return render(
+#             request,
+#             self.template_name,
+#             {"name": guest.firstname},
+#         )
 
 
 class RSVPManageView(View):
@@ -173,7 +173,7 @@ class BasicsView(View):
     def get(self, request):
         code = request.session.get("guest_code")
         guest = models.Person.objects.filter(invite_code=code).first()
-        rsvp = models.RSVP.objects.filter(guest=guest).get()
+        rsvp = models.RSVP.objects.filter(guest=guest).first()
 
         wedding = models.Wedding.objects.first()
         if not guest or not (
@@ -219,20 +219,40 @@ class BasicsView(View):
             rsvp.can_come_to_ceremony = form.cleaned_data["can_come_to_ceremony"]
             rsvp.can_come_to_reception = form.cleaned_data["can_come_to_reception"]
             if form.cleaned_data["plus_one"]:
-                plus_one_person = models.Person.objects.create(
-                    firstname=form.cleaned_data["plus_one_firstname"],
-                    lastname=form.cleaned_data["plus_one_lastname"],
-                    email=form.cleaned_data["plus_one_email"],
-                    type=models.Person.Type.STANDARD,
-                    allowed_plus_one=False,
-                    invited_to_ceremony=person.invited_to_ceremony,
-                    invited_to_reception=person.invited_to_reception,
-                    allowed_to_stay_onsite=person.allowed_to_stay_onsite,
-                    allowed_to_stay_in_yurt=person.allowed_to_stay_in_yurt,
-                    allowed_to_stay_night_after_reception=person.allowed_to_stay_night_after_reception,
-                )
-                rsvp.plus_one = plus_one_person
-            rsvp.save()
+                if not rsvp.plus_one:
+                    plus_one_person = models.Person.objects.create(
+                        firstname=form.cleaned_data["plus_one_firstname"],
+                        lastname=form.cleaned_data["plus_one_lastname"],
+                        email=form.cleaned_data["plus_one_email"],
+                        type=models.Person.Type.STANDARD,
+                        allowed_plus_one=False,
+                        invited_to_ceremony=person.invited_to_ceremony,
+                        invited_to_reception=person.invited_to_reception,
+                        allowed_to_stay_onsite=person.allowed_to_stay_onsite,
+                        allowed_to_stay_in_yurt=person.allowed_to_stay_in_yurt,
+                        allowed_to_stay_night_after_reception=person.allowed_to_stay_night_after_reception,
+                    )
+                    rsvp.plus_one = plus_one_person
+                    models.RSVP.objects.get_or_create(
+                        guest=plus_one_person,
+                        defaults={
+                            "can_come_to_ceremony": rsvp.can_come_to_ceremony,
+                            "can_come_to_reception": rsvp.can_come_to_reception,
+                        },
+                    )
+                else:
+                    # update existing plus one details in case they changed
+                    rsvp.plus_one.firstname = form.cleaned_data["plus_one_firstname"]
+                    rsvp.plus_one.lastname = form.cleaned_data["plus_one_lastname"]
+                    rsvp.plus_one.email = form.cleaned_data["plus_one_email"]
+                    rsvp.plus_one.save()
+                rsvp.save()
+            else:
+                if rsvp.plus_one:
+                    models.RSVP.objects.filter(guest=rsvp.plus_one).delete()
+                    rsvp.plus_one.delete()
+                rsvp.plus_one = None
+                rsvp.save()
 
         # rsvp_exists = models.RSVP.objects.filter(guest=person).exists()
         # return render(request, "components/rsvp/form/basics.html", {
@@ -247,7 +267,7 @@ class DietaryView(View):
         code = request.session.get("guest_code")
         guest = models.Person.objects.filter(invite_code=code).first()
         wedding = models.Wedding.objects.first()
-        rsvp = models.RSVP.objects.filter(guest=guest).get()
+        rsvp = models.RSVP.objects.filter(guest=guest).first()
 
         if not guest or not (
             wedding and wedding.ceremony_venue and wedding.reception_venue
