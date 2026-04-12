@@ -17,3 +17,6 @@ black $TARGET_DIRS
 
 echo "Running flake8..."
 flake8 $TARGET_DIRS
+
+echo "Running djlint..."
+flake8 $TARGET_DIRS

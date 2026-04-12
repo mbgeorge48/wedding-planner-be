@@ -19,10 +19,14 @@
                 {% csrf_token %}
                 {% include "components/rsvp/form/basics.html" %}
                 {% if invited_to_reception %}
-                    {% include "components/rsvp/form/dietary.html" %}
+                {% include "components/rsvp/form/dietary.html" %}
                 {% endif %}
                 {% comment %} Need an else to say something else if you can't stay onsite {% endcomment %}
                 {% include "components/rsvp/form/accommodation.html" %}
+                
+                {% if ceremony_venue == reception_venue %}
+                {% include "components/rsvp/form/travel.html" %}
+                {% endif %}
 
                 {% button text="Continue" type="submit" %}
                 {% if error %}<p class="text-red">{{ error }}</p>{% endif %}

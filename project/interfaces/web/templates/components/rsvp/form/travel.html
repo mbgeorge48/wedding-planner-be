@@ -1,0 +1,18 @@
+<div>The ceremony and reception are about a 40-minute drive apart. We’re not currently arranging group transport, but if you’re worried about travel between {{ ceremony_venue }} and {{ reception_venue }}, please let us know below — if enough people are in the same boat, we may look into a coach or shared option.</div>
+
+{% if invited_to_reception %}
+Would you like help sorting travel between venues?
+  <label class="flex items-center gap-2">
+    <input type="checkbox" name="stay_night_after_reception" value="true" />
+    <span>Yes, please keep me updated</span>
+  </label>
+  <label class="flex items-center gap-2">
+    <input type="checkbox" name="stay_night_after_reception" value="true" />
+    <span>No, I'll make my own way</span>
+  </label>
+  <label class="flex items-center gap-2">
+    <input type="checkbox" name="stay_night_after_reception" value="true" />
+    <span>Not sure yet, keep me in the loop just in case</span>
+  </label>
+
+{% endif %}

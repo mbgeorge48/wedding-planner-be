@@ -14,3 +14,4 @@ psycopg==3.2.9
 pycodestyle==2.13.0
 pyflakes==3.3.2
 sqlparse==0.5.3
+djlint==1.36.4
