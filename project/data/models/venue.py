@@ -21,7 +21,7 @@ class Venue(models.Model):
     )
 
     name = models.CharField(max_length=255)
-    description = models.TextField(blank=True)
+    description = models.TextField(blank=True, null=True)
     address_line1 = models.CharField("Address Line 1", max_length=255)
     address_line2 = models.CharField("Address Line 2", max_length=255, blank=True)
     city = models.CharField(max_length=100)

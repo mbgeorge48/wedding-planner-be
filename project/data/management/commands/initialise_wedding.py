@@ -2,7 +2,7 @@ from django.core.management.base import BaseCommand
 
 from project.actions.person import create_person
 from project.actions.venue import create_venue
-from project.data.models import Venue, Wedding
+from project.data.models import Venue, Wedding,Person
 
 
 class Command(BaseCommand):
@@ -20,7 +20,7 @@ class Command(BaseCommand):
         email = input("Enter the email: ")
         # Code for generating invite codes
         bride, _ = create_person(
-            firstname=firstname, lastname=lastname, email=email, type="BRIDEGROOM"
+            firstname=firstname, lastname=lastname, email=email, type=Person.Type.BRIDE_GROOM
         )
 
         # groom
@@ -32,7 +32,7 @@ class Command(BaseCommand):
         email = input("Enter the email: ")
         # Code for generating invite codes
         groom, _ = create_person(
-            firstname=firstname, lastname=lastname, email=email, type="BRIDEGROOM"
+            firstname=firstname, lastname=lastname, email=email, type=Person.Type.BRIDE_GROOM
         )
 
         def get_venue_info():
@@ -41,7 +41,7 @@ class Command(BaseCommand):
             print("=" * 8)
             name = input("Enter the name: ")
             address_line1 = input("Enter the first line of the address: ")
-            city = input("Enter the city: ")
+            city = input("Enter the city or town: ")
             postcode = input("Enter the postcode: ")
             type_choice = input(
                 "Enter the type of venue: [c for Ceremony, r for Reception] "
@@ -51,18 +51,18 @@ class Command(BaseCommand):
                 address_line1=address_line1,
                 city=city,
                 postcode=postcode,
-                type="RECEPTION" if type_choice != "c" else "CEREMONY",
+                type=Venue.Type.RECEPTION if type_choice != "c" else Venue.Type.CEREMONY,
             )
 
         get_venue_info()
-        second_venue = input("Is there a 2nd venue: [y for yes, n for no]")
+        second_venue = input("Is there a 2nd venue: [y for yes, n for no] ")
         if second_venue == "y":
             get_venue_info()
 
         print("=" * 8)
         print("WEDDING")
         print("=" * 8)
-        date = input("Enter the date: ")
+        date = input("Enter the date (YYYY-MM-DD): ")
         start_time = input("Enter the starting time: ")
 
         wedding = Wedding.objects.create(

@@ -51,8 +51,9 @@ class RSVPFormView(View):
     def get(self, request):
         code = request.session.get("guest_code")
         guest = models.Person.objects.filter(invite_code=code).first()
+        wedding = models.Wedding.objects.first()
 
-        if not guest:
+        if not guest or not (wedding and wedding.ceremony_venue and wedding.reception_venue):
             return redirect("rsvp")
 
         data = {
@@ -63,6 +64,8 @@ class RSVPFormView(View):
             "allowed_to_stay_in_yurt": guest.allowed_to_stay_in_yurt,
             "allowed_to_stay_night_after_reception": guest.allowed_to_stay_night_after_reception,
             "food_categories": models.Food.Category.choices,
+            "ceremony_venue": wedding.ceremony_venue.name,
+            "reception_venue": wedding.reception_venue.name,
         }
         return render(request, self.template_name, {"name": guest.firstname, **data})
 

@@ -8,7 +8,7 @@ def create_venue(
     address_line1: str,
     city: str,
     postcode: str,
-    description: str = None,
+    description: str | None = None,
 ):
     venue, created = models.Venue.objects.get_or_create(
         type=type,
