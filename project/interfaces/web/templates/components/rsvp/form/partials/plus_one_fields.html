@@ -1,6 +1,7 @@
 {% if plus_one %}
-    <div id="plus-one-name-container" hx-swap-oob="outerHTML">
-        {% include "components/common/form_input.html" with name="plus_one_name" label="Plus one name" %}
+    <div id="plus-one-container" hx-swap-oob="outerHTML">
+        {% include "components/common/form_input.html" with name="plus_one_firstname" label="Plus one first name" %}
+        {% include "components/common/form_input.html" with name="plus_one_lastname" label="Plus one last name" %}
         {% include "components/common/form_input.html" with name="plus_one_email" label="Plus one email" %}
         {% include "components/common/form_input.html" with name="plus_one_phone" label="Plus one phone" %}
     </div>
@@ -8,7 +9,7 @@
         {% include "components/rsvp/form/partials/dietary_form.html" with prefix="plus_one_" food_categories=food_categories %}
     </div>
 {% else %}
-    <div id="plus-one-name-container" hx-swap-oob="outerHTML" class="hidden"></div>
+    <div id="plus-one-container" hx-swap-oob="outerHTML" class="hidden"></div>
     <div id="plus-one-dietary-container"
          hx-swap-oob="outerHTML"
          class="hidden"></div>

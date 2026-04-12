@@ -1,0 +1,25 @@
+{% extends "base.html" %}
+{% load static %}
+{% block title %}
+    RSVP
+{% endblock title %}
+{% load button_tag %}
+{% block content %}
+    <main class="flex m-6 items-center justify-center font-serif w-full flex-col bg-green-300">
+        <div class="w-full max-w-3xl space-y-6">
+            <div class="flex items-center justify-between bg-red-50 px-4 py-2">
+                <h2 class="text-lg md:text-xl italic">Hello {{ name }}</h2>
+                <form method="post" action="{% url 'signout' %}">
+                    {% csrf_token %}
+                    {% button text="Signout" type="submit" %}
+                </form>
+            </div>
+            <form method="post"
+                  class="flex flex-col space-y-6 text-black/80 bg-white/80 px-4 py-6">
+                {% csrf_token %}
+                {% block step_content %}
+                {% endblock step_content %}
+            </form>
+        </div>
+    </main>
+{% endblock content %}

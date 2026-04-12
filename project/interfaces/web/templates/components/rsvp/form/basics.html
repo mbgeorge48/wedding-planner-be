@@ -1,33 +1,48 @@
-<div class=" mb-4">
-    <h2 class="text-xl font-semibold">Contact Details</h2>
-    <p class="text-sm">You don't need to, but if you want enter your phone or email so we can contact you if we need to</p>
-</div>
-<div class="space-y-4">
-    {% include "components/common/form_input.html" with name="email" label="Email address" type="email" %}
-    {% include "components/common/form_input.html" with name="phone" label="Phone Number" type="tel" %}
-</div>
-{% if allowed_plus_one %}
-    <label class="flex items-center gap-2">
-        <input type="checkbox"
-               name="plus_one"
-               value="true"
-               hx-get="{% url 'plus-one-state' %}"
-               hx-trigger="change"
-               hx-target="this"
-               hx-swap="none" />
-        <span>Yes, I'm bringing a plus one</span>
-    </label>
-    <div id="plus-one-name-container" class="hidden"></div>
-{% endif %}
-{% if invited_to_ceremony %}
-    <label class="flex items-center gap-2">
-        <input type="checkbox" name="can_come_to_ceremony" value="true" />
-        <span>Can you come to the wedding ceremony in Bala?</span>
-    </label>
-{% endif %}
-{% if invited_to_reception %}
-    <label class="flex items-center gap-2">
-        <input type="checkbox" name="can_come_to_reception" value="true" />
-        <span>Can you come to the wedding reception in Owestry?</span>
-    </label>
-{% endif %}
+{% extends "components/rsvp/form/form_wrapper.html" %}
+{% load button_tag %}
+{% block step_content %}
+    <div class=" mb-4">
+        <h2 class="text-xl font-semibold">Contact Details</h2>
+        <p class="text-sm">You don't need to, but if you want enter your phone or email so we can contact you if we need to</p>
+    </div>
+    <div class="space-y-4">
+        {% include "components/common/form_input.html" with name="email" label="Email address" type="email" value=email %}
+        {% include "components/common/form_input.html" with name="phone" label="Phone Number" type="tel" value=phone %}
+    </div>
+    {% if allowed_plus_one %}
+        <div x-data="{ plusOne: false }">
+            <label class="flex items-center gap-2">
+                <input type="checkbox"
+                       name="plus_one"
+                       value="true"
+                       x-model="plusOne"
+                       {% if plus_one %}checked{% endif %} />
+                <span>Yes, I'm bringing a plus one</span>
+            </label>
+            <div x-show="plusOne">
+                {% include "components/common/form_input.html" with name="plus_one_firstname" label="Plus one first name" value=plus_one_firstname %}
+                {% include "components/common/form_input.html" with name="plus_one_lastname" label="Plus one last name" value=plus_one_lastname %}
+                {% include "components/common/form_input.html" with name="plus_one_email" label="Plus one email" value=plus_one_email %}
+                {% include "components/common/form_input.html" with name="plus_one_phone" label="Plus one phone" value=plus_one_phone %}
+            </div>
+        </div>
+
+    {% endif %}
+    {% if invited_to_ceremony %}
+        <label class="flex items-center gap-2">
+            <input type="checkbox"
+                   name="can_come_to_ceremony"
+                   {% if can_come_to_ceremony %}checked{% endif %} />
+            <span>Can you come to the wedding ceremony in Bala?</span>
+        </label>
+    {% endif %}
+    {% if invited_to_reception %}
+        <label class="flex items-center gap-2">
+            <input type="checkbox"
+                   name="can_come_to_reception"
+                   {% if can_come_to_reception %}checked{% endif %} />
+            <span>Can you come to the wedding reception in Owestry?</span>
+        </label>
+    {% endif %}
+    {% button text="Continue" type="submit" %}
+{% endblock step_content %}

@@ -1,0 +1,6 @@
+#plus-one-container {
+    display: none;
+}
+label#plus-one-toggle:checked ~ #plus-one-container {
+    display: block;
+}

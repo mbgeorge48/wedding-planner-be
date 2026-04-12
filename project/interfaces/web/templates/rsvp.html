@@ -7,12 +7,7 @@
     <main id="rsvp"
           class="flex m-6 items-center justify-center font-serif w-full">
         {% if guest_code %}
-            <p>Hello {{ name }}</p>
-            <form method="post">
-                {% csrf_token %}
-                <input type="hidden" name="action" value="signout">
-                <button type="submit">Signout</button>
-            </form>
+            {% include "components/rsvp/rsvp_menu.html" %}
         {% else %}
             {% include "components/rsvp/signin_form.html" %}
         {% endif %}
