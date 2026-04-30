@@ -1,13 +1,25 @@
 {% extends "components/rsvp/form/form_wrapper.html" %}
 {% load button_tag %}
 {% block step_content %}
-    <div class=" mb-4">
-        <h2 class="text-xl font-semibold">Dietary Requirements</h2>
-        <p class="text-sm">Please let us know if you have any dietary requirements so we can try and cater for you</p>
+    <div class="space-y-10">
+        <section class="space-y-6">
+            <div class="border-b border-emerald-100 pb-4">
+                <h2 class="text-2xl font-medium text-emerald-900">Dietary Requirements</h2>
+                <p class="text-neutral-500 text-sm mt-1 italic font-sans">Please let us know so we can cater for you.</p>
+            </div>
+            <div class="space-y-8">
+                <div class="space-y-4">
+                    <h3 class="text-xs font-semibold text-emerald-900 uppercase tracking-widest">For {{ name }}</h3>
+                    {% include "components/rsvp/form/partials/dietary_form.html" with food_categories=food_categories selected_categories=selected_categories selected_other_detail=selected_other_detail %}
+                </div>
+                {% if has_plus_one %}
+                    <div class="space-y-4 pt-8 border-t border-emerald-100">
+                        <h3 class="text-xs font-semibold text-emerald-900 uppercase tracking-widest">For your Plus One</h3>
+                        {% include "components/rsvp/form/partials/dietary_form.html" with prefix="plus_one_" food_categories=food_categories selected_categories=plus_one_selected_categories selected_other_detail=plus_one_selected_other_detail %}
+                    </div>
+                {% endif %}
+            </div>
+        </section>
+        <div class="flex justify-end pt-8">{% button text="Continue to Accommodation" type="submit" %}</div>
     </div>
-    {% include "components/rsvp/form/partials/dietary_form.html" with food_categories=food_categories selected_categories=selected_categories selected_other_detail=selected_other_detail %}
-    {% if has_plus_one %}
-        {% include "components/rsvp/form/partials/dietary_form.html" with prefix="plus_one_" food_categories=food_categories selected_categories=plus_one_selected_categories selected_other_detail=plus_one_selected_other_detail %}
-    {% endif %}
-    {% button text="Continue" type="submit" %}
 {% endblock step_content %}

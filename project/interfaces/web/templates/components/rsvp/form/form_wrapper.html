@@ -1,25 +1,30 @@
 {% extends "base.html" %}
 {% load static %}
 {% block title %}
-    RSVP
+    RSVP | {{ bride }} & {{ groom }}
 {% endblock title %}
 {% load button_tag %}
 {% block content %}
-    <main class="flex m-6 items-center justify-center font-serif w-full flex-col bg-green-300">
-        <div class="w-full max-w-3xl space-y-6">
-            <div class="flex items-center justify-between bg-red-50 px-4 py-2">
-                <h2 class="text-lg md:text-xl italic">Hello {{ name }}</h2>
-                <form method="post" action="{% url 'signout' %}">
-                    {% csrf_token %}
-                    {% button text="Signout" type="submit" %}
-                </form>
+    <main class="flex flex-col items-center min-h-screen px-4 py-12 font-serif bg-stone-50">
+        <div class="w-full max-w-2xl">
+            <div class="overflow-hidden bg-white border rounded-lg shadow-2xl border-emerald-100/50">
+                <div class="flex items-center justify-between px-8 py-6 text-white border-b-2 bg-emerald-900 border-amber-600/30">
+                    <h2 class="text-xl italic font-light tracking-wide">Hello {{ guest_first_name }}</h2>
+                </div>
+                <div class="p-8 md:p-12">
+                    <form method="post">
+                        {% csrf_token %}
+                        <div class="animate-fade-in">
+                            {% block step_content %}
+                            {% endblock step_content %}
+                        </div>
+                    </form>
+                </div>
             </div>
-            <form method="post"
-                  class="flex flex-col space-y-6 text-black/80 bg-white/80 px-4 py-6">
-                {% csrf_token %}
-                {% block step_content %}
-                {% endblock step_content %}
-            </form>
+            <div class="mt-8 text-center">
+                <a href="{% url 'rsvp' %}"
+                   class="font-sans text-sm font-semibold tracking-widest uppercase transition text-emerald-800 hover:text-amber-700">Back to Home</a>
+            </div>
         </div>
     </main>
 {% endblock content %}

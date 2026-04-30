@@ -27,7 +27,6 @@ class HomeView(TemplateView):
             {
                 "page_title": "Welcome to the Wedding Planner",
                 "guest_count": 42,
-                "show_banner": True,
             }
         )
 

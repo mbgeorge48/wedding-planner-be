@@ -1,11 +1,41 @@
 {% extends "base.html" %}
 {% load static %}
 {% block title %}
-    Schedule
+    Schedule | Our Wedding
 {% endblock title %}
 {% block content %}
     <main id="schedule"
-          class="relative min-h-screen flex items-center justify-center">
-        Nothing to see here yet
+          class="flex items-center justify-center min-h-screen p-4 bg-stone-50">
+        <div class="w-full max-w-2xl space-y-8 text-center animate-fade-in">
+            <div class="space-y-4">
+                <h1 class="font-serif text-4xl md:text-5xl text-emerald-900">Wedding Schedule</h1>
+                <p class="font-serif text-lg italic text-amber-600">Coming Soon</p>
+            </div>
+            <div class="p-12 space-y-8 overflow-hidden bg-white border rounded-lg shadow-2xl border-emerald-100/50">
+                <div class="p-6 mb-8 -mx-12 -mt-12 text-white border-b-4 bg-emerald-900 border-amber-600">
+                    <p class="text-sm italic font-light tracking-widest uppercase">A Day to Celebrate</p>
+                </div>
+                <div class="pb-8 border-b border-emerald-50">
+                    <p class="font-serif italic leading-relaxed text-emerald-800">
+                        We are currently finalizing the details for our special day.
+                        Please check back soon for a full itinerary of events!
+                    </p>
+                </div>
+                <div class="grid grid-cols-1 gap-8 text-left md:grid-cols-2">
+                    <div class="space-y-2 group">
+                        <h3 class="text-xs font-semibold tracking-widest uppercase text-amber-600">The Ceremony</h3>
+                        <p class="font-serif text-lg font-medium text-emerald-900">Bala, North Wales</p>
+                    </div>
+                    <div class="space-y-2 group">
+                        <h3 class="text-xs font-semibold tracking-widest uppercase text-amber-600">The Reception</h3>
+                        <p class="font-serif text-lg font-medium text-emerald-900">Oswestry, Shropshire</p>
+                    </div>
+                </div>
+            </div>
+            <div class="mt-8">
+                <a href="{% url 'home' %}"
+                   class="font-sans text-sm font-semibold tracking-widest uppercase transition text-emerald-800 hover:text-amber-700">Back to Home</a>
+            </div>
+        </div>
     </main>
 {% endblock content %}

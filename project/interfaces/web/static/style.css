@@ -4,3 +4,6 @@
 label#plus-one-toggle:checked ~ #plus-one-container {
     display: block;
 }
+[x-cloak] {
+    display: none !important;
+}

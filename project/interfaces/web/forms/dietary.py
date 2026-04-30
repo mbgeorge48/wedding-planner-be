@@ -16,7 +16,6 @@ class DietaryForm(forms.Form):
         required=False,
         widget=forms.CheckboxSelectMultiple,
     )
-    # TODO: This field is only required if the choice selected is OTHER
     plus_one_dietary_other_detail = forms.CharField(required=False)
 
     def __init__(self, *args, has_plus_one=False, **kwargs):
@@ -24,3 +23,26 @@ class DietaryForm(forms.Form):
         if not has_plus_one:
             del self.fields["plus_one_dietary_categories"]
             del self.fields["plus_one_dietary_other_detail"]
+
+    def clean(self):
+        cleaned_data = super().clean()
+
+        # Validation for main guest
+        if models.Food.Category.OTHER in (
+            cleaned_data.get("dietary_categories") or []
+        ) and not cleaned_data.get("dietary_other_detail"):
+            self.add_error(
+                "dietary_other_detail",
+                "Please provide details for 'Other' dietary requirements.",
+            )
+
+        # Validation for plus one
+        if models.Food.Category.OTHER in (
+            cleaned_data.get("plus_one_dietary_categories") or []
+        ) and not cleaned_data.get("plus_one_dietary_other_detail"):
+            self.add_error(
+                "plus_one_dietary_other_detail",
+                "Please provide details for the plus one's 'Other' dietary requirements.",
+            )
+
+        return cleaned_data

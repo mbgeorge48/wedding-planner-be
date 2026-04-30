@@ -5,8 +5,9 @@
 {% endblock title %}
 {% block content %}
     <main id="rsvp"
-          class="flex m-6 items-center justify-center font-serif w-full">
+          class="flex flex-col items-center min-h-screen p-4 pt-12 bg-stone-50">
         {% if guest_code %}
+            {% include "components/rsvp/rsvp_summary.html" %}
             {% include "components/rsvp/rsvp_menu.html" %}
         {% else %}
             {% include "components/rsvp/signin_form.html" %}

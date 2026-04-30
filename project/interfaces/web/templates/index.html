@@ -6,14 +6,17 @@
 {% endblock title %}
 {% block content %}
     <main id="home"
-          class="relative min-h-screen flex items-center justify-center">
-        <div class="absolute inset-0 bg-[url('{% static "background-image.jpg" %}')] bg-cover bg-center" />
-        <div class="absolute inset-0 bg-black/20 pt-16" />
-        <div class="container mx-auto px-4 md:px-6 z-10">
-            <div class="max-w-3xl mx-auto text-center animate-fade-in space-y-10">
+          class="relative flex items-center justify-center min-h-screen">
+        <div class="absolute inset-0 overflow-hidden">
+            <div class="absolute inset-0 bg-cover bg-center blur-sm scale-110 bg-[url('{% static "background-image.jpg" %}')]">
+            </div>
+        </div>
+        <div class="absolute inset-0 pt-16 bg-black/20" />
+        <div class="container z-10 px-4 mx-auto md:px-6">
+            <div class="max-w-3xl mx-auto space-y-10 text-center animate-fade-in">
                 {% include "components/home/heading.html" with bride=bride groom=groom date=date %}
                 {% include "components/home/timer.html" with date=date %}
-                {% url 'rsvp_form' as rsvp_url %}
+                {% url 'rsvp' as rsvp_url %}
                 {% button text="RSVP Now" href=rsvp_url %}
             </div>
         </div>

@@ -1,0 +1,100 @@
+<div class="w-full max-w-4xl mx-auto mb-12 animate-fade-in">
+    <div class="overflow-hidden bg-white border shadow-md rounded-xl border-emerald-100">
+        <div class="px-6 py-4 border-b bg-emerald-50 border-emerald-100 flex justify-between items-center">
+            <h2 class="font-serif text-2xl text-emerald-900">Your RSVP Summary</h2>
+            {% if rsvp %}
+                <span class="px-3 py-1 text-xs font-bold tracking-widest uppercase rounded-full bg-emerald-100 text-emerald-700 border border-emerald-200">
+                    Received
+                </span>
+            {% else %}
+                <span class="px-3 py-1 text-xs font-bold tracking-widest uppercase rounded-full bg-amber-100 text-amber-700 border border-amber-200">
+                    Pending
+                </span>
+            {% endif %}
+        </div>
+        
+        <div class="p-6">
+            {% if rsvp %}
+                <div class="grid grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-4">
+                    <!-- Attendance -->
+                    <div class="space-y-3">
+                        <h3 class="font-sans text-xs font-bold tracking-widest uppercase text-neutral-400">Attendance</h3>
+                        <div class="space-y-1">
+                            {% if guest.invited_to_ceremony %}
+                                <div class="flex items-center justify-between">
+                                    <span class="text-sm text-emerald-900">Ceremony</span>
+                                    <span class="font-serif italic {% if rsvp.can_come_to_ceremony %}text-emerald-600{% else %}text-rose-600{% endif %}">
+                                        {% if rsvp.can_come_to_ceremony %}Attending{% else %}Declined{% endif %}
+                                    </span>
+                                </div>
+                            {% endif %}
+                            {% if guest.invited_to_reception %}
+                                <div class="flex items-center justify-between">
+                                    <span class="text-sm text-emerald-900">Reception</span>
+                                    <span class="font-serif italic {% if rsvp.can_come_to_reception %}text-emerald-600{% else %}text-rose-600{% endif %}">
+                                        {% if rsvp.can_come_to_reception %}Attending{% else %}Declined{% endif %}
+                                    </span>
+                                </div>
+                            {% endif %}
+                        </div>
+                    </div>
+
+                    <!-- Plus One -->
+                    {% if guest.allowed_plus_one %}
+                        <div class="space-y-3">
+                            <h3 class="font-sans text-xs font-bold tracking-widest uppercase text-neutral-400">Plus One</h3>
+                            {% if rsvp.plus_one %}
+                                <p class="font-serif text-lg italic text-emerald-900">{{ rsvp.plus_one.firstname }} {{ rsvp.plus_one.lastname }}</p>
+                                <p class="text-xs text-neutral-400">{{ rsvp.plus_one.email|default:"" }}</p>
+                            {% else %}
+                                <p class="font-serif italic text-neutral-400 text-sm">No plus one added</p>
+                            {% endif %}
+                        </div>
+                    {% endif %}
+
+                    <!-- Dietary -->
+                    <div class="space-y-3">
+                        <h3 class="font-sans text-xs font-bold tracking-widest uppercase text-neutral-400">Dietary</h3>
+                        <div class="flex flex-wrap gap-1">
+                            {% for requirement in rsvp.dietary_requirements.all %}
+                                <span class="px-2 py-0.5 text-xs rounded-full bg-emerald-50 text-emerald-700 border border-emerald-100" title="{{ requirement.detail }}">
+                                    {{ requirement.get_category_display }}
+                                </span>
+                            {% empty %}
+                                <span class="font-serif italic text-neutral-400 text-sm">No requirements</span>
+                            {% endfor %}
+                        </div>
+                    </div>
+
+                    <!-- Accommodation -->
+                    <div class="space-y-3">
+                        <h3 class="font-sans text-xs font-bold tracking-widest uppercase text-neutral-400">Stay</h3>
+                        <p class="font-serif text-lg italic text-emerald-900">
+                            {{ rsvp.get_staying_preference_display|default:"Not specified" }}
+                        </p>
+                        {% if rsvp.staying_night_after_reception %}
+                            <p class="text-xs italic text-emerald-600">Staying the night after</p>
+                        {% endif %}
+                    </div>
+                </div>
+
+                <div class="pt-6 mt-8 border-t border-emerald-50 flex items-center justify-between">
+                    <p class="text-xs italic text-neutral-400">Last updated {{ rsvp.modified|date:"jS F Y" }}</p>
+                    <div class="flex space-x-4">
+                         <span class="text-xs font-bold tracking-widest uppercase text-emerald-600 flex items-center">
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" class="w-4 h-4 mr-1">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="m4.5 12.75 6 6 9-13.5" />
+                            </svg>
+                            Information Saved
+                        </span>
+                    </div>
+                </div>
+            {% else %}
+                <div class="py-4 text-center">
+                    <p class="font-serif text-lg italic text-neutral-500">You haven't completed your RSVP yet.</p>
+                    <p class="mt-2 text-sm text-neutral-400">Please use the sections below to let us know your plans.</p>
+                </div>
+            {% endif %}
+        </div>
+    </div>
+</div>

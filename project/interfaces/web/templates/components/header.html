@@ -1,16 +1,35 @@
 {% url 'home' as home_url %}
 {% url 'rsvp' as rsvp_url %}
 {% url 'schedule' as schedule_url %}
-{% comment %} {% url 'faqs' as faqs_url %} {% endcomment %}
-<header class="bg-neutral-100 backdrop-blur-sm shadow-md text-black/80 text-xl font-semibold p-4 flex">
-    <nav class="md:ml-auto my-0 mx-auto md:mx-0 space-x-4"
-         x-data="{ path: window.location.pathname }">
-        <a href="{{ home_url }}"
-           :class="path === '/' ? 'font-bold underline underline-offset-4 decoration-double' : 'hover:text-blue-400'">Home</a>
-        <a href="{{ rsvp_url }}"
-           :class="path.includes('rsvp') ? 'font-bold underline underline-offset-4 decoration-double' : 'hover:text-blue-400'">RSVP</a>
-        <a href="{{ schedule_url }}"
-           :class="path === '/schedule' ? 'font-bold underline underline-offset-4 decoration-double' : 'hover:text-blue-400'">Schedule</a>
-        {% comment %} <a href="{{ faqs_url }}" :class="path === '/faqs' ? 'font-bold underline underline-offset-4 decoration-double' : 'hover:text-blue-400'">FAQs</a> {% endcomment %}
-    </nav>
+<header class="sticky top-0 z-50 px-6 py-4 text-white border-b-2 shadow-xl bg-emerald-900 border-amber-600">
+    <div class="container flex flex-col items-center justify-between gap-4 mx-auto md:flex-row">
+        <div class="font-serif text-xl italic tracking-widest text-amber-200">{{ bride }} & {{ groom }}</div>
+        <nav class="flex space-x-8 text-xs uppercase tracking-[0.2em] font-sans font-semibold"
+             x-data="{ path: window.location.pathname }">
+            <a href="{{ home_url }}"
+               class="relative transition duration-300 group"
+               :class="path === '{{ home_url }}' ? 'text-amber-400' : 'text-white/80 hover:text-white'">
+                Home
+                <span x-cloak
+                      class="absolute -bottom-1 left-0 w-full h-0.5 bg-amber-500 transform transition-transform duration-300"
+                      :class="path === '{{ home_url }}' ? 'scale-x-100' : 'scale-x-0 group-hover:scale-x-100'"></span>
+            </a>
+            <a href="{{ rsvp_url }}"
+               class="relative transition duration-300 group"
+               :class="path.includes('rsvp') ? 'text-amber-400' : 'text-white/80 hover:text-white'">
+                RSVP
+                <span x-cloak
+                      class="absolute -bottom-1 left-0 w-full h-0.5 bg-amber-500 transform transition-transform duration-300"
+                      :class="path.includes('rsvp') ? 'scale-x-100' : 'scale-x-0 group-hover:scale-x-100'"></span>
+            </a>
+            <a href="{{ schedule_url }}"
+               class="relative transition duration-300 group"
+               :class="path === '{{ schedule_url }}' ? 'text-amber-400' : 'text-white/80 hover:text-white'">
+                Schedule
+                <span x-cloak
+                      class="absolute -bottom-1 left-0 w-full h-0.5 bg-amber-500 transform transition-transform duration-300"
+                      :class="path === '{{ schedule_url }}' ? 'scale-x-100' : 'scale-x-0 group-hover:scale-x-100'"></span>
+            </a>
+        </nav>
+    </div>
 </header>

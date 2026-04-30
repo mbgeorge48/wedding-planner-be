@@ -58,12 +58,5 @@ class RSVP(models.Model):
     )
     day_after_reception_suggestion = models.CharField(max_length=255)
 
-    travel_between_venues = models.CharField(
-        max_length=50,
-        choices=TravelBetweenVenues.choices,
-        null=False,
-        blank=True,
-    )
-
     class Meta:
         ordering = ["guest__lastname"]

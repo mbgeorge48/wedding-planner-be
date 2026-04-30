@@ -1,38 +1,54 @@
 {% load button_tag %}
-<script>
-      document.addEventListener("DOMContentLoaded", function () {
-          const urlParams = new URLSearchParams(window.location.search);
-          const code = urlParams.get('code');
-          if (code) {
-              document.getElementById("code").value = code;
-            }
-  });
-</script>
-<div>
-    <div class="text-center mb-8">
-        <h2 class="text-5xl font-semibold mb-4">RSVP</h2>
-        <p>Please log in to submit your RSVP</p>
+<div class="w-full max-w-md mx-auto animate-fade-in">
+    <div class="overflow-hidden bg-white border rounded-lg shadow-2xl border-emerald-100/50">
+        <div class="px-8 py-10 text-center text-white border-b-4 bg-emerald-900 border-amber-600">
+            <h2 class="mb-2 text-4xl italic font-light tracking-widest uppercase">RSVP</h2>
+            <p class="text-amber-200/80 text-xs uppercase tracking-[0.2em] font-sans font-semibold">Find your invitation</p>
+        </div>
+        <div class="p-8 bg-white md:p-12">
+            <form method="post" class="space-y-8">
+                {% csrf_token %}
+                <div class="space-y-6">
+                    <div class="flex flex-col space-y-2">
+                        <label for="firstname"
+                               class="text-xs font-semibold tracking-widest uppercase text-emerald-900">
+                            First Name
+                        </label>
+                        <input id="firstname"
+                               name="firstname"
+                               type="text"
+                               value="{{ prefill.firstname }}"
+                               required
+                               class="w-full px-4 py-3 text-lg italic transition border-b-2 border-emerald-50 focus:outline-none focus:border-amber-600 bg-emerald-50/10 text-emerald-900"
+                               placeholder="e.g. Elizabeth" />
+                    </div>
+                    <div class="flex flex-col space-y-2">
+                        <label for="code"
+                               class="text-xs font-semibold tracking-widest uppercase text-emerald-900">
+                            Invite Code
+                        </label>
+                        <input id="code"
+                               name="code"
+                               type="text"
+                               value="{{ prefill.code }}"
+                               maxlength="10"
+                               required
+                               class="w-full px-4 py-3 border-b-2 border-emerald-50 focus:outline-none focus:border-amber-600 transition bg-emerald-50/10 text-lg tracking-[0.3em] text-emerald-900 uppercase"
+                               placeholder="XXXXXX" />
+                        <p class="text-[10px] text-neutral-400 italic">Check your invitation for your unique code.</p>
+                    </div>
+                </div>
+                {% if error %}
+                    <div class="p-3 text-xs italic text-center text-red-600 border border-red-100 rounded bg-red-50 animate-pulse">
+                        {{ error }}
+                    </div>
+                {% endif %}
+                <div class="flex justify-center pt-4">{% button text="Continue" type="submit" %}</div>
+            </form>
+        </div>
     </div>
-    <form method="post"
-          class="flex flex-col items-center font-serif space-y-6 text-black/80 bg-white/80 md:mx-4">
-        {% csrf_token %}
-        <div class="flex flex-col font-semibold w-full">
-            <label for="firstname" class="font-sans">First name</label>
-            <input id="firstname"
-                   value="{{ prefill.firstname }}"
-                   name="firstname"
-                   class="border" />
-        </div>
-        <div class="flex flex-col font-semibold w-full">
-            <label for="code" class="font-sans">Invite code</label>
-            <input id="code"
-                   value="{{ prefill.code }}"
-                   type="text"
-                   name="code"
-                   maxlength="10"
-                   class="border tracking-widest" />
-        </div>
-        {% button text="Continue" type="submit" %}
-        {% if error %}<p class="text-red">{{ error }}</p>{% endif %}
-    </form>
+    <div class="mt-8 text-center">
+        <a href="{% url 'rsvp' %}"
+           class="font-sans text-sm font-semibold tracking-widest uppercase transition text-emerald-800 hover:text-amber-700">Back to Home</a>
+    </div>
 </div>

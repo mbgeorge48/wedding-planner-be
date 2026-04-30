@@ -1,0 +1,70 @@
+<div class="flex flex-col space-y-2 accent-emerald-900 {{ extra_classes }}">
+    {% if type == "checkbox" %}
+        {# CHECKBOX LAYOUT #}
+        <label class="flex items-center gap-3 p-4 border {% if errors %}border-red-300 bg-red-50/30{% else %}border-emerald-50 hover:bg-emerald-50/50{% endif %} rounded-md transition cursor-pointer group">
+            <input type="checkbox"
+                   name="{{ name }}"
+                   id="id_{{ name }}"
+                   value="true"
+                   {% if value %}checked{% endif %}
+                   class="w-5 h-5 transition rounded cursor-pointer border-emerald-300 text-amber-600 focus:ring-amber-500"
+                   {% if required %}required{% endif %} />
+            <div class="flex flex-col">
+                <span class="font-serif italic transition text-emerald-800 group-hover:text-emerald-900">{{ label }}</span>
+                {% if help_text %}
+                    <p class="text-xs text-neutral-500 font-sans title-case tracking-widest mt-0.5">{{ help_text }}</p>
+                {% endif %}
+            </div>
+        </label>
+    {% elif type == "radio" %}
+        {# RADIO GROUP LAYOUT #}
+        {% if label %}
+            <span class="mb-1 text-xs font-semibold tracking-widest uppercase text-emerald-900">{{ label }}</span>
+        {% endif %}
+        <div class="space-y-3">
+            {% for choice_val, choice_label in choices %}
+                <label class="flex items-center gap-3 p-4 transition bg-white border rounded-md shadow-sm cursor-pointer border-emerald-100 hover:border-amber-600 group">
+                    <input type="radio"
+                           name="{{ name }}"
+                           value="{{ choice_val }}"
+                           {% if value == choice_val %}checked{% endif %}
+                           class="w-4 h-4 text-amber-600 focus:ring-amber-500"
+                           {% if required %}required{% endif %} />
+                    <span class="font-serif italic transition text-emerald-800 group-hover:text-emerald-900">{{ choice_label }}</span>
+                </label>
+            {% endfor %}
+        </div>
+    {% elif type == "textarea" %}
+        {# TEXTAREA LAYOUT #}
+        {% if label %}
+            <label for="id_{{ name }}"
+                   class="text-xs font-semibold tracking-widest uppercase text-emerald-900">{{ label }}</label>
+        {% endif %}
+        <textarea id="id_{{ name }}"
+                  name="{{ name }}"
+                  rows="{{ attrs.rows|default:3 }}"
+                  placeholder="{{ attrs.placeholder|default:'' }}"
+                  class="w-full px-4 py-2 border-b-2 {% if errors %}border-red-300{% else %}border-emerald-50 focus:border-amber-600{% endif %} transition bg-emerald-50/10 text-emerald-900 text-sm font-serif"
+                  {% if required %}required{% endif %}>{{ value|default:'' }}</textarea>
+    {% else %}
+        {# STANDARD INPUT LAYOUT (text, email, tel, etc) #}
+        {% if label %}
+            <label for="id_{{ name }}"
+                   class="text-xs font-semibold tracking-widest uppercase text-emerald-900">{{ label }}</label>
+        {% endif %}
+        <input id="id_{{ name }}"
+               name="{{ name }}"
+               type="{{ type }}"
+               value="{{ value|default:'' }}"
+               placeholder="{{ attrs.placeholder|default:'' }}"
+               class="w-full px-4 py-2 border-b-2 {% if errors %}border-red-300{% else %}border-emerald-50 focus:border-amber-600{% endif %} transition bg-emerald-50/10 text-emerald-900"
+               {% if required %}required{% endif %} />
+    {% endif %}
+    {# COMMON ERROR AND HELP TEXT #}
+    {% if errors %}
+        {% for error in errors %}<p class="text-red-600 text-[10px] italic font-sans">{{ error }}</p>{% endfor %}
+    {% endif %}
+    {% if type != "checkbox" and help_text %}
+        <p class="font-serif text-xs italic text-neutral-500">{{ help_text }}</p>
+    {% endif %}
+</div>

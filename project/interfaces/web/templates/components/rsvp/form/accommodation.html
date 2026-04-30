@@ -1,26 +1,76 @@
 {% extends "components/rsvp/form/form_wrapper.html" %}
+{% load button_tag %}
+{% load form_tags %}
 {% block step_content %}
-    <div>
-        Barnutopia has a mix of yurts and camping space. We'll do our best to
-        allocate the yurts fairly and make sure no one shares outside their family
-        or friend group. Where would you like to stay?
-    </div>
-    {% if allowed_to_stay_onsite %}
-        {% if allowed_to_stay_in_yurt %}
-            <input type="radio" id="yurt" name="accommodation" value="yurt" />
-            <label for="yurt">I'd like to stay in a yurt (if available)</label>
+    <div class="space-y-10" x-data="{ stayingAfter:
+        {% if staying_night_after_reception %}
+            true
+        {% else %}
+            false
         {% endif %}
-        <input type="radio" id="camp" name="accommodation" value="camp" />
-        <label for="camp">I'll be camping</label>
-        <input type="radio" id="offsite" name="accommodation" value="offsite" />
-        <label for="offsite">I'll book my own accommodation nearby</label>
-    {% endif %}
-    {% if allowed_to_stay_night_after_reception %}
-        We have the option to stay the night after the reception, Would you like to stay the night after the reception?
-        {% comment %} fix wording {% endcomment %}
-        <label class="flex items-center gap-2">
-            <input type="checkbox" name="stay_night_after_reception" value="true" />
-            <span>Yes please!</span>
-        </label>
-    {% endif %}
+        }">
+        <section class="space-y-6">
+            <div class="pb-4 border-b border-emerald-100">
+                <h2 class="text-2xl font-medium text-emerald-900">Accommodation</h2>
+                <p class="mt-1 font-sans text-sm italic text-neutral-500">Where would you like to rest your head?</p>
+            </div>
+            <div class="space-y-6">
+                {% if allowed_to_stay_onsite %}
+                    <div class="p-6 space-y-6 border rounded-lg bg-emerald-50/30 border-emerald-100/50">
+                        <p class="italic leading-relaxed text-emerald-900">
+                            Barnutopia has a mix of yurts and camping space. We'll do our best to allocate the yurts fairly and make sure no one shares outside their family or friend group.
+                        </p>
+                        {% if allowed_to_stay_in_yurt %}
+                            {% form_field type="radio" name="staying_preference" value=staying_preference choices=staying_preference_choices label="Preference" %}
+                        {% else %}
+                            <div class="p-4 italic border rounded-md bg-white/50 border-emerald-100">
+                                <p class="text-sm text-emerald-600">Right now all the yurts are assigned, but camping is still available!</p>
+                            </div>
+                            {% form_field type="radio" name="staying_preference" value=staying_preference choices=staying_preference_choices_no_yurt label="Preference" %}
+                        {% endif %}
+                    </div>
+                {% else %}
+                    <div class="space-y-6">
+                        <div class="p-6 border rounded-lg bg-emerald-50/30 border-emerald-100/50">
+                            <p class="mb-4 italic leading-relaxed text-emerald-900">
+                                Onsite yurts are currently fully booked. Here are some lovely options nearby:
+                            </p>
+                            <ul class="grid grid-cols-1 gap-4 font-sans text-sm md:grid-cols-2">
+                                <li class="flex items-center gap-2 text-emerald-800">
+                                    <span class="w-1.5 h-1.5 bg-amber-600 rounded-full"></span>
+                                    Premier Inn, Oswestry
+                                </li>
+                                <li class="flex items-center gap-2 text-emerald-800">
+                                    <span class="w-1.5 h-1.5 bg-amber-600 rounded-full"></span>
+                                    The Wynnstay Hotel
+                                </li>
+                                <li class="flex items-center gap-2 text-emerald-800">
+                                    <span class="w-1.5 h-1.5 bg-amber-600 rounded-full"></span>
+                                    Sweeney Hall Hotel
+                                </li>
+                            </ul>
+                        </div>
+                        {% form_field type="radio" name="staying_preference" value=staying_preference choices=staying_preference_choices_no_yurt label="Preference" %}
+                    </div>
+                {% endif %}
+            </div>
+        </section>
+        {% if allowed_to_stay_night_after_reception %}
+            <section class="pt-6 space-y-8 border-t border-emerald-100">
+                <div class="space-y-2">
+                    <h3 class="font-sans text-sm text-lg font-medium tracking-widest uppercase text-emerald-900">The Morning After</h3>
+                </div>
+                {% form_field type="checkbox" name="staying_night_after_reception" label="Yes, I'd love to stay the night after the reception!" value=staying_night_after_reception attrs=stayingAfter %}
+                <div x-show="stayingAfter"
+                     x-transition:enter="transition ease-out duration-300"
+                     x-transition:enter-start="opacity-0 transform -translate-y-4"
+                     x-transition:enter-end="opacity-100 transform translate-y-0"
+                     class="pt-6 pl-8 space-y-8 border-l-2 border-amber-600/20">
+                    {% form_field type="radio" name="evening_meal_day_after_reception" label="Sunday Evening Meal" value=evening_meal_day_after_reception choices=meal_choices help_text="We might head to a local pub or have a relaxed meal at the barn." %}
+                    {% form_field type="textarea" name="day_after_reception_suggestion" label="Any suggestions for Saturday?" value=day_after_reception_suggestion placeholder="e.g. A walk in the hills, a trip to a local castle..." %}
+                </div>
+            </section>
+        {% endif %}
+        <div class="flex justify-end pt-8">{% button text="Continue to Travel" type="submit" %}</div>
+    </div>
 {% endblock step_content %}

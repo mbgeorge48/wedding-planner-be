@@ -7,15 +7,14 @@ from .views import (  # RSVPFormView,
     HomeView,
     PlusOneStateView,
     RSVPManageView,
-    # RSVPView,
+    RSVPView,
     ScheduleView,
     SignoutView,
-    TravelView,
 )
 
 urlpatterns = [
     path("", HomeView.as_view(), name="home"),
-    # path("rsvp/", RSVPView.as_view(), name="rsvp"),
+    path("rsvp/", RSVPView.as_view(), name="rsvp"),
     # path("rsvp/form/", RSVPFormView.as_view(), name="rsvp_form"),
     path("rsvp/manage/", RSVPManageView.as_view(), name="rsvp_manage"),
     path("schedule/", ScheduleView.as_view(), name="schedule"),
@@ -24,5 +23,4 @@ urlpatterns = [
     path("rsvp/basics/", BasicsView.as_view(), name="rsvp_basics"),
     path("rsvp/dietary/", DietaryView.as_view(), name="rsvp_dietary"),
     path("rsvp/accommodation/", AccommodationView.as_view(), name="rsvp_accommodation"),
-    path("rsvp/travel/", TravelView.as_view(), name="rsvp_travel"),
 ]

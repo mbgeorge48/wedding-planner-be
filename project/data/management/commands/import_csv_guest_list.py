@@ -46,6 +46,8 @@ class Command(BaseCommand):
         guests = []
         with open(file_name, mode="r") as file:
             csv_file = csv.DictReader(file)
+            if not csv_file.fieldnames:
+                return
 
             # Clean the header names
             headers = csv_file.fieldnames = [h.strip() for h in csv_file.fieldnames]
@@ -79,14 +81,14 @@ class Command(BaseCommand):
                     "Ensure all headings are supplied. The order of the keys does not matter",
                 )
             )
-            self.stdout.write(self.style.WARNING(f"Missing: {", ".join(missing)}"))
+            self.stdout.write(self.style.WARNING(f"Missing: {', '.join(missing)}"))
             raise SystemExit
 
         for guest in guests:
             try:
                 person, created = create_person(update_existing=force_update, **guest)
                 print(
-                    f"{person.firstname} {person.lastname} => {"created" if created else "updated"}"
+                    f"{person.firstname} {person.lastname} => {'created' if created else 'updated'}"
                 )
             except TypeError as e:
                 print(e, f"function called with {guest}")

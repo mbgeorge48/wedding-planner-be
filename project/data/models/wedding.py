@@ -36,7 +36,9 @@ class Wedding(models.Model):
     )
 
     date = models.DateField()
-    start_time = models.TimeField()
+    ceremony_start_time = models.TimeField()
+    reception_start_time = models.TimeField()
+    evening_only_start_time = models.TimeField()
     description = models.TextField(blank=True)
 
     def save(self, *args, **kwargs):

@@ -17,7 +17,7 @@
         const diff = this.target - now;
 
         if (diff <= 0) {
-          this.time = { days: 00, hours: 00, minutes: 00, seconds: 00 };
+          this.time = { days: "00", hours: "00", minutes: "00", seconds: "00" };
           return;
         }
 
@@ -27,39 +27,42 @@
         const days = Math.floor(diff / (1000 * 60 * 60 * 24));
 
          this.time = {
-    days: this.pad(days),
-    hours: this.pad(hours),
-    minutes: this.pad(minutes),
-    seconds: this.pad(seconds)
-  };
-},
-pad(num) {
-  return num.toString().padStart(2, "0");
-}
-
+            days: this.pad(days),
+            hours: this.pad(hours),
+            minutes: this.pad(minutes),
+            seconds: this.pad(seconds)
+          };
+        },
+        pad(num) {
+          return num.toString().padStart(2, "0");
+        }
     }
   }
 </script>
 <div x-data="countdown('{{ date }}')"
      x-init="start()"
-     class="p-6 rounded-lg text-black/80 bg-white/80 backdrop-blur-sm shadow-md text-center text-2xl font-semibold flex flex-col justify-center gap-4">
-    <p class="font-light">Countdown to Our Big Day</p>
-    <div class="grid grid-cols-4 gap-4 w-1/2 mx-auto">
-        <div class="flex flex-col">
-            <span class="text-amber-600 font-sans" x-text="time.days"></span>
-            <p class="text-sm font-extralight ">days</p>
+     class="flex flex-col justify-center gap-6 p-8 text-center text-white border-b-4 rounded-lg shadow-2xl bg-emerald-900 border-amber-600 animate-fade-in backdrop-blur-sm">
+    <p class="font-serif text-lg italic text-amber-200">Countdown to The Big Day</p>
+    <div class="grid grid-cols-4 gap-2 mx-auto md:gap-6">
+        <div class="flex flex-col items-center">
+            <span class="font-sans text-3xl font-bold tracking-tighter text-white md:text-4xl"
+                  x-text="time.days"></span>
+            <p class="text-[10px] uppercase tracking-widest text-amber-200/60 font-semibold">days</p>
         </div>
-        <div class="flex flex-col">
-            <span class="text-amber-600 font-sans" x-text="time.hours"></span>
-            <p class="text-sm font-extralight">hours</p>
+        <div class="flex flex-col items-center">
+            <span class="font-sans text-3xl font-bold tracking-tighter text-white md:text-4xl"
+                  x-text="time.hours"></span>
+            <p class="text-[10px] uppercase tracking-widest text-amber-200/60 font-semibold">hours</p>
         </div>
-        <div class="flex flex-col">
-            <span class="text-amber-600 font-sans" x-text="time.minutes"></span>
-            <p class="text-sm font-extralight">minutes</p>
+        <div class="flex flex-col items-center">
+            <span class="font-sans text-3xl font-bold tracking-tighter text-white md:text-4xl"
+                  x-text="time.minutes"></span>
+            <p class="text-[10px] uppercase tracking-widest text-amber-200/60 font-semibold">mins</p>
         </div>
-        <div class="flex flex-col">
-            <span class="text-amber-600 font-sans" x-text="time.seconds"></span>
-            <p class="text-sm font-extralight">seconds</p>
+        <div class="flex flex-col items-center">
+            <span class="font-sans text-3xl font-bold tracking-tighter text-white md:text-4xl"
+                  x-text="time.seconds"></span>
+            <p class="text-[10px] uppercase tracking-widest text-amber-200/60 font-semibold">secs</p>
         </div>
     </div>
 </div>

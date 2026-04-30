@@ -1,12 +1,10 @@
 from .home import HomeView, SignoutView
-from .rsvp import (
+from .rsvp import (  # RSVPFormView,
     AccommodationView,
     BasicsView,
     DietaryView,
-    RSVPFormView,
     RSVPManageView,
     RSVPView,
-    TravelView,
 )
 from .rsvp_form import PlusOneStateView
 from .schedule import ScheduleView
@@ -14,7 +12,7 @@ from .schedule import ScheduleView
 __all__ = [
     "HomeView",
     "RSVPView",
-    "RSVPFormView",
+    # "RSVPFormView",
     "ScheduleView",
     "RSVPManageView",
     "SignoutView",
@@ -22,5 +20,4 @@ __all__ = [
     "BasicsView",
     "DietaryView",
     "AccommodationView",
-    "TravelView",
 ]
