@@ -33,7 +33,6 @@ class RSVPMixin(View):
         guest = models.Person.objects.filter(invite_code=code).first()
         wedding = models.Wedding.objects.first()
 
-        # Needs fixing for the rsvp view
         if not (wedding and wedding.ceremony_venue and wedding.reception_venue):
             return redirect("rsvp")
 
