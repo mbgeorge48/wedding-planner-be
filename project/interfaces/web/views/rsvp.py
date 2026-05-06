@@ -1,4 +1,4 @@
-from typing import TYPE_CHECKING, Optional, cast
+from typing import TYPE_CHECKING, cast
 
 from django.core import exceptions
 from django.shortcuts import redirect, render
@@ -10,13 +10,11 @@ if TYPE_CHECKING:
     from project.data.models.person import Person
     from project.data.models.venue import Venue
     from project.data.models.wedding import Wedding
-    from project.data.models.person import Person
 
 from project.actions import rsvp as rsvp_actions
 from project.interfaces.web.forms.accommodation import AccommodationForm
 from project.interfaces.web.forms.basics import BasicsForm
 from project.interfaces.web.forms.dietary import DietaryForm
-from project.interfaces.web.forms.travel import TravelForm
 
 
 class RSVPMixin(View):
@@ -63,16 +61,22 @@ class RSVPView(RSVPMixin):
 
         guest = None
         rsvp = None
+        group_members = models.Person.objects.none()
         if guest_code:
             guest = models.Person.objects.filter(invite_code=guest_code).first()
-            if guest:
+            if isinstance(guest, models.Person):
                 rsvp = models.RSVP.objects.filter(guest=guest).first()
+                # Get other members from the guest's group
+                group_members = models.Person.objects.none()
+                if guest.group:
+                    group_members = guest.group.members.exclude(id=guest.id)
 
         data = {
             "bride": self.bride.firstname,
             "groom": self.groom.firstname,
             "guest": guest,
             "rsvp": rsvp,
+            "group_members": group_members,
         }
 
         context = {
@@ -95,7 +99,9 @@ class RSVPView(RSVPMixin):
                 invite_code=code, firstname__iexact=firstname
             ).get()
         except exceptions.MultipleObjectsReturned:
-            groom_name = wedding.groom.firstname if wedding and wedding.groom else "the groom"
+            groom_name = (
+                wedding.groom.firstname if wedding and wedding.groom else "the groom"
+            )
             return render(
                 request,
                 self.template_name,
@@ -111,12 +117,13 @@ class RSVPView(RSVPMixin):
         request.session["guest_code"] = code
 
         guest = None
-        rsvp = None
         if code:
             guest = models.Person.objects.filter(invite_code=code).first()
-            if models.RSVP.objects.filter(guest=guest).exists():
+            if (
+                isinstance(guest, models.Person)
+                and models.RSVP.objects.filter(guest=guest).exists()
+            ):
                 return redirect("rsvp")
-
 
         # If they haven't rsvpd yet then redirect, otherwise don't let them go to the main menu
         return redirect("rsvp_basics")

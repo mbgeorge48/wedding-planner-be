@@ -33,15 +33,16 @@ class Person(models.Model):
         blank=True,
     )
 
+    group = models.ForeignKey(
+        "data.PersonGroup",
+        on_delete=models.SET_NULL,
+        null=True,
+        blank=True,
+        related_name="members",
+    )
+
     invited_to_ceremony = models.BooleanField(default=False)
     invited_to_reception = models.BooleanField(default=False)
-
-    relationships = models.ManyToManyField(
-        "self",
-        through="data.PersonGroup",
-        symmetrical=False,
-        related_name="related_people",
-    )
 
     children = models.IntegerField(default=0)
     pets = models.IntegerField(default=0)

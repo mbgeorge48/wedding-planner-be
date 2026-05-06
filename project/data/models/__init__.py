@@ -1,8 +1,7 @@
 from .food import Food
-from .group import Group
 from .person import Person
-from .personfood import PersonFood
-from .persongroup import PersonGroup
+from .personfood import PersonFood  # Underscore
+from .person_group import PersonGroup
 from .personphotogroup import PersonPhotoGroup
 from .photogroup import PhotoGroup
 from .rsvp import RSVP
@@ -19,5 +18,4 @@ __all__ = [
     "RSVP",
     "Venue",
     "Wedding",
-    "Group",
 ]
