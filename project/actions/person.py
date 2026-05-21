@@ -10,7 +10,6 @@ def create_person(
     update_existing: bool = False,
     **extra_fields
 ):
-
     if type not in models.Person.Type.values:
         type = models.Person.Type.STANDARD
 

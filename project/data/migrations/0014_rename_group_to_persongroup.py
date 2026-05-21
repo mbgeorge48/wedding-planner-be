@@ -4,7 +4,6 @@ from django.db import migrations
 
 
 class Migration(migrations.Migration):
-
     dependencies = [
         ("data", "0013_alter_person_group_alter_persongroup_unique_together_and_more"),
     ]

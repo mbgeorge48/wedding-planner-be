@@ -4,7 +4,6 @@ from django.db import migrations, models
 
 
 class Migration(migrations.Migration):
-
     dependencies = [
         ("data", "0005_rename_has_plus_one_person_allowed_plus_one_and_more"),
     ]

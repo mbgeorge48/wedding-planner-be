@@ -5,7 +5,6 @@ from django.db import migrations, models
 
 
 class Migration(migrations.Migration):
-
     dependencies = [
         ("data", "0007_alter_rsvp_options_alter_rsvp_travel_between_venues_and_more"),
     ]

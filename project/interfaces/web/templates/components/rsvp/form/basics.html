@@ -14,7 +14,13 @@
             </div>
         </section>
         {% if allowed_plus_one %}
-            <section class="p-6 space-y-6 border rounded-lg bg-emerald-50/30 border-emerald-100/50" x-data="{ plusOne: {% if plus_one %}true{% else %}false{% endif %} }">
+            <section class="p-6 space-y-6 border rounded-lg bg-emerald-50/30 border-emerald-100/50" x-data="{ plusOne:
+                {% if plus_one %}
+                    true
+                {% else %}
+                    false
+                {% endif %}
+                }">
                 {% form_field type="checkbox" name="plus_one" label="Yes, I'm bringing a plus one" value=plus_one attrs="plusOne" errors=form_errors.plus_one %}
                 <div x-show="plusOne"
                      x-transition:enter="transition ease-out duration-200"
@@ -32,12 +38,10 @@
         {% endif %}
         <section class="pt-6 space-y-6 border-t border-emerald-100">
             <h3 class="mb-4 font-sans text-sm text-lg font-medium tracking-widest uppercase text-emerald-900">Attendance</h3>
-            
             <div class="space-y-4">
                 {% if invited_to_ceremony %}
                     {% form_field type="checkbox" name="can_come_to_ceremony" label="Will you attend the ceremony at {venue}?" venue=ceremony_venue value=can_come_to_ceremony errors=form_errors.can_come_to_ceremony help_text="The service starts at {time} at {venue.address_line1}, {venue.postcode}" time=ceremony_start_time|time:"H:i" %}
                 {% endif %}
-
                 {% if invited_to_reception %}
                     {% form_field type="checkbox" name="can_come_to_reception" label="Will you attend the reception at {venue}?" venue=reception_venue value=can_come_to_reception errors=form_errors.can_come_to_reception help_text="The reception starts at {time} at {venue.address_line1}, {venue.postcode}" time=reception_start_time|time:"H:i" %}
                 {% endif %}

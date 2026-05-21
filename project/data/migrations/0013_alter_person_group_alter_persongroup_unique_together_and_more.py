@@ -4,7 +4,6 @@ from django.db import migrations
 
 
 class Migration(migrations.Migration):
-
     dependencies = [
         ("data", "0012_remove_group_members_remove_person_relationships_and_more"),
     ]

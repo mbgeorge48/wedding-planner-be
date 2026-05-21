@@ -1,7 +1,7 @@
 from .food import Food
 from .person import Person
-from .personfood import PersonFood  # Underscore
 from .person_group import PersonGroup
+from .personfood import PersonFood  # Underscore
 from .personphotogroup import PersonPhotoGroup
 from .photogroup import PhotoGroup
 from .rsvp import RSVP

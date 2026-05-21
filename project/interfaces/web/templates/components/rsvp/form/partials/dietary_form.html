@@ -1,6 +1,12 @@
 {% load form_tags %}
 {% load custom_filters %}
-<div class="grid grid-cols-1 md:grid-cols-2 gap-4" x-data="{ otherSelected: {% if 'OTHER' in selected_categories %}true{% else %}false{% endif %} }">
+<div class="grid grid-cols-1 md:grid-cols-2 gap-4" x-data="{ otherSelected:
+    {% if 'OTHER' in selected_categories %}
+        true
+    {% else %}
+        false
+    {% endif %}
+    }">
     {% for val, label in food_categories %}
         {% if val != "NONE" %}
             <div class="{% if val == 'OTHER' %}md:col-span-2 space-y-3{% endif %}">
