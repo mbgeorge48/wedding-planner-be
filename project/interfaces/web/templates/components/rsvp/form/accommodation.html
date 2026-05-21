@@ -2,13 +2,7 @@
 {% load button_tag %}
 {% load form_tags %}
 {% block step_content %}
-    <div class="space-y-10" x-data="{ stayingAfter:
-        {% if staying_night_after_reception %}
-            true
-        {% else %}
-            false
-        {% endif %}
-        }">
+    <div class="space-y-10" x-data="{ stayingAfter: {% if staying_night_after_reception %}true{% else %}false{% endif %} }">
         <section class="space-y-6">
             <div class="pb-4 border-b border-emerald-100">
                 <h2 class="text-2xl font-medium text-emerald-900">Accommodation</h2>
@@ -60,7 +54,7 @@
                 <div class="space-y-2">
                     <h3 class="font-sans text-sm text-lg font-medium tracking-widest uppercase text-emerald-900">The Morning After</h3>
                 </div>
-                {% form_field type="checkbox" name="staying_night_after_reception" label="Yes, I'd love to stay the night after the reception!" value=staying_night_after_reception attrs=stayingAfter %}
+                {% form_field type="checkbox" name="staying_night_after_reception" label="Yes, I'd love to stay the night after the reception!" value=staying_night_after_reception attrs="stayingAfter" %}
                 <div x-show="stayingAfter"
                      x-transition:enter="transition ease-out duration-300"
                      x-transition:enter-start="opacity-0 transform -translate-y-4"

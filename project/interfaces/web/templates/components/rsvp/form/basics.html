@@ -14,14 +14,8 @@
             </div>
         </section>
         {% if allowed_plus_one %}
-            <section class="p-6 space-y-6 border rounded-lg bg-emerald-50/30 border-emerald-100/50" x-data="{ plusOne:
-                {% if plus_one %}
-                    true
-                {% else %}
-                    false
-                {% endif %}
-                }">
-                {% form_field type="checkbox" name="plus_one" label="Yes, I'm bringing a plus one" value=plus_one attrs=plusOne errors=form_errors.plus_one %}
+            <section class="p-6 space-y-6 border rounded-lg bg-emerald-50/30 border-emerald-100/50" x-data="{ plusOne: {% if plus_one %}true{% else %}false{% endif %} }">
+                {% form_field type="checkbox" name="plus_one" label="Yes, I'm bringing a plus one" value=plus_one attrs="plusOne" errors=form_errors.plus_one %}
                 <div x-show="plusOne"
                      x-transition:enter="transition ease-out duration-200"
                      x-transition:enter-start="opacity-0 transform -translate-y-2"

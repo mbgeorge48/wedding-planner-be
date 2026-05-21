@@ -1,32 +1,19 @@
-<div class="grid grid-cols-1 md:grid-cols-2 gap-4" x-data="{ otherSelected:
-    {% if 'OTHER' in selected_categories %}
-        true
-    {% else %}
-        false
-    {% endif %}
-    }">
-    {% for value, label in food_categories %}
-        {% if value != "NONE" %}
-            <div class="{% if value == 'OTHER' %}md:col-span-2 space-y-3{% endif %}">
-                <label class="flex items-center gap-3 p-3 border border-emerald-50 rounded-md hover:bg-emerald-50/50 transition cursor-pointer group">
-                    <input type="checkbox"
-                           name="{{ prefix }}dietary_categories"
-                           value="{{ value }}"
-                           {% if value == 'OTHER' %}x-model="otherSelected"{% endif %}
-                           class="w-5 h-5 border-emerald-300 rounded text-amber-600 focus:ring-amber-500 transition cursor-pointer"
-                           {% if value in selected_categories %}checked{% endif %} />
-                    <span class="text-emerald-800 group-hover:text-emerald-900 transition font-serif italic">{{ label }}</span>
-                </label>
-                {% if value == "OTHER" %}
+{% load form_tags %}
+{% load custom_filters %}
+<div class="grid grid-cols-1 md:grid-cols-2 gap-4" x-data="{ otherSelected: {% if 'OTHER' in selected_categories %}true{% else %}false{% endif %} }">
+    {% for val, label in food_categories %}
+        {% if val != "NONE" %}
+            <div class="{% if val == 'OTHER' %}md:col-span-2 space-y-3{% endif %}">
+                {% if val == 'OTHER' %}
+                    {% form_field type="checkbox" name=prefix|add:"dietary_categories" value=val label=label x_model="otherSelected" checked=val|in_list:selected_categories %}
                     <div x-show="otherSelected"
                          x-transition:enter="transition ease-out duration-200"
                          x-transition:enter-start="opacity-0 transform -translate-y-2"
                          x-transition:enter-end="opacity-100 transform translate-y-0">
-                        <textarea name="{{ prefix }}dietary_other_detail"
-                                  placeholder="Please provide details..."
-                                  class="w-full px-4 py-2 border-b-2 border-emerald-50 focus:outline-none focus:border-amber-600 transition bg-emerald-50/10 text-emerald-900 text-sm"
-                                  rows="2">{{ selected_other_detail }}</textarea>
+                        {% form_field type="textarea" name=prefix|add:"dietary_other_detail" value=selected_other_detail placeholder="Please provide details..." rows=2 %}
                     </div>
+                {% else %}
+                    {% form_field type="checkbox" name=prefix|add:"dietary_categories" value=val label=label checked=val|in_list:selected_categories %}
                 {% endif %}
             </div>
         {% endif %}

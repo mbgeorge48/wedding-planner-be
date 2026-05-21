@@ -13,3 +13,13 @@ def ordinal_date(value):
         "th" if 11 <= day <= 13 else {1: "st", 2: "nd", 3: "rd"}.get(day % 10, "th")
     )
     return value.strftime(f"%-d{suffix} of %B %Y")
+
+
+@register.filter
+def in_list(value, arg):
+    """
+    Check if value is in arg (list or queryset).
+    """
+    if not arg:
+        return False
+    return value in arg

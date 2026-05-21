@@ -343,6 +343,8 @@ class DietaryView(RSVPMixin):
                 )
 
         data = {
+            "bride": self.bride.firstname,
+            "groom": self.groom.firstname,
             "food_categories": models.Food.Category.choices,
             "has_plus_one": rsvp.plus_one is not None,
             **rsvp_data,
