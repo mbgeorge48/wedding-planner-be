@@ -5,6 +5,7 @@ from .rsvp import (  # RSVPFormView,
     DietaryView,
     RSVPManageView,
     RSVPView,
+    SwitchGuestView,
 )
 from .rsvp_form import PlusOneStateView
 from .schedule import ScheduleView
@@ -20,4 +21,5 @@ __all__ = [
     "BasicsView",
     "DietaryView",
     "AccommodationView",
+    "SwitchGuestView",
 ]

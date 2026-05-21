@@ -1,6 +1,6 @@
 from django.urls import path
 
-from .views import (  # RSVPFormView,
+from .views import (
     AccommodationView,
     BasicsView,
     DietaryView,
@@ -10,12 +10,13 @@ from .views import (  # RSVPFormView,
     RSVPView,
     ScheduleView,
     SignoutView,
+    SwitchGuestView,
 )
 
 urlpatterns = [
     path("", HomeView.as_view(), name="home"),
     path("rsvp/", RSVPView.as_view(), name="rsvp"),
-    # path("rsvp/form/", RSVPFormView.as_view(), name="rsvp_form"),
+    path("rsvp/switch/", SwitchGuestView.as_view(), name="rsvp_switch"),
     path("rsvp/manage/", RSVPManageView.as_view(), name="rsvp_manage"),
     path("schedule/", ScheduleView.as_view(), name="schedule"),
     path("signout/", SignoutView.as_view(), name="signout"),

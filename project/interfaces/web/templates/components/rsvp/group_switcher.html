@@ -1,0 +1,30 @@
+{% if group_members %}
+    <div class="w-full max-w-4xl mx-auto mb-8 animate-fade-in">
+        <div class="p-6 bg-white border border-emerald-100 rounded-xl shadow-sm">
+            <h3 class="font-serif text-lg text-emerald-900 mb-4">Other members of your group:</h3>
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+                {% for member in group_members %}
+                    <div class="flex items-center justify-between p-4 bg-emerald-50/50 border border-emerald-100 rounded-lg group hover:border-amber-500 transition-colors">
+                        <div class="flex flex-col">
+                            <span class="font-serif text-emerald-900">{{ member.firstname }}</span>
+                            <span class="text-xs text-neutral-400">
+                                {% if member.guest.exists %}
+                                    RSVP'd
+                                {% else %}
+                                    Pending
+                                {% endif %}
+                            </span>
+                        </div>
+                        <form method="post" action="{% url 'rsvp_switch' %}">
+                            {% csrf_token %}
+                            <input type="hidden" name="guest_id" value="{{ member.id }}">
+                            <button type="submit" class="text-xs font-sans font-bold tracking-widest uppercase text-emerald-700 hover:text-amber-700 transition-colors">
+                                Switch
+                            </button>
+                        </form>
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+{% endif %}

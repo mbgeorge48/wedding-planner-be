@@ -129,6 +129,23 @@ class RSVPView(RSVPMixin):
         return redirect("rsvp_basics")
 
 
+class SwitchGuestView(RSVPMixin):
+    def post(self, request):
+        guest_id = request.POST.get("guest_id")
+        if not guest_id:
+            return redirect("rsvp")
+
+        # Security check: ensure the target guest is in the same group
+        target_guest = models.Person.objects.filter(
+            id=guest_id, group=self.guest.group
+        ).first()
+
+        if target_guest:
+            request.session["guest_code"] = target_guest.invite_code
+
+        return redirect("rsvp")
+
+
 # class RSVPManageView(View):
 #     template_name = "rsvp_form.html"
 
@@ -273,6 +290,7 @@ class BasicsView(RSVPMixin):
             rsvp_data["phone"] = self.guest.phone
             rsvp_data["can_come_to_ceremony"] = rsvp.can_come_to_ceremony
             rsvp_data["can_come_to_reception"] = rsvp.can_come_to_reception
+            rsvp_data["song_suggestion"] = rsvp.song_suggestion
             rsvp_data["plus_one"] = rsvp.plus_one
             if rsvp.plus_one:
                 rsvp_data["plus_one_firstname"] = rsvp.plus_one.firstname
@@ -292,6 +310,7 @@ class BasicsView(RSVPMixin):
                 phone=form.cleaned_data["phone"],
                 can_come_to_ceremony=form.cleaned_data["can_come_to_ceremony"],
                 can_come_to_reception=form.cleaned_data["can_come_to_reception"],
+                song_suggestion=form.cleaned_data["song_suggestion"],
                 plus_one=form.cleaned_data["plus_one"],
                 plus_one_firstname=form.cleaned_data["plus_one_firstname"],
                 plus_one_lastname=form.cleaned_data["plus_one_lastname"],
@@ -338,11 +357,12 @@ class DietaryView(RSVPMixin):
             rsvp_data["selected_other_detail"] = selected_other_detail
             rsvp_data["plus_one_selected_categories"] = plus_one_selected_categories
             if rsvp.plus_one:
-                rsvp_data[
-                    "plus_one_selected_other_detail"
-                ] = plus_one_selected_other_detail
+                rsvp_data["plus_one_selected_other_detail"] = (
+                    plus_one_selected_other_detail
+                )
 
         data = {
+            "guest_first_name": self.guest.firstname,
             "bride": self.bride.firstname,
             "groom": self.groom.firstname,
             "food_categories": models.Food.Category.choices,
@@ -352,7 +372,6 @@ class DietaryView(RSVPMixin):
         return render(request, "components/rsvp/form/dietary.html", data)
 
     def post(self, request):
-        # TODO need to raise validation errors
         rsvp = models.RSVP.objects.get(guest=self.guest)
         form = DietaryForm(request.POST, has_plus_one=bool(rsvp.plus_one))
 
@@ -377,6 +396,7 @@ class AccommodationView(RSVPMixin):
         rsvp = models.RSVP.objects.get(guest=self.guest)
 
         data = {
+            "guest_first_name": self.guest.firstname,
             "bride": self.bride.firstname,
             "groom": self.groom.firstname,
             "allowed_to_stay_onsite": self.guest.allowed_to_stay_onsite,
