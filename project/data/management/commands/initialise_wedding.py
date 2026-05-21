@@ -71,15 +71,19 @@ class Command(BaseCommand):
         print("WEDDING")
         print("=" * 8)
         date = input("Enter the date (YYYY-MM-DD): ")
-        start_time = input("Enter the starting time: ")
+        ceremony_start_time = input("Enter the ceremony starting time (HH:MM): ")
+        reception_start_time = input("Enter the reception starting time (HH:MM): ")
+        evening_only_start_time = input("Enter the evening only starting time (HH:MM): ")
 
         wedding = Wedding.objects.create(
             bride=bride,
             groom=groom,
-            ceremony_venue=Venue.objects.filter(type="CEREMONY").get(),
-            reception_venue=Venue.objects.filter(type="RECEPTION").get(),
+            ceremony_venue=Venue.objects.filter(type="CEREMONY").first(),
+            reception_venue=Venue.objects.filter(type="RECEPTION").first(),
             date=date,
-            start_time=start_time,
+            ceremony_start_time=ceremony_start_time,
+            reception_start_time=reception_start_time,
+            evening_only_start_time=evening_only_start_time,
         )
 
-        self.stdout.write(self.style.SUCCESS(f"✅ Created book: {wedding}"))
+        self.stdout.write(self.style.SUCCESS(f"✅ Created wedding: {wedding}"))

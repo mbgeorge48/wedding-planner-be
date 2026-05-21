@@ -34,7 +34,9 @@ class RSVP(models.Model):
     can_come_to_reception = models.BooleanField(blank=True, null=True)
     song_suggestion = models.CharField(max_length=255)
 
-    dietary_requirements = models.ManyToManyField("data.Food", blank=True, null=True)
+    dietary_requirements = models.ManyToManyField(
+        "data.Food", blank=True, related_name="rsvp_dietary_requirements"
+    )
 
     plus_one = models.OneToOneField(
         "data.Person",

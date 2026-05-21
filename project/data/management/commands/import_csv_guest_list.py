@@ -33,10 +33,14 @@ class Command(BaseCommand):
 
     def add_arguments(self, parser):
         parser.add_argument("file_name", type=str)
-        parser.add_argument("force_update", type=bool, nargs="?", default=False)
+        parser.add_argument(
+            "--force",
+            action="store_true",
+            help="Update existing guests if they already exist",
+        )
 
     def handle(self, *args, **options):
-        force_update = options["force_update"]
+        force_update = options["force"]
         file_name = options["file_name"]
 
         if not os.path.exists(file_name):

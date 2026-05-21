@@ -1,9 +1,10 @@
 import urllib.parse
 
 from django.core.management.base import BaseCommand
-from django.urls import reverse
 
 from project.data.models import Person
+import qrcode
+from qrcode.constants import ERROR_CORRECT_M
 
 
 class Command(BaseCommand):
@@ -16,9 +17,15 @@ class Command(BaseCommand):
             default="http://localhost:8000",
             help="Base URL of the site (default: http://localhost:8000)",
         )
+        parser.add_argument(
+            "--create-qr-codes",
+            action="store_true",
+            help="Create QR codes for each URL",
+        )
 
     def handle(self, *args, **options):
         base_url = options["base_url"].rstrip("/")
+        create_qr_codes = options["create_qr_codes"]
         people = Person.objects.all()
 
         if not people.exists():
@@ -42,10 +49,24 @@ class Command(BaseCommand):
                 "code": person.invite_code,
             }
             query_string = urllib.parse.urlencode(params)
-            # Hardcoding /rsvp/ as requested, but joining properly
             url = f"{base_url}/rsvp/?{query_string}"
 
             self.stdout.write(f"{person.firstname} {person.lastname}: {url}")
+            if create_qr_codes:
+                # qr = qrcode.make(url)
+                filename = f"{person.firstname}_{person.lastname}_qr.png"
+                # qr.save(filename)
+                qr = qrcode.QRCode(
+                    version=1,
+                    error_correction=ERROR_CORRECT_M,
+                    box_size=18,
+                )
+                qr.add_data(url)
+                qr.make(fit=True)
+
+                img = qr.make_image(fill_color="black", back_color="white")
+                with open(filename, "wb") as f:
+                    img.save(f)
 
         self.stdout.write("-" * 80)
         self.stdout.write(
