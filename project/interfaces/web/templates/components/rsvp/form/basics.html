@@ -47,6 +47,9 @@
                 {% endif %}
             </div>
         </section>
+        <section class="pt-6 space-y-6 border-t border-emerald-100">
+            {% form_field  name="song_suggestion" label="Suggest a song for the evening!" value=song_suggestion placeholder="Livin’ la Vida Loca - Ricky Martin" %}
+        </section>
         <div class="flex justify-end pt-8">{% button text="Continue to Dietary" type="submit" %}</div>
     </div>
 {% endblock step_content %}

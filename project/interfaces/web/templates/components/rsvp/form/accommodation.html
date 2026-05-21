@@ -21,12 +21,12 @@
                             Barnutopia has a mix of yurts and camping space. We'll do our best to allocate the yurts fairly and make sure no one shares outside their family or friend group.
                         </p>
                         {% if allowed_to_stay_in_yurt %}
-                            {% form_field type="radio" name="staying_preference" value=staying_preference choices=staying_preference_choices label="Preference" %}
+                            {% form_field type="radio" name="staying_preference" value=staying_preference choices=staying_preference_choices label="Preference" required=True %}
                         {% else %}
                             <div class="p-4 italic border rounded-md bg-white/50 border-emerald-100">
                                 <p class="text-sm text-emerald-600">Right now all the yurts are assigned, but camping is still available!</p>
                             </div>
-                            {% form_field type="radio" name="staying_preference" value=staying_preference choices=staying_preference_choices_no_yurt label="Preference" %}
+                            {% form_field type="radio" name="staying_preference" value=staying_preference choices=staying_preference_choices_no_yurt label="Preference" required=True %}
                         {% endif %}
                     </div>
                 {% else %}
@@ -50,7 +50,7 @@
                                 </li>
                             </ul>
                         </div>
-                        {% form_field type="radio" name="staying_preference" value=staying_preference choices=staying_preference_choices_no_yurt label="Preference" %}
+                        {% form_field type="radio" name="staying_preference" value=staying_preference choices=staying_preference_choices_no_yurt label="Preference" required=True %}
                     </div>
                 {% endif %}
             </div>
@@ -66,11 +66,11 @@
                      x-transition:enter-start="opacity-0 transform -translate-y-4"
                      x-transition:enter-end="opacity-100 transform translate-y-0"
                      class="pt-6 pl-8 space-y-8 border-l-2 border-amber-600/20">
-                    {% form_field type="radio" name="evening_meal_day_after_reception" label="Sunday Evening Meal" value=evening_meal_day_after_reception choices=meal_choices help_text="We might head to a local pub or have a relaxed meal at the barn." %}
+                    {% form_field type="radio" name="evening_meal_day_after_reception" label="Saturday Evening Meal" value=evening_meal_day_after_reception choices=meal_choices help_text="We might head to a local pub or have a relaxed meal at the barn." required=True %}
                     {% form_field type="textarea" name="day_after_reception_suggestion" label="Any suggestions for Saturday?" value=day_after_reception_suggestion placeholder="e.g. A walk in the hills, a trip to a local castle..." %}
                 </div>
             </section>
         {% endif %}
-        <div class="flex justify-end pt-8">{% button text="Continue to Travel" type="submit" %}</div>
+        <div class="flex justify-end pt-8">{% button text="Submit RSVP" type="submit" %}</div>
     </div>
 {% endblock step_content %}

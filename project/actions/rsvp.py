@@ -10,6 +10,7 @@ def update_rsvp_basics(
     phone: Optional[str] = None,
     can_come_to_ceremony: bool = False,
     can_come_to_reception: bool = False,
+    song_suggestion: Optional[str] = None,
     plus_one: bool = False,
     plus_one_firstname: Optional[str] = None,
     plus_one_lastname: Optional[str] = None,
@@ -30,6 +31,8 @@ def update_rsvp_basics(
     rsvp, _ = models.RSVP.objects.get_or_create(guest=guest)
     rsvp.can_come_to_ceremony = can_come_to_ceremony
     rsvp.can_come_to_reception = can_come_to_reception
+    if song_suggestion is not None:
+        rsvp.song_suggestion = song_suggestion
 
     if plus_one:
         if not rsvp.plus_one:
@@ -141,21 +144,6 @@ def update_rsvp_accommodation(
         rsvp.evening_meal_day_after_reception = evening_meal_day_after_reception
     if day_after_reception_suggestion is not None:
         rsvp.day_after_reception_suggestion = day_after_reception_suggestion
-
-    rsvp.save()
-    return rsvp
-
-
-def update_rsvp_travel(
-    *,
-    rsvp: models.RSVP,
-    travel_between_venues: Optional[str] = None,
-) -> models.RSVP:
-    """
-    Updates travel information for a guest.
-    """
-    if travel_between_venues is not None:
-        rsvp.travel_between_venues = travel_between_venues
 
     rsvp.save()
     return rsvp

@@ -12,94 +12,111 @@
                 </span>
             {% endif %}
         </div>
-        <div class="p-6">
+        <div class="p-8">
             {% if rsvp %}
-                <div class="grid grid-cols-1 gap-8 lg:grid-cols-3">
+                <div class="grid grid-cols-1 gap-x-12 gap-y-10 lg:grid-cols-3">
                     <!-- Attendance -->
-                    <div class="space-y-3">
-                        <h3 class="font-sans text-xs font-bold tracking-widest uppercase text-neutral-400">Attendance</h3>
-                        <div class="space-y-1">
+                    <div class="space-y-4">
+                        <h3 class="text-xs font-bold tracking-widest uppercase text-emerald-900/40">Attendance</h3>
+                        <div class="space-y-3">
                             {% if guest.invited_to_ceremony %}
-                                <div class="flex items-center justify-between">
-                                    <span class="text-sm text-emerald-900">Ceremony</span>
-                                    <span class="font-serif italic {% if rsvp.can_come_to_ceremony %}text-emerald-600{% else %}text-rose-600{% endif %}">
-                                        {% if rsvp.can_come_to_ceremony %}
-                                            Attending
-                                        {% else %}
-                                            Declined
-                                        {% endif %}
+                                <div class="flex items-center justify-between border-b border-emerald-50/50 pb-1">
+                                    <span class="text-sm text-neutral-500">Ceremony</span>
+                                    <span class="font-serif text-lg italic {% if rsvp.can_come_to_ceremony %}text-emerald-600{% else %}text-rose-600{% endif %}">
+                                        {% if rsvp.can_come_to_ceremony %}Attending{% else %}Declined{% endif %}
                                     </span>
                                 </div>
                             {% endif %}
                             {% if guest.invited_to_reception %}
-                                <div class="flex items-center justify-between">
-                                    <span class="text-sm text-emerald-900">Reception</span>
-                                    <span class="font-serif italic {% if rsvp.can_come_to_reception %}text-emerald-600{% else %}text-rose-600{% endif %}">
-                                        {% if rsvp.can_come_to_reception %}
-                                            Attending
-                                        {% else %}
-                                            Declined
-                                        {% endif %}
+                                <div class="flex items-center justify-between border-b border-emerald-50/50 pb-1">
+                                    <span class="text-sm text-neutral-500">Reception</span>
+                                    <span class="font-serif text-lg italic {% if rsvp.can_come_to_reception %}text-emerald-600{% else %}text-rose-600{% endif %}">
+                                        {% if rsvp.can_come_to_reception %}Attending{% else %}Declined{% endif %}
                                     </span>
                                 </div>
                             {% endif %}
                         </div>
                     </div>
+
                     <!-- Plus One -->
                     {% if guest.allowed_plus_one %}
-                        <div class="space-y-3">
-                            <h3 class="font-sans text-xs font-bold tracking-widest uppercase text-neutral-400">Plus One</h3>
+                        <div class="space-y-4">
+                            <h3 class="text-xs font-bold tracking-widest uppercase text-emerald-900/40">Plus One</h3>
                             {% if rsvp.plus_one %}
-                                <p class="font-serif text-lg italic text-emerald-900">{{ rsvp.plus_one.firstname }} {{ rsvp.plus_one.lastname }}</p>
-                                <p class="text-xs text-neutral-400">{{ rsvp.plus_one.email|default:"" }}</p>
+                                <div>
+                                    <p class="font-serif text-lg italic text-emerald-900">{{ rsvp.plus_one.firstname }} {{ rsvp.plus_one.lastname }}</p>
+                                    <p class="text-sm text-neutral-500 mt-1">{{ rsvp.plus_one.email|default:"No email provided" }}</p>
+                                </div>
                             {% else %}
-                                <p class="font-serif italic text-neutral-400 text-sm">No plus one added</p>
+                                <p class="font-serif text-lg italic text-neutral-300">No plus one added</p>
                             {% endif %}
                         </div>
                     {% endif %}
+
                     <!-- Dietary -->
-                    <div class="space-y-3">
-                        <h3 class="font-sans text-xs font-bold tracking-widest uppercase text-neutral-400">Dietary</h3>
-                        <div class="flex flex-wrap gap-1">
+                    <div class="space-y-4">
+                        <h3 class="text-xs font-bold tracking-widest uppercase text-emerald-900/40">Dietary</h3>
+                        <div class="flex flex-wrap gap-2">
                             {% for requirement in rsvp.dietary_requirements.all %}
-                                <span class="px-2 py-0.5 text-xs rounded-full bg-emerald-50 text-emerald-700 border border-emerald-100"
+                                <span class="px-3 py-1 text-xs font-medium rounded-md bg-emerald-50 text-emerald-700 border border-emerald-100/50"
                                       title="{{ requirement.detail }}">{{ requirement.get_category_display }}</span>
                             {% empty %}
-                                <span class="font-serif italic text-neutral-400 text-sm">No requirements</span>
+                                <p class="font-serif text-lg italic text-neutral-300">No requirements</p>
                             {% endfor %}
                         </div>
                     </div>
+
                     <!-- Accommodation -->
-                    <div class="space-y-3">
-                        <h3 class="font-sans text-xs font-bold tracking-widest uppercase text-neutral-400">Stay</h3>
-                        <p class="font-serif text-lg italic text-emerald-900">
-                            {{ rsvp.get_staying_preference_display|default:"Not specified" }}
-                        </p>
-                        {% if rsvp.staying_night_after_reception %}
-                            <p class="text-xs italic text-emerald-600">Staying the night after</p>
-                        {% endif %}
+                    <div class="space-y-4">
+                        <h3 class="text-xs font-bold tracking-widest uppercase text-emerald-900/40">Stay</h3>
+                        <div>
+                            <p class="font-serif text-lg italic text-emerald-900 leading-tight">
+                                {{ rsvp.get_staying_preference_display|default:"Not specified" }}
+                            </p>
+                            {% if rsvp.staying_night_after_reception %}
+                                <div class="mt-3 pt-3 border-t border-emerald-50/50">
+                                    <p class="text-xs font-bold text-amber-600 uppercase tracking-wider mb-1">Saturday Night</p>
+                                    <p class="text-sm text-neutral-500 italic">{{ rsvp.get_evening_meal_day_after_reception_display }}</p>
+                                </div>
+                            {% endif %}
+                        </div>
                     </div>
+
+                    <!-- Song Suggestion -->
+                    <div class="space-y-4">
+                        <h3 class="text-xs font-bold tracking-widest uppercase text-emerald-900/40">Song Request</h3>
+                        <p class="font-serif text-lg italic text-emerald-900">
+                            {{ rsvp.song_suggestion|default:"None" }}
+                        </p>
+                    </div>
+
+                    <!-- Day After Suggestion -->
+                    {% if rsvp.day_after_reception_suggestion %}
+                        <div class="space-y-4">
+                            <h3 class="text-xs font-bold tracking-widest uppercase text-emerald-900/40">Saturday Activity</h3>
+                            <p class="font-serif text-lg italic text-emerald-900 leading-snug">{{ rsvp.day_after_reception_suggestion }}</p>
+                        </div>
+                    {% endif %}
                 </div>
-                <div class="pt-6 mt-8 border-t border-emerald-50 flex items-center justify-between">
+
+                <div class="pt-8 mt-10 border-t border-emerald-50 flex items-center justify-between">
                     <p class="text-xs italic text-neutral-400">Last updated {{ rsvp.modified|date:"jS F Y" }}</p>
-                    <div class="flex space-x-4">
-                        <span class="text-xs font-bold tracking-widest uppercase text-emerald-600 flex items-center">
-                            <svg xmlns="http://www.w3.org/2000/svg"
-                                 fill="none"
-                                 viewBox="0 0 24 24"
-                                 stroke-width="2"
-                                 stroke="currentColor"
-                                 class="w-4 h-4 mr-1">
-                                <path stroke-linecap="round" stroke-linejoin="round" d="m4.5 12.75 6 6 9-13.5" />
-                            </svg>
-                            Information Saved
-                        </span>
+                    <div class="flex items-center text-xs font-bold tracking-widest uppercase text-emerald-600">
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2.5" stroke="currentColor" class="w-4 h-4 mr-2">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="m4.5 12.75 6 6 9-13.5" />
+                        </svg>
+                        Information Saved
                     </div>
                 </div>
             {% else %}
-                <div class="py-4 text-center">
-                    <p class="font-serif text-lg italic text-neutral-500">You haven't completed your RSVP yet.</p>
-                    <p class="mt-2 text-sm text-neutral-400">Please use the sections below to let us know your plans.</p>
+                <div class="py-12 text-center">
+                    <div class="inline-flex items-center justify-center w-16 h-16 mb-6 rounded-full bg-amber-50 text-amber-500">
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-8 h-8">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M12 9v3.75m9-.75a9 9 0 1 1-18 0 9 9 0 0 1 18 0Zm-9 3.75h.008v.008H12v-.008Z" />
+                        </svg>
+                    </div>
+                    <p class="font-serif text-xl italic text-emerald-900">You haven't completed your RSVP yet.</p>
+                    <p class="mt-2 text-sm text-neutral-500">Please use the sections below to let us know your plans.</p>
                 </div>
             {% endif %}
         </div>

@@ -13,3 +13,5 @@ class BasicsForm(forms.Form):
     plus_one_lastname = forms.CharField(required=False)
     plus_one_email = forms.EmailField(required=False)
     plus_one_phone = forms.CharField(required=False)
+
+    song_suggestion = forms.CharField(required=False, max_length=255)
