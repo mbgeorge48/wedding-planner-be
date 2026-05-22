@@ -52,10 +52,6 @@ class Person(models.Model):
     allowed_to_stay_in_yurt = models.BooleanField(default=False)
     allowed_to_stay_night_after_reception = models.BooleanField(default=False)
 
-    photo_groups = models.ManyToManyField(
-        "data.PhotoGroup", through="data.PersonPhotoGroup", related_name="person"
-    )
-
     class Meta:
         ordering = ["firstname"]
 

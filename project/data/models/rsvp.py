@@ -54,12 +54,8 @@ class RSVP(models.Model):
     )
 
     staying_night_after_reception = models.BooleanField(blank=True, null=True)
-    evening_meal_day_after_reception = models.CharField(
-        max_length=50,
-        choices=DayAfterReceptionMeal.choices,
-        null=False,
-        blank=True,
-    )
+    morning_meal_day_after_reception = models.BooleanField(blank=True, null=True)
+    evening_meal_day_after_reception = models.BooleanField(blank=True, null=True)
     day_after_reception_suggestion = models.CharField(max_length=255)
 
     class Meta:
