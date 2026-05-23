@@ -1,111 +1,115 @@
-# Wedding Planner Backend
+# Wedding Planner RSVP System
 
-Backend for the Wedding Planner application, built with Django. This project manages wedding events, guests, food, venues, schedules, and RSVP functionality.
+A professional, containerized Django application for managing wedding RSVPs, guest lists, and event details.
 
-## Project Overview
-
-This backend powers a wedding planning web app. It provides:
-
--   Event, guest, and RSVP management
--   Food and venue selection
--   Scheduling and timeline features
--   User authentication and admin controls
--   API endpoints for frontend integration
-
-## Folder Structure
-
--   `project/` — Main Django project
-    -   `data/` — Core app for models, migrations, and admin
-        -   `models/` — Contains models for Person, Food, Venue, Wedding, Groups, etc.
-        -   `migrations/` — Database migrations
-        -   `admin.py` — Admin interface registration
-    -   `interfaces/` — Handles routing and API/web interfaces
-        -   `web/` — Web views, templates, static files
-            -   `views/` — Web view logic (home, RSVP, schedule, time)
-            -   `templates/` — HTML templates (base, index, RSVP, schedule)
-            -   `static/` — Static assets (images, CSS, JS)
-            -   `templatetags/` — Custom template filters
-
-## Main Django Apps
-
--   **data**: Models and admin for all core entities (Person, Wedding, Food, Venue, Groups)
--   **interfaces**: URL routing, API endpoints, and web views
-
-## Features
-
--   Manage weddings, guests, food, venues, and schedules
--   RSVP and group management
--   Custom template tags and filters
--   RESTful API endpoints
--   Admin dashboard
-
-## Getting Started
+## 🚀 Quick Start (Local Development)
 
 ### Prerequisites
 
--   Python 3.13.3
--   pip
--   virtualenv
--   PostgreSQL
+- Python 3.13+
+- Docker & Docker Compose (Optional, but recommended)
+- PostgreSQL (if running without Docker)
 
-### Installation
+### Option 1: Using Docker (Easiest)
 
-1. **Clone the repository:**
+Run the entire stack (Django + Postgres) with a single command:
+
+```bash
+docker-compose up
+```
+
+The app will be available at `http://localhost:8000`.
+
+### Option 2: Manual Setup
+
+1. **Environment**: Create a `.env` file from the example:
     ```bash
-    git clone https://github.com/mbgeorge48/wedding-planner-be.git
-    cd wedding-planner-be
+    cp .env.example .env
     ```
-2. **Create and activate a virtual environment:**
-    ```bash
-    python3 -m venv .venv
-    source .venv/bin/activate
-    ```
-3. **Install dependencies:**
+2. **Install Dependencies**:
     ```bash
     pip install -r requirements.txt
     ```
-4. **Configure environment variables:**
-    - not setup yet
-    - Copy `.env.example` to `.env` and update settings as needed (DB credentials, secret key, etc.)
-5. **Apply migrations:**
+3. **Database**: Ensure PostgreSQL is running and matches your `.env` settings.
+4. **Run**:
     ```bash
     python manage.py migrate
-    ```
-6. **Create a superuser (optional):**
-    ```bash
-    python manage.py createsuperuser
-    ```
-7. **Run the development server:**
-    ```bash
-    python manage.py runserver
+    scripts/server
     ```
 
-## API Endpoints
+---
 
--   API routes are defined in `project/interfaces/api/`
--   Example: `/api/home/` for home page data
+## 🛠 Project Scripts (`/scripts`)
 
-## Web Interface
+The `scripts/` directory contains helper utilities for common tasks:
 
--   Web views and templates in `project/interfaces/web/`
--   Main pages: Home, RSVP, Schedule
+- **`entrypoint.sh`**: **(Production Only)** Automatically runs migrations, collects static files, and starts the Gunicorn server. Used by Docker.
+- **`server`**: Starts the local Django development server.
+- **`setup`**: Initial environment setup script.
+- **`test`**: Runs the project test suite.
+- **`format`**: Runs code formatters (Black/Isort) to keep the codebase clean.
+- **`console`**: Opens a Django shell for direct database/model interaction.
 
-## Customization
+---
 
--   Add new models in `project/data/models/`
--   Add new views in `project/interfaces/web/views/`
--   Add templates in `project/interfaces/web/templates/`
+## 📋 Management Commands
 
-## Running Tests -- not setup yet
+Custom Django commands are located in `project/data/management/commands/`:
+
+### `initialise_wedding`
+
+Used to set up a new wedding instance. It will prompt you for bride/groom details, venue information, and the wedding date/time.
 
 ```bash
-python manage.py test
+python manage.py initialise_wedding
 ```
 
-## Contributing
+### `import_csv_guest_list`
 
-Pull requests are welcome! Please follow PEP8 style and add docstrings. For major changes, open an issue first to discuss.
+Bulk imports guests from a CSV file. Use the `--force` flag to update existing guests.
 
-## License
+```bash
+python manage.py import_csv_guest_list path/to/guests.csv --force
+```
 
-MIT
+### `generate_guest_urls`
+
+Generates unique RSVP links for every guest. Can also generate QR code images for physical invitations.
+
+```bash
+python manage.py generate_guest_urls --base-url https://yourwedding.com --create-qr-codes
+```
+
+---
+
+## 🌐 Production & Deployment
+
+This project is configured for easy deployment to **Railway.app**, **Render**, or **AWS**.
+
+### Production Features:
+
+- **Optimized Tailwind**: CSS is built and minified during the Docker build stage.
+- **Security**: Automatic SSL redirection and secure headers when `DEBUG=False`.
+- **Static Files**: Efficiently served via **WhiteNoise**.
+- **Containerized**: Runs anywhere that supports Docker.
+
+For detailed deployment steps, see [DEPLOYMENT.md](./DEPLOYMENT.md).
+
+---
+
+## 🗄 Database Schema
+
+The project uses a standard PostgreSQL database. Key models include:
+
+- **Person**: Guests and members of the wedding party.
+- **PersonGroup**: Groups guests together (e.g., households) so they can RSVP for each other.
+- **RSVP**: Tracks attendance, dietary requirements, song suggestions, and Sunday meal plans.
+- **Wedding/Venue**: Core event configuration.
+
+---
+
+## 🎨 Frontend Stack
+
+- **Tailwind CSS**: Utility-first styling (Optimized via CLI in production).
+- **Alpine.js**: Lightweight interactivity for form toggles and group switching.
+- **HTMX**: For seamless, dynamic page updates without full refreshes.
