@@ -404,6 +404,7 @@ class AccommodationView(RSVPMixin):
             "allowed_to_stay_night_after_reception": self.guest.allowed_to_stay_night_after_reception,
             "staying_preference": rsvp.staying_preference,
             "staying_night_after_reception": rsvp.staying_night_after_reception,
+            "morning_meal_day_after_reception": rsvp.morning_meal_day_after_reception,
             "evening_meal_day_after_reception": rsvp.evening_meal_day_after_reception,
             "day_after_reception_suggestion": rsvp.day_after_reception_suggestion,
             "staying_preference_choices": models.RSVP.StayingPreferences.choices,
@@ -425,6 +426,9 @@ class AccommodationView(RSVPMixin):
                 staying_preference=form.cleaned_data["staying_preference"],
                 staying_night_after_reception=form.cleaned_data[
                     "staying_night_after_reception"
+                ],
+                morning_meal_day_after_reception=form.cleaned_data[
+                    "morning_meal_day_after_reception"
                 ],
                 evening_meal_day_after_reception=form.cleaned_data[
                     "evening_meal_day_after_reception"

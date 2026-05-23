@@ -130,7 +130,8 @@ def update_rsvp_accommodation(
     rsvp: models.RSVP,
     staying_preference: Optional[str] = None,
     staying_night_after_reception: Optional[bool] = None,
-    evening_meal_day_after_reception: Optional[str] = None,
+    morning_meal_day_after_reception: Optional[bool] = None,
+    evening_meal_day_after_reception: Optional[bool] = None,
     day_after_reception_suggestion: Optional[str] = None,
 ) -> models.RSVP:
     """
@@ -140,6 +141,8 @@ def update_rsvp_accommodation(
         rsvp.staying_preference = staying_preference
     if staying_night_after_reception is not None:
         rsvp.staying_night_after_reception = staying_night_after_reception
+    if morning_meal_day_after_reception is not None:
+        rsvp.morning_meal_day_after_reception = morning_meal_day_after_reception
     if evening_meal_day_after_reception is not None:
         rsvp.evening_meal_day_after_reception = evening_meal_day_after_reception
     if day_after_reception_suggestion is not None:

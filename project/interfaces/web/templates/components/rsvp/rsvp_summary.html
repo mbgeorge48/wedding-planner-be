@@ -75,10 +75,24 @@
                             </p>
                             {% if rsvp.staying_night_after_reception %}
                                 <div class="mt-3 pt-3 border-t border-emerald-50/50">
-                                    <p class="text-xs font-bold text-amber-600 uppercase tracking-wider mb-1">Saturday Night</p>
-                                    <p class="text-sm text-neutral-500 italic">{{ rsvp.get_evening_meal_day_after_reception_display }}</p>
+                                    <p class="text-xs font-bold text-amber-600 uppercase tracking-wider mb-2">Saturday Plans</p>
+                                    <div class="space-y-1">
+                                        <div class="flex items-center justify-between text-sm">
+                                            <span class="text-neutral-500 italic">Breakfast</span>
+                                            <span class="font-serif italic {% if rsvp.morning_meal_day_after_reception %}text-emerald-600{% else %}text-neutral-300{% endif %}">
+                                                {% if rsvp.morning_meal_day_after_reception %}Yes, please{% else %}No, thanks{% endif %}
+                                            </span>
+                                        </div>
+                                        <div class="flex items-center justify-between text-sm">
+                                            <span class="text-neutral-500 italic">Evening Pizzas</span>
+                                            <span class="font-serif italic {% if rsvp.evening_meal_day_after_reception %}text-emerald-600{% else %}text-neutral-300{% endif %}">
+                                                {% if rsvp.evening_meal_day_after_reception %}Yes, please{% else %}No, thanks{% endif %}
+                                            </span>
+                                        </div>
+                                    </div>
                                 </div>
                             {% endif %}
+
                         </div>
                     </div>
 

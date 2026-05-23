@@ -1,2 +1,46 @@
-*.pyc
+# Django
+*.log
+local_settings.py
+db.sqlite3
+db.sqlite3-journal
+media
+static_root/
+
+# Environment variables
+.env
+
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+env/
+venv/
+.venv/
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+
+# Extensions
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# Project specific
 *.csv
+favicon.svg
+*.png
