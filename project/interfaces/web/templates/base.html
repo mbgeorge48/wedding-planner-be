@@ -3,6 +3,9 @@
 <html lang="en">
     <head>
         <meta charset="UTF-8">
+        <meta name="description" content="Wedding website and RSVP for {{ bride }} and {{ groom }}'s special day.">
+        <meta name="keywords" content="wedding, RSVP, {{ bride }}, {{ groom }}, marriage, celebration">
+
         <title>
             {% block title %}
             {% endblock title %}
@@ -10,10 +13,12 @@
         <link rel="stylesheet" href="{% static 'style.css' %}">
         <link rel="icon" type="image/svg+xml" href="{% static 'favicon.svg' %}">
         <script src="https://unpkg.com/htmx.org@1.9.10"></script>
-        {% comment %} Consider doing this via postcss {% endcomment %}
-        <script src="https://cdn.tailwindcss.com"></script>
+        {% if debug %}
+            <script src="https://cdn.tailwindcss.com"></script>
+        {% endif %}
         <script src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"
                 defer></script>
+
     </head>
     <body class="min-h-screen font-serif bg-white">
         {% include "components/header.html" %}

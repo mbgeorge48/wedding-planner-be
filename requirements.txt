@@ -16,3 +16,6 @@ pyflakes==3.3.2
 sqlparse==0.5.3
 djlint==1.36.4
 qrcode==8.2.0
+python-dotenv==1.0.1
+gunicorn==23.0.0
+whitenoise==6.9.0

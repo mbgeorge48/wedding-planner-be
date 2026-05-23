@@ -1,0 +1,13 @@
+.git
+.venv
+__pycache__
+*.pyc
+*.pyo
+*.pyd
+db.sqlite3
+.env
+static_root
+media
+node_modules
+.python-version
+unused_model_fields_report.md
