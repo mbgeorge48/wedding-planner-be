@@ -1,4 +1,5 @@
 import urllib.parse
+from pathlib import Path
 
 import qrcode
 from django.core.management.base import BaseCommand
@@ -35,6 +36,14 @@ class Command(BaseCommand):
         self.stdout.write(self.style.SUCCESS(f"Generating URLs with base: {base_url}"))
         self.stdout.write("-" * 80)
 
+        qr_dir = None
+        if create_qr_codes:
+            qr_dir = Path("qr_codes")
+            qr_dir.mkdir(exist_ok=True)
+            self.stdout.write(
+                self.style.SUCCESS(f"Saving QR codes to: {qr_dir.resolve()}")
+            )
+
         for person in people:
             if not person.invite_code:
                 self.stdout.write(
@@ -52,10 +61,11 @@ class Command(BaseCommand):
             url = f"{base_url}/rsvp/?{query_string}"
 
             self.stdout.write(f"{person.firstname} {person.lastname}: {url}")
-            if create_qr_codes:
-                # qr = qrcode.make(url)
+
+            if create_qr_codes and qr_dir:
                 filename = f"{person.firstname}_{person.lastname}_qr.png"
-                # qr.save(filename)
+                file_path = qr_dir / filename
+
                 qr = qrcode.QRCode(
                     version=1,
                     error_correction=ERROR_CORRECT_M,
@@ -65,7 +75,7 @@ class Command(BaseCommand):
                 qr.make(fit=True)
 
                 img = qr.make_image(fill_color="black", back_color="white")
-                with open(filename, "wb") as f:
+                with open(file_path, "wb") as f:
                     img.save(f)
 
         self.stdout.write("-" * 80)

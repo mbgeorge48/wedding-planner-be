@@ -10,4 +10,4 @@ static_root
 media
 node_modules
 .python-version
-unused_model_fields_report.md
+qr_codes/

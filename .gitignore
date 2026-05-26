@@ -43,4 +43,6 @@ wheels/
 # Project specific
 *.csv
 favicon.svg
+qr_codes/
 *.png
+faqs.json
