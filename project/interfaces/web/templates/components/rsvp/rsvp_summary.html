@@ -23,7 +23,11 @@
                                 <div class="flex items-center justify-between border-b border-emerald-50/50 pb-1">
                                     <span class="text-sm text-neutral-500">Ceremony</span>
                                     <span class="font-serif text-lg italic {% if rsvp.can_come_to_ceremony %}text-emerald-600{% else %}text-rose-600{% endif %}">
-                                        {% if rsvp.can_come_to_ceremony %}Attending{% else %}Declined{% endif %}
+                                        {% if rsvp.can_come_to_ceremony %}
+                                            Attending
+                                        {% else %}
+                                            Declined
+                                        {% endif %}
                                     </span>
                                 </div>
                             {% endif %}
@@ -31,13 +35,16 @@
                                 <div class="flex items-center justify-between border-b border-emerald-50/50 pb-1">
                                     <span class="text-sm text-neutral-500">Reception</span>
                                     <span class="font-serif text-lg italic {% if rsvp.can_come_to_reception %}text-emerald-600{% else %}text-rose-600{% endif %}">
-                                        {% if rsvp.can_come_to_reception %}Attending{% else %}Declined{% endif %}
+                                        {% if rsvp.can_come_to_reception %}
+                                            Attending
+                                        {% else %}
+                                            Declined
+                                        {% endif %}
                                     </span>
                                 </div>
                             {% endif %}
                         </div>
                     </div>
-
                     <!-- Plus One -->
                     {% if guest.allowed_plus_one %}
                         <div class="space-y-4">
@@ -52,7 +59,6 @@
                             {% endif %}
                         </div>
                     {% endif %}
-
                     <!-- Dietary -->
                     <div class="space-y-4">
                         <h3 class="text-xs font-bold tracking-widest uppercase text-emerald-900/40">Dietary</h3>
@@ -65,7 +71,6 @@
                             {% endfor %}
                         </div>
                     </div>
-
                     <!-- Accommodation -->
                     <div class="space-y-4">
                         <h3 class="text-xs font-bold tracking-widest uppercase text-emerald-900/40">Stay</h3>
@@ -80,30 +85,33 @@
                                         <div class="flex items-center justify-between text-sm">
                                             <span class="text-neutral-500 italic">Breakfast</span>
                                             <span class="font-serif italic {% if rsvp.morning_meal_day_after_reception %}text-emerald-600{% else %}text-neutral-300{% endif %}">
-                                                {% if rsvp.morning_meal_day_after_reception %}Yes, please{% else %}No, thanks{% endif %}
+                                                {% if rsvp.morning_meal_day_after_reception %}
+                                                    Yes, please
+                                                {% else %}
+                                                    No, thanks
+                                                {% endif %}
                                             </span>
                                         </div>
                                         <div class="flex items-center justify-between text-sm">
                                             <span class="text-neutral-500 italic">Evening Pizzas</span>
                                             <span class="font-serif italic {% if rsvp.evening_meal_day_after_reception %}text-emerald-600{% else %}text-neutral-300{% endif %}">
-                                                {% if rsvp.evening_meal_day_after_reception %}Yes, please{% else %}No, thanks{% endif %}
+                                                {% if rsvp.evening_meal_day_after_reception %}
+                                                    Yes, please
+                                                {% else %}
+                                                    No, thanks
+                                                {% endif %}
                                             </span>
                                         </div>
                                     </div>
                                 </div>
                             {% endif %}
-
                         </div>
                     </div>
-
                     <!-- Song Suggestion -->
                     <div class="space-y-4">
                         <h3 class="text-xs font-bold tracking-widest uppercase text-emerald-900/40">Song Request</h3>
-                        <p class="font-serif text-lg italic text-emerald-900">
-                            {{ rsvp.song_suggestion|default:"None" }}
-                        </p>
+                        <p class="font-serif text-lg italic text-emerald-900">{{ rsvp.song_suggestion|default:"None" }}</p>
                     </div>
-
                     <!-- Day After Suggestion -->
                     {% if rsvp.day_after_reception_suggestion %}
                         <div class="space-y-4">
@@ -112,11 +120,15 @@
                         </div>
                     {% endif %}
                 </div>
-
                 <div class="pt-8 mt-10 border-t border-emerald-50 flex items-center justify-between">
                     <p class="text-xs italic text-neutral-400">Last updated {{ rsvp.modified|date:"jS F Y" }}</p>
                     <div class="flex items-center text-xs font-bold tracking-widest uppercase text-emerald-600">
-                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2.5" stroke="currentColor" class="w-4 h-4 mr-2">
+                        <svg xmlns="http://www.w3.org/2000/svg"
+                             fill="none"
+                             viewBox="0 0 24 24"
+                             stroke-width="2.5"
+                             stroke="currentColor"
+                             class="w-4 h-4 mr-2">
                             <path stroke-linecap="round" stroke-linejoin="round" d="m4.5 12.75 6 6 9-13.5" />
                         </svg>
                         Information Saved
@@ -125,7 +137,12 @@
             {% else %}
                 <div class="py-12 text-center">
                     <div class="inline-flex items-center justify-center w-16 h-16 mb-6 rounded-full bg-amber-50 text-amber-500">
-                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-8 h-8">
+                        <svg xmlns="http://www.w3.org/2000/svg"
+                             fill="none"
+                             viewBox="0 0 24 24"
+                             stroke-width="1.5"
+                             stroke="currentColor"
+                             class="w-8 h-8">
                             <path stroke-linecap="round" stroke-linejoin="round" d="M12 9v3.75m9-.75a9 9 0 1 1-18 0 9 9 0 0 1 18 0Zm-9 3.75h.008v.008H12v-.008Z" />
                         </svg>
                     </div>

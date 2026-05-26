@@ -73,7 +73,9 @@ class Command(BaseCommand):
         date = input("Enter the date (YYYY-MM-DD): ")
         ceremony_start_time = input("Enter the ceremony starting time (HH:MM): ")
         reception_start_time = input("Enter the reception starting time (HH:MM): ")
-        evening_only_start_time = input("Enter the evening only starting time (HH:MM): ")
+        evening_only_start_time = input(
+            "Enter the evening only starting time (HH:MM): "
+        )
 
         wedding = Wedding.objects.create(
             bride=bride,

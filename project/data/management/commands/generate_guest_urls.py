@@ -1,10 +1,10 @@
 import urllib.parse
 
+import qrcode
 from django.core.management.base import BaseCommand
+from qrcode.constants import ERROR_CORRECT_M
 
 from project.data.models import Person
-import qrcode
-from qrcode.constants import ERROR_CORRECT_M
 
 
 class Command(BaseCommand):

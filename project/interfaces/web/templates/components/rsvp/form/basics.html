@@ -37,7 +37,7 @@
             </section>
         {% endif %}
         <section class="pt-6 space-y-6 border-t border-emerald-100">
-            <h3 class="mb-4 font-sans text-sm text-lg font-medium tracking-widest uppercase text-emerald-900">Attendance</h3>
+            <h3 class="mb-4 font-sans text-lg font-medium tracking-widest uppercase text-emerald-900">Attendance</h3>
             <div class="space-y-4">
                 {% if invited_to_ceremony %}
                     {% form_field type="checkbox" name="can_come_to_ceremony" label="Will you attend the ceremony at {venue}?" venue=ceremony_venue value=can_come_to_ceremony errors=form_errors.can_come_to_ceremony help_text="The service starts at {time} at {venue.address_line1}, {venue.postcode}" time=ceremony_start_time|time:"H:i" %}
@@ -48,7 +48,7 @@
             </div>
         </section>
         <section class="pt-6 space-y-6 border-t border-emerald-100">
-            {% form_field  name="song_suggestion" label="Suggest a song for the evening!" value=song_suggestion placeholder="Livin’ la Vida Loca - Ricky Martin" %}
+            {% form_field name="song_suggestion" label="Suggest a song for the evening!" value=song_suggestion placeholder="Livin’ la Vida Loca - Ricky Martin" %}
         </section>
         <div class="flex justify-end pt-8">{% button text="Continue to Dietary" type="submit" %}</div>
     </div>

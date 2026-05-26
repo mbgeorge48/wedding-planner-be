@@ -66,7 +66,7 @@
                      x-transition:enter-start="opacity-0 transform -translate-y-4"
                      x-transition:enter-end="opacity-100 transform translate-y-0"
                      class="pt-6 pl-8 space-y-8 border-l-2 border-amber-600/20">
-                     <div class="space-y-4">
+                    <div class="space-y-4">
                         <p class="text-sm font-serif italic text-emerald-900 leading-relaxed">
                             If you're staying the night after the reception, we'd love to have you join us for some more fun the next day! We know some of you will be travelling a long way and want to make the most of your trip, so we're planning to have some food and activities on Saturday. If you're around, we'd love for you to join us!
                         </p>
@@ -77,10 +77,9 @@
                             {% form_field type="checkbox" name="morning_meal_day_after_reception" label="Saturday Morning English Breakfast (£12pp)" value=morning_meal_day_after_reception %}
                             {% form_field type="checkbox" name="evening_meal_day_after_reception" label="Saturday Evening Pizza (£10pp)" value=evening_meal_day_after_reception %}
                         </div>
-                     </div>
-                     {% form_field type="textarea" name="day_after_reception_suggestion" label="Any suggestions for Saturday?" value=day_after_reception_suggestion placeholder="e.g. A walk in the hills, a trip to a local castle..." %}
-                     </div>
-
+                    </div>
+                    {% form_field type="textarea" name="day_after_reception_suggestion" label="Any suggestions for Saturday?" value=day_after_reception_suggestion placeholder="e.g. A walk in the hills, a trip to a local castle..." %}
+                </div>
             </section>
         {% endif %}
         <div class="flex justify-end pt-8">{% button text="Submit RSVP" type="submit" %}</div>

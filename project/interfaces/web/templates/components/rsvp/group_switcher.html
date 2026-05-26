@@ -18,7 +18,8 @@
                         <form method="post" action="{% url 'rsvp_switch' %}">
                             {% csrf_token %}
                             <input type="hidden" name="guest_id" value="{{ member.id }}">
-                            <button type="submit" class="text-xs font-sans font-bold tracking-widest uppercase text-emerald-700 hover:text-amber-700 transition-colors">
+                            <button type="submit"
+                                    class="text-xs font-sans font-bold tracking-widest uppercase text-emerald-700 hover:text-amber-700 transition-colors">
                                 Switch
                             </button>
                         </form>
