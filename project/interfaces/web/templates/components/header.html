@@ -1,10 +1,12 @@
 {% url 'home' as home_url %}
 {% url 'rsvp' as rsvp_url %}
 {% url 'schedule' as schedule_url %}
-<header class="sticky top-0 z-50 px-6 py-4 text-white border-b-2 shadow-xl bg-emerald-900 border-amber-600">
+<header class="sticky top-0 z-50 px-4 md:px-6 py-4 text-white border-b-2 shadow-xl bg-emerald-900 border-amber-600">
     <div class="container flex flex-col items-center justify-between gap-4 mx-auto md:flex-row">
-        <div class="font-serif text-xl italic tracking-widest text-amber-200">{{ bride }} & {{ groom }}</div>
-        <nav class="flex space-x-8 text-xs uppercase tracking-[0.2em] font-sans font-semibold"
+        <div class="font-serif text-lg md:text-xl italic tracking-widest text-amber-200 text-center md:text-left">
+            {{ bride }} & {{ groom }}
+        </div>
+        <nav class="flex space-x-4 sm:space-x-8 uppercase tracking-[0.2em] text-md font-sans font-semibold"
              x-data="{ path: window.location.pathname }">
             <a href="{{ home_url }}"
                class="relative transition duration-300 group"

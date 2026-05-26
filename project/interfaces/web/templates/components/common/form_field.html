@@ -1,38 +1,39 @@
 <div class="flex flex-col space-y-2 accent-emerald-900 {{ extra_classes }}">
     {% if type == "checkbox" %}
         {# CHECKBOX LAYOUT #}
-        <label class="flex items-center gap-3 p-4 border {% if errors %}border-red-300 bg-red-50/30{% else %}border-emerald-50 hover:bg-emerald-50/50{% endif %} rounded-md transition cursor-pointer group">
+        <label class="flex items-center gap-4 p-4 md:p-5 border {% if errors %}border-red-300 bg-red-50/30{% else %}border-emerald-50 hover:bg-emerald-50/50{% endif %} rounded-md transition cursor-pointer group min-h-[64px]">
             <input type="checkbox"
                    name="{{ name }}"
                    id="id_{{ name }}"
                    value="{{ value|default:'true' }}"
                    {% if value == True or checked %}checked{% endif %}
                    {% if attrs.attrs %}x-model="{{ attrs.attrs }}"{% elif attrs.x_model %}x-model="{{ attrs.x_model }}"{% endif %}
-                   class="w-5 h-5 transition rounded cursor-pointer border-emerald-300 text-amber-600 focus:ring-amber-500"
+                   {% if attrs.x_required %}:required="{{ attrs.x_required }}"{% endif %}
+                   class="w-6 h-6 md:w-5 md:h-5 transition rounded cursor-pointer border-emerald-300 text-amber-600 focus:ring-amber-500 shrink-0"
                    {% if required %}required{% endif %} />
             <div class="flex flex-col">
-                <span class="font-serif italic transition text-emerald-800 group-hover:text-emerald-900">{{ label }}</span>
+                <span class="font-serif italic transition text-emerald-800 group-hover:text-emerald-900 leading-tight">{{ label }}</span>
                 {% if help_text %}
-                    <p class="text-xs text-neutral-500 font-sans title-case tracking-widest mt-0.5">{{ help_text }}</p>
+                    <p class="text-[10px] md:text-xs text-neutral-500 font-sans title-case tracking-widest mt-1">{{ help_text }}</p>
                 {% endif %}
             </div>
         </label>
     {% elif type == "radio" %}
         {# RADIO GROUP LAYOUT #}
         {% if label %}
-            <span class="mb-1 text-xs font-semibold tracking-widest uppercase text-emerald-900">{{ label }}</span>
+            <span class="mb-1 text-xs font-semibold tracking-widest uppercase text-emerald-900/50">{{ label }}</span>
         {% endif %}
-        <div class="space-y-3">
+        <div class="space-y-4 md:space-y-3">
             {% for choice_val, choice_label in choices %}
-                <label class="flex items-center gap-3 p-4 transition bg-white border rounded-md shadow-sm cursor-pointer border-emerald-100 hover:border-amber-600 group">
+                <label class="flex items-center gap-4 p-4 md:p-5 transition bg-white border rounded-md shadow-sm cursor-pointer border-emerald-100 hover:border-amber-600 group min-h-[60px]">
                     <input type="radio"
                            name="{{ name }}"
                            value="{{ choice_val }}"
                            {% if value == choice_val %}checked{% endif %}
                            {% if attrs.attrs %}x-model="{{ attrs.attrs }}"{% elif attrs.x_model %}x-model="{{ attrs.x_model }}"{% endif %}
-                           class="w-4 h-4 text-amber-600 focus:ring-amber-500"
+                           class="w-6 h-6 md:w-4 md:h-4 text-amber-600 focus:ring-amber-500 shrink-0"
                            {% if required %}required{% endif %} />
-                    <span class="font-serif italic transition text-emerald-800 group-hover:text-emerald-900">{{ choice_label }}</span>
+                    <span class="font-serif italic transition text-emerald-800 group-hover:text-emerald-900 leading-tight">{{ choice_label }}</span>
                 </label>
             {% endfor %}
         </div>

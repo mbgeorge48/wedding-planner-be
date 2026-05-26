@@ -26,10 +26,10 @@
                      x-transition:enter="transition ease-out duration-200"
                      x-transition:enter-start="opacity-0 transform -translate-y-2"
                      x-transition:enter-end="opacity-100 transform translate-y-0"
-                     class="grid grid-cols-1 gap-6 pt-6 border-t md:grid-cols-2 border-emerald-100">
+                     class="grid grid-cols-1 gap-4 md:gap-6 pt-6 border-t md:grid-cols-2 border-emerald-100">
                     {% form_field name="plus_one_firstname" label="Plus One First Name" value=plus_one_firstname errors=form_errors.plus_one_firstname %}
                     {% form_field name="plus_one_lastname" label="Plus One Last Name" value=plus_one_lastname errors=form_errors.plus_one_lastname %}
-                    <div class="grid grid-cols-1 gap-6 md:col-span-2 md:grid-cols-2">
+                    <div class="grid grid-cols-1 gap-4 md:gap-6 md:col-span-2 md:grid-cols-2">
                         {% form_field name="plus_one_email" label="Plus One Email" type="email" value=plus_one_email errors=form_errors.plus_one_email %}
                         {% form_field name="plus_one_phone" label="Plus One Phone" type="tel" value=plus_one_phone errors=form_errors.plus_one_phone %}
                     </div>

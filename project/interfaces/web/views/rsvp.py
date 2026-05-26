@@ -357,9 +357,9 @@ class DietaryView(RSVPMixin):
             rsvp_data["selected_other_detail"] = selected_other_detail
             rsvp_data["plus_one_selected_categories"] = plus_one_selected_categories
             if rsvp.plus_one:
-                rsvp_data["plus_one_selected_other_detail"] = (
-                    plus_one_selected_other_detail
-                )
+                rsvp_data[
+                    "plus_one_selected_other_detail"
+                ] = plus_one_selected_other_detail
 
         data = {
             "guest_first_name": self.guest.firstname,
