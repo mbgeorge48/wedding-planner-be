@@ -4,6 +4,7 @@ import os
 from django.core.management.base import BaseCommand
 
 from project.actions.person import create_person
+from project.data import models
 
 required_keys = [
     "firstname",
@@ -16,6 +17,7 @@ required_keys = [
     "allowed_to_stay_onsite",
     "allowed_to_stay_in_yurt",
     "allowed_to_stay_night_after_reception",
+    "postal_index",
 ]
 
 boolean_keys = [
@@ -29,7 +31,7 @@ boolean_keys = [
 
 
 class Command(BaseCommand):
-    help = "Upload a CSV guest list"
+    help = "Upload a CSV guest list and automatically group them"
 
     def add_arguments(self, parser):
         parser.add_argument("file_name", type=str)
@@ -47,8 +49,11 @@ class Command(BaseCommand):
             self.stdout.write(self.style.ERROR(f"CSV file not found: {file_name}"))
             raise SystemExit
 
+        # Cache groups created during this run to avoid multiple lookups
+        group_cache = {}
+
         guests = []
-        with open(file_name, mode="r") as file:
+        with open(file_name, mode="r", encoding="utf-8-sig") as file:
             csv_file = csv.DictReader(file)
             if not csv_file.fieldnames:
                 return
@@ -56,43 +61,78 @@ class Command(BaseCommand):
             # Clean the header names
             headers = csv_file.fieldnames = [h.strip() for h in csv_file.fieldnames]
 
+            missing = set(required_keys) - set(headers)
+            if missing:
+                self.stdout.write(self.style.ERROR("Missing headings in CSV:"))
+                self.stdout.write(self.style.WARNING(f"{', '.join(missing)}"))
+                self.stdout.write(
+                    self.style.NOTICE(
+                        "Ensure all headings are supplied. The order of the keys does not matter. 'phone' is optional."
+                    )
+                )
+                raise SystemExit
+
             for line in csv_file:
                 cleaned = {}
                 for k, v in line.items():
-                    key = k.strip()  # clean the key
+                    key = k.strip()
+                    value = v.strip() if isinstance(v, str) else v
 
-                    # Clean string values
-                    if isinstance(v, str):
-                        value = v.strip()
-                    else:
-                        value = v
-
-                    # Convert boolean keys
                     if key in boolean_keys:
-                        cleaned[key] = (
-                            value.lower() == "y" if isinstance(value, str) else False
-                        )
+                        cleaned[key] = value.lower() in ["y", "yes", "true", "1"]
                     else:
                         cleaned[key] = value
 
                 guests.append(cleaned)
 
-        missing = set(required_keys) - set(headers)
-        if missing:
-            print("Missing keys:", missing)
-            self.stdout.write(
-                self.style.ERROR(
-                    "Ensure all headings are supplied. The order of the keys does not matter",
-                )
-            )
-            self.stdout.write(self.style.WARNING(f"Missing: {', '.join(missing)}"))
-            raise SystemExit
+        self.stdout.write(
+            self.style.SUCCESS(f"Found {len(guests)} guests. Starting import...")
+        )
 
         for guest in guests:
+            postal_index = guest.pop("postal_index", None)
+
+            # Handle Grouping
+            group = None
+            if postal_index:
+                if postal_index not in group_cache:
+                    group = models.PersonGroup.objects.create()
+                    group_cache[postal_index] = group
+                else:
+                    group = group_cache[postal_index]
+
+            guest["group"] = group
+
             try:
-                person, created = create_person(update_existing=force_update, **guest)
-                print(
-                    f"{person.firstname} {person.lastname} => {'created' if created else 'updated'}"
+                # Extract core fields required by action
+                firstname = guest.pop("firstname")
+                lastname = guest.pop("lastname")
+                email = guest.pop("email")
+                person_type = guest.pop("type")
+
+                person, created = create_person(
+                    firstname=firstname,
+                    lastname=lastname,
+                    email=email,
+                    type=person_type,
+                    update_existing=force_update,
+                    **guest,
                 )
-            except TypeError as e:
-                print(e, f"function called with {guest}")
+
+                status = "created" if created else "updated"
+                group_status = f" (Group: {postal_index})" if postal_index else ""
+                self.stdout.write(
+                    f"✓ {person.firstname} {person.lastname} => {status}{group_status}"
+                )
+
+            except Exception as e:
+                self.stdout.write(
+                    self.style.ERROR(
+                        f"✗ Error importing {guest.get('firstname', 'Unknown')}: {e}"
+                    )
+                )
+
+        self.stdout.write(self.style.SUCCESS("-" * 40))
+        self.stdout.write(
+            self.style.SUCCESS(f"Import complete. Groups processed: {len(group_cache)}")
+        )
