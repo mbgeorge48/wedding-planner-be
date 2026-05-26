@@ -16,7 +16,7 @@
                          x-transition:enter="transition ease-out duration-200"
                          x-transition:enter-start="opacity-0 transform -translate-y-2"
                          x-transition:enter-end="opacity-100 transform translate-y-0">
-                        {% form_field type="textarea" name=prefix|add:"dietary_other_detail" value=selected_other_detail placeholder="Please provide details..." rows=2 required=True %}
+                        {% form_field type="textarea" name=prefix|add:"dietary_other_detail" value=selected_other_detail placeholder="Please provide details..." rows=2 x_required="otherSelected" %}
                     </div>
                 {% else %}
                     {% form_field type="checkbox" name=prefix|add:"dietary_categories" value=val label=label checked=val|in_list:selected_categories %}

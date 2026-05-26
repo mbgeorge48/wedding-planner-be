@@ -47,6 +47,7 @@
                   rows="{{ attrs.rows|default:3 }}"
                   placeholder="{{ attrs.placeholder|default:'' }}"
                   {% if attrs.attrs %}x-model="{{ attrs.attrs }}"{% elif attrs.x_model %}x-model="{{ attrs.x_model }}"{% endif %}
+                  {% if attrs.x_required %}:required="{{ attrs.x_required }}"{% endif %}
                   class="w-full px-4 py-2 border-b-2 {% if errors %}border-red-300{% else %}border-emerald-50 focus:border-amber-600{% endif %} transition bg-emerald-50/10 text-emerald-900 text-sm font-serif"
                   {% if required %}required{% endif %}>{{ value|default:'' }}</textarea>
     {% else %}
