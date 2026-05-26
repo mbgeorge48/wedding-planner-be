@@ -13,6 +13,7 @@ https://docs.djangoproject.com/en/5.2/ref/settings/
 import os
 from pathlib import Path
 
+import dj_database_url
 from dotenv import load_dotenv
 
 # Load environment variables from .env file
@@ -105,14 +106,11 @@ WSGI_APPLICATION = "project.wsgi.application"
 # https://docs.djangoproject.com/en/5.2/ref/settings/#databases
 
 DATABASES = {
-    "default": {
-        "ENGINE": "django.db.backends.postgresql",
-        "NAME": os.getenv("DB_NAME", os.getenv("PGDATABASE", "weddingplanner")),
-        "USER": os.getenv("DB_USER", os.getenv("PGUSER", "mg")),
-        "PASSWORD": os.getenv("DB_PASSWORD", os.getenv("PGPASSWORD", "")),
-        "HOST": os.getenv("DB_HOST", os.getenv("PGHOST", "localhost")),
-        "PORT": os.getenv("DB_PORT", os.getenv("PGPORT", "5432")),
-    }
+    "default": dj_database_url.config(
+        default=f"postgres://{os.getenv('DB_USER', 'mg')}:{os.getenv('DB_PASSWORD', '')}@{os.getenv('DB_HOST', 'localhost')}:{os.getenv('DB_PORT', '5432')}/{os.getenv('DB_NAME', 'weddingplanner')}",
+        conn_max_age=600,
+        conn_health_checks=True,
+    )
 }
 
 
