@@ -86,18 +86,19 @@ TEMPLATES = [
                 "django.template.context_processors.request",
                 "django.contrib.auth.context_processors.auth",
                 "django.contrib.messages.context_processors.messages",
+                "project.settings.debug_context_processor",
             ],
         },
     },
 ]
 
+
+def debug_context_processor(request):
+    return {"debug": DEBUG}
+
+
 WSGI_APPLICATION = "project.wsgi.application"
 
-STATIC_URL = "/static/"
-
-STATICFILES_DIRS = [
-    BASE_DIR / "project" / "interfaces" / "web" / "static",
-]
 
 # Database
 # https://docs.djangoproject.com/en/5.2/ref/settings/#databases
@@ -148,8 +149,15 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/5.2/howto/static-files/
 
-STATIC_URL = "static/"
+STATIC_URL = "/static/"
+STATICFILES_DIRS = [
+    BASE_DIR / "project" / "interfaces" / "web" / "static",
+]
 STATIC_ROOT = BASE_DIR / "static_root"
+
+# WhiteNoise storage to handle compression and caching in production
+if not DEBUG:
+    WHITENOISE_STORAGE = "whitenoise.storage.CompressedManifestStaticFilesStorage"
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.2/ref/settings/#default-auto-field
