@@ -7,8 +7,8 @@ media
 static_root/
 
 # Environment variables
-.env
 
+.env
 # Python
 __pycache__/
 *.py[cod]
@@ -39,6 +39,7 @@ wheels/
 .idea/
 *.swp
 *.swo
+.ds_store
 
 # Project specific
 *.csv
@@ -46,3 +47,4 @@ favicon.svg
 qr_codes/
 *.png
 faqs.json
+*.zip
