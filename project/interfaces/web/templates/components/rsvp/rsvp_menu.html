@@ -1,16 +1,16 @@
 {% url 'rsvp_basics' as rsvp_basics_url %}
 {% url 'rsvp_dietary' as rsvp_dietary_url %}
 {% url 'rsvp_accommodation' as rsvp_accommodation_url %}
-<div class="w-full max-w-4xl mx-auto animate-fade-in px-2">
-    <div class="mb-10 md:mb-12 text-center">
-        <h1 class="mb-2 md:mb-3 font-serif text-3xl md:text-4xl text-emerald-900">Your Invitation</h1>
-        <p class="font-serif text-base md:text-lg italic text-amber-600">Please complete each section below</p>
+<div class="w-full max-w-4xl px-2 mx-auto animate-fade-in">
+    <div class="mb-10 text-center md:mb-12">
+        <h1 class="mb-2 font-serif text-3xl md:mb-3 md:text-4xl text-emerald-900">Hello {{ guest.firstname }}</h1>
+        <p class="font-serif text-base italic md:text-lg text-amber-600">Please complete each section below</p>
     </div>
     <div class="grid grid-cols-1 gap-4 md:gap-6 md:grid-cols-2 lg:grid-cols-3">
         <!-- Personal Details -->
         <a href="{{ rsvp_basics_url }}"
            class="flex flex-col items-center p-6 md:p-8 space-y-4 text-center transition-all duration-300 bg-white border shadow-sm md:shadow-md group rounded-xl border-emerald-100 hover:border-amber-500 hover:-translate-y-1 active:scale-[0.98]">
-            <div class="p-3 md:p-4 transition-colors duration-300 rounded-full bg-emerald-50 text-emerald-900 group-hover:bg-amber-600 group-hover:text-white">
+            <div class="p-3 transition-colors duration-300 rounded-full md:p-4 bg-emerald-50 text-emerald-900 group-hover:bg-amber-600 group-hover:text-white">
                 <svg xmlns="http://www.w3.org/2000/svg"
                      fill="none"
                      viewBox="0 0 24 24"
