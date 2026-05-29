@@ -43,7 +43,9 @@ class Person(models.Model):
 
     invited_to_ceremony = models.BooleanField(default=False)
     invited_to_reception = models.BooleanField(default=False)
+    evening_only_reception = models.BooleanField(default=False)
 
+    # unused
     children = models.IntegerField(default=0)
     pets = models.IntegerField(default=0)
 

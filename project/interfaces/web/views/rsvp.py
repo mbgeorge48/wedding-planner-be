@@ -268,7 +268,7 @@ class BasicsView(RSVPMixin):
         rsvp = models.RSVP.objects.filter(guest=self.guest).first()
 
         reception_start_time = self.wedding.reception_start_time
-        if not self.guest.invited_to_ceremony and self.guest.invited_to_reception:
+        if self.guest.invited_to_reception and self.guest.evening_only_reception:
             reception_start_time = self.wedding.evening_only_start_time
 
         data = {
