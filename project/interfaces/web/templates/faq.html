@@ -1,0 +1,57 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}
+    FAQs | Our Wedding
+{% endblock title %}
+
+{% block content %}
+    <main id="faq"
+          class="flex flex-col items-center justify-start min-h-screen p-4 pt-12 bg-stone-50">
+        <div class="w-full max-w-3xl space-y-8 animate-fade-in">
+            <div class="space-y-4 text-center">
+                <h1 class="font-serif text-4xl md:text-5xl text-emerald-900">Frequently Asked Questions</h1>
+                <p class="font-serif text-lg italic text-amber-600">Everything you need to know</p>
+            </div>
+
+            <div class="p-8 md:p-12 space-y-8 bg-white border rounded-lg shadow-2xl border-emerald-100/50">
+                <div class="space-y-6">
+                    {% for faq in faqs %}
+                        <div x-data="{ open: false }" class="border-b border-emerald-50 pb-6 last:border-0 last:pb-0">
+                            <button @click="open = !open"
+                                    class="flex items-center justify-between w-full text-left group focus:outline-none">
+                                <h3 class="font-serif text-xl font-medium text-emerald-900 group-hover:text-amber-700 transition-colors">
+                                    {{ faq.question }}
+                                </h3>
+                                <span class="ml-4 flex-shrink-0 text-amber-600 transform transition-transform duration-300"
+                                      :class="{ 'rotate-180': open }">
+                                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+                                    </svg>
+                                </span>
+                            </button>
+                            <div x-show="open"
+                                 x-transition:enter="transition ease-out duration-200"
+                                 x-transition:enter-start="opacity-0 transform -translate-y-2"
+                                 x-transition:enter-end="opacity-100 transform translate-y-0"
+                                 class="mt-4">
+                                <div class="font-serif text-lg leading-relaxed text-emerald-800 space-y-4">
+                                    {{ faq.answer|linebreaks }}
+                                </div>
+                            </div>
+                        </div>
+                    {% empty %}
+                        <div class="text-center py-12">
+                            <p class="font-serif italic text-emerald-800">No questions yet! Check back soon.</p>
+                        </div>
+                    {% endfor %}
+                </div>
+            </div>
+
+            <div class="mt-8 text-center">
+                <a href="{% url 'home' %}"
+                   class="font-sans text-sm font-semibold tracking-widest uppercase transition text-emerald-800 hover:text-amber-700">Back to Home</a>
+            </div>
+        </div>
+    </main>
+{% endblock content %}

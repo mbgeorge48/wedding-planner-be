@@ -1,3 +1,4 @@
+from .faq import FAQView
 from .home import HomeView, SignoutView
 from .rsvp import (  # RSVPFormView,
     AccommodationView,
@@ -22,4 +23,5 @@ __all__ = [
     "DietaryView",
     "AccommodationView",
     "SwitchGuestView",
+    "FAQView",
 ]

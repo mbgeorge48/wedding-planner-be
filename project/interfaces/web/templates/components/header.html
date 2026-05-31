@@ -1,6 +1,7 @@
 {% url 'home' as home_url %}
 {% url 'rsvp' as rsvp_url %}
 {% url 'schedule' as schedule_url %}
+{% url 'faq' as faq_url %}
 <header class="sticky top-0 z-50 px-4 md:px-6 py-4 text-white border-b-2 shadow-xl bg-emerald-900 border-amber-600">
     <div class="container flex flex-col items-center justify-between gap-4 mx-auto md:flex-row">
         <div class="font-serif text-lg md:text-xl italic tracking-widest text-amber-200 text-center md:text-left">
@@ -31,6 +32,14 @@
                 <span x-cloak
                       class="absolute -bottom-1 left-0 w-full h-0.5 bg-amber-500 transform transition-transform duration-300"
                       :class="path === '{{ schedule_url }}' ? 'scale-x-100' : 'scale-x-0 group-hover:scale-x-100'"></span>
+            </a>
+            <a href="{{ faq_url }}"
+               class="relative transition duration-300 group"
+               :class="path === '{{ faq_url }}' ? 'text-amber-400' : 'text-white/80 hover:text-white'">
+                FAQ
+                <span x-cloak
+                      class="absolute -bottom-1 left-0 w-full h-0.5 bg-amber-500 transform transition-transform duration-300"
+                      :class="path === '{{ faq_url }}' ? 'scale-x-100' : 'scale-x-0 group-hover:scale-x-100'"></span>
             </a>
         </nav>
     </div>
