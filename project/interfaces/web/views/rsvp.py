@@ -1,17 +1,14 @@
-from typing import TYPE_CHECKING, cast
+from typing import cast
 
 from django.core import exceptions
 from django.shortcuts import redirect, render
 from django.views import View
 
-from project.data import models
-
-if TYPE_CHECKING:
-    from project.data.models.person import Person
-    from project.data.models.venue import Venue
-    from project.data.models.wedding import Wedding
-
 from project.actions import rsvp as rsvp_actions
+from project.data import models
+from project.data.models.person import Person
+from project.data.models.venue import Venue
+from project.data.models.wedding import Wedding
 from project.interfaces.web.forms.accommodation import AccommodationForm
 from project.interfaces.web.forms.basics import BasicsForm
 from project.interfaces.web.forms.dietary import DietaryForm
@@ -116,17 +113,11 @@ class RSVPView(RSVPMixin):
 
         request.session["guest_code"] = code
 
-        guest = None
-        if code:
-            guest = models.Person.objects.filter(invite_code=code).first()
-            if (
-                isinstance(guest, models.Person)
-                and models.RSVP.objects.filter(guest=guest).exists()
-            ):
-                return redirect("rsvp")
+        if code and models.Person.objects.filter(invite_code=code).exists():
+            guest = models.Person.objects.filter(invite_code=code).get()
+            _, created = rsvp_actions.create_rsvp_for_guest(guest)
 
-        # If they haven't rsvpd yet then redirect, otherwise don't let them go to the main menu
-        return redirect("rsvp_basics")
+            return redirect("rsvp" if not created else "rsvp_basics")
 
 
 class SwitchGuestView(RSVPMixin):
@@ -144,94 +135,6 @@ class SwitchGuestView(RSVPMixin):
             request.session["guest_code"] = target_guest.invite_code
 
         return redirect("rsvp")
-
-
-# class RSVPManageView(View):
-#     template_name = "rsvp_form.html"
-
-#     def get(self, request):
-#         code = request.session.get("guest_code")
-#         guest = models.Person.objects.filter(invite_code=code).first()
-#         wedding = models.Wedding.objects.first()
-
-#         if not guest or not (
-#             wedding and wedding.ceremony_venue and wedding.reception_venue
-#         ):
-#             return redirect("rsvp")
-
-#         data = {
-#             "invited_to_ceremony": guest.invited_to_ceremony,
-#             "invited_to_reception": guest.invited_to_reception,
-#             "allowed_plus_one": guest.allowed_plus_one,
-#             "allowed_to_stay_onsite": guest.allowed_to_stay_onsite,
-#             "allowed_to_stay_in_yurt": guest.allowed_to_stay_in_yurt,
-#             "allowed_to_stay_night_after_reception": guest.allowed_to_stay_night_after_reception,
-#             "food_categories": models.Food.Category.choices,
-#             "ceremony_venue": wedding.ceremony_venue.name,
-#             "reception_venue": wedding.reception_venue.name,
-#         }
-#         return render(request, self.template_name, {"name": guest.firstname, **data})
-
-#     def post(self, request):
-
-#         # If user somehow POSTs without session, redirect
-#         code = request.session.get("guest_code")
-#         guest = models.Person.objects.filter(invite_code=code).first()
-#         if not guest:
-#             return redirect(
-#                 "rsvp",
-#                 {"error": "unable to find guest with that code/name combination"},
-#             )
-
-#         return render(
-#             request,
-#             self.template_name,
-#             {"name": guest.firstname},
-#         )
-
-
-# class RSVPContactView(View):
-#     template_name = "rsvp_form.html"
-
-#     def get(self, request):
-#         code = request.session.get("guest_code")
-#         guest = models.Person.objects.filter(invite_code=code).first()
-#         wedding = models.Wedding.objects.first()
-
-#         if not guest or not (
-#             wedding and wedding.ceremony_venue and wedding.reception_venue
-#         ):
-#             return redirect("rsvp")
-
-#         data = {
-#             "invited_to_ceremony": guest.invited_to_ceremony,
-#             "invited_to_reception": guest.invited_to_reception,
-#             "allowed_plus_one": guest.allowed_plus_one,
-#             "allowed_to_stay_onsite": guest.allowed_to_stay_onsite,
-#             "allowed_to_stay_in_yurt": guest.allowed_to_stay_in_yurt,
-#             "allowed_to_stay_night_after_reception": guest.allowed_to_stay_night_after_reception,
-#             "food_categories": models.Food.Category.choices,
-#             "ceremony_venue": wedding.ceremony_venue.name,
-#             "reception_venue": wedding.reception_venue.name,
-#         }
-#         return render(request, self.template_name, {"name": guest.firstname, **data})
-
-#     def post(self, request):
-
-#         # If user somehow POSTs without session, redirect
-#         code = request.session.get("guest_code")
-#         guest = models.Person.objects.filter(invite_code=code).first()
-#         if not guest:
-#             return redirect(
-#                 "rsvp",
-#                 {"error": "unable to find guest with that code/name combination"},
-#             )
-
-#         return render(
-#             request,
-#             self.template_name,
-#             {"name": guest.firstname},
-#         )
 
 
 class RSVPManageView(View):
@@ -357,9 +260,9 @@ class DietaryView(RSVPMixin):
             rsvp_data["selected_other_detail"] = selected_other_detail
             rsvp_data["plus_one_selected_categories"] = plus_one_selected_categories
             if rsvp.plus_one:
-                rsvp_data[
-                    "plus_one_selected_other_detail"
-                ] = plus_one_selected_other_detail
+                rsvp_data["plus_one_selected_other_detail"] = (
+                    plus_one_selected_other_detail
+                )
 
         data = {
             "guest_first_name": self.guest.firstname,

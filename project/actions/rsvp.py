@@ -3,6 +3,11 @@ from typing import Optional
 from project.data import models
 
 
+def create_rsvp_for_guest(guest: models.Person) -> tuple[models.RSVP, bool]:
+    rsvp, created = models.RSVP.objects.get_or_create(guest=guest)
+    return rsvp, created
+
+
 def update_rsvp_basics(
     *,
     guest: models.Person,
@@ -27,8 +32,7 @@ def update_rsvp_basics(
         guest.phone = phone
     guest.save()
 
-    # Get or create RSVP
-    rsvp, _ = models.RSVP.objects.get_or_create(guest=guest)
+    rsvp, _ = create_rsvp_for_guest(guest)
     rsvp.can_come_to_ceremony = can_come_to_ceremony
     rsvp.can_come_to_reception = can_come_to_reception
     if song_suggestion is not None:
