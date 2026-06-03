@@ -175,6 +175,7 @@ class BasicsView(RSVPMixin):
             reception_start_time = self.wedding.evening_only_start_time
 
         data = {
+            "step": "Basics",
             "guest_first_name": self.guest.firstname,
             "bride": self.bride.firstname,
             "groom": self.groom.firstname,
@@ -265,6 +266,7 @@ class DietaryView(RSVPMixin):
                 )
 
         data = {
+            "step": "Dietary",
             "guest_first_name": self.guest.firstname,
             "bride": self.bride.firstname,
             "groom": self.groom.firstname,
@@ -299,6 +301,7 @@ class AccommodationView(RSVPMixin):
         rsvp = models.RSVP.objects.get(guest=self.guest)
 
         data = {
+            "step": "Accommodation",
             "guest_first_name": self.guest.firstname,
             "bride": self.bride.firstname,
             "groom": self.groom.firstname,

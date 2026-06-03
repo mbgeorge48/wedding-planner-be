@@ -52,4 +52,4 @@ class Wedding(models.Model):
         super().save(*args, **kwargs)
 
     def __str__(self):
-        return f"{self.bride.firstname} & {self.groom.firstname}'s Wedding"
+        return f"{self.groom.firstname} & {self.bride.firstname}'s Wedding"

@@ -2,7 +2,7 @@
 {% load static %}
 
 {% block title %}
-    FAQs | Our Wedding
+    FAQs | {{ block.super }}
 {% endblock title %}
 
 {% block content %}
@@ -14,16 +14,16 @@
                 <p class="font-serif text-lg italic text-amber-600">Everything you need to know</p>
             </div>
 
-            <div class="p-8 md:p-12 space-y-8 bg-white border rounded-lg shadow-2xl border-emerald-100/50">
+            <div class="p-8 space-y-8 bg-white border rounded-lg shadow-2xl md:p-12 border-emerald-100/50">
                 <div class="space-y-6">
                     {% for faq in faqs %}
-                        <div x-data="{ open: false }" class="border-b border-emerald-50 pb-6 last:border-0 last:pb-0">
+                        <div x-data="{ open: false }" class="pb-6 border-b border-emerald-50 last:border-0 last:pb-0">
                             <button @click="open = !open"
                                     class="flex items-center justify-between w-full text-left group focus:outline-none">
-                                <h3 class="font-serif text-xl font-medium text-emerald-900 group-hover:text-amber-700 transition-colors">
+                                <h3 class="font-serif text-xl font-medium transition-colors text-emerald-900 group-hover:text-amber-700">
                                     {{ faq.question }}
                                 </h3>
-                                <span class="ml-4 flex-shrink-0 text-amber-600 transform transition-transform duration-300"
+                                <span class="flex-shrink-0 ml-4 transition-transform duration-300 transform text-amber-600"
                                       :class="{ 'rotate-180': open }">
                                     <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
@@ -35,13 +35,13 @@
                                  x-transition:enter-start="opacity-0 transform -translate-y-2"
                                  x-transition:enter-end="opacity-100 transform translate-y-0"
                                  class="mt-4">
-                                <div class="font-serif text-lg leading-relaxed text-emerald-800 space-y-4">
+                                <div class="space-y-4 font-serif text-lg leading-relaxed text-emerald-800">
                                     {{ faq.answer|linebreaks }}
                                 </div>
                             </div>
                         </div>
                     {% empty %}
-                        <div class="text-center py-12">
+                        <div class="py-12 text-center">
                             <p class="font-serif italic text-emerald-800">No questions yet! Check back soon.</p>
                         </div>
                     {% endfor %}

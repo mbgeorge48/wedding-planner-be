@@ -1,14 +1,11 @@
 {% extends "base.html" %}
 {% load static %}
 {% load button_tag %}
-{% block title %}
-    {{ bride }} & {{ groom }}'s Wedding
-{% endblock title %}
 {% block content %}
     <main id="home"
           class="relative flex items-center justify-center min-h-screen">
         <div class="absolute inset-0 overflow-hidden">
-            <div class="absolute inset-0 bg-cover bg-center blur-sm scale-110"
+            <div class="absolute inset-0 scale-110 bg-center bg-cover blur-sm"
                  style="background-image: url('{% static "background-image.jpg" %}')"></div>
         </div>
         <div class="absolute inset-0 pt-16 bg-black/20" />
