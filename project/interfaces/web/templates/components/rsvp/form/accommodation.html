@@ -9,7 +9,7 @@
             false
         {% endif %}
         }">
-        <section class="space-y-6">
+<section class="space-y-6">
             <div class="pb-4 border-b border-emerald-100">
                 <h2 class="text-2xl font-medium text-emerald-900">Accommodation</h2>
                 <p class="mt-1 font-sans text-sm italic text-neutral-500">Where would you like to rest your head?</p>
@@ -17,40 +17,66 @@
             <div class="space-y-6">
                 {% if allowed_to_stay_onsite %}
                     <div class="p-6 space-y-6 border rounded-lg bg-emerald-50/30 border-emerald-100/50">
-                        <p class="italic leading-relaxed text-emerald-900">
-                            Barnutopia has a mix of yurts and camping space. We'll do our best to allocate the yurts fairly and make sure no one shares outside their family or friend group.
-                        </p>
+                        
                         {% if allowed_to_stay_in_yurt %}
+                            <!-- Only shown if yurts are available to them -->
+                            <p class="italic leading-relaxed text-emerald-900">
+                                Barnutopia has a mix of yurts and camping space. We'll do our best to allocate the yurts fairly and make sure no one shares outside their family or friend group.
+                            </p>
                             {% form_field type="radio" name="staying_preference" value=staying_preference choices=staying_preference_choices label="Preference" required=True %}
                         {% else %}
+                            <!-- Yurts full, but onsite camping/offsite is still an option -->
                             <div class="p-4 italic border rounded-md bg-white/50 border-emerald-100">
-                                <p class="text-sm text-emerald-600">Right now all the yurts are assigned, but camping is still available!</p>
+                                <p class="text-sm font-medium text-emerald-600">Right now all the yurts are assigned, but camping is still available!</p>
                             </div>
+
+                            {% if hotels %}
+                            <div class="space-y-4">
+                                <p class="font-sans text-sm text-neutral-600">If you prefer not to camp, here are some lovely options nearby:</p>
+                                <ul class="grid grid-cols-1 gap-4 font-sans text-sm md:grid-cols-2">
+                                    {% for hotel in hotels %}
+                                        <li class="flex flex-col gap-1 p-3 bg-white border rounded border-emerald-100/50">
+                                            <div class="flex items-center gap-2 font-medium text-emerald-900">
+                                                <span class="w-1.5 h-1.5 bg-amber-600 rounded-full"></span>
+                                                {{ hotel.name }}
+                                            </div>
+                                            <div class="pl-3.5 text-xs text-neutral-500">
+                                                {{ hotel.address_line1 }}{% if hotel.address_line2 %}, {{ hotel.address_line2 }}{% endif %}, {{ hotel.city }}, {{ hotel.postcode }}
+                                            </div>
+                                            {% if hotel.website %}
+                                                <a href="{{ hotel.website }}" target="_blank" class="pl-3.5 text-xs text-amber-600 hover:text-amber-700 underline">Visit Website</a>
+                                            {% endif %}
+                                        </li>
+                                        {% endfor %}
+                                    </ul>
+                                </div>
+                                {% endif %}
+
                             {% form_field type="radio" name="staying_preference" value=staying_preference choices=staying_preference_choices_no_yurt label="Preference" required=True %}
                         {% endif %}
                     </div>
-                {% else %}
-                    <div class="space-y-6">
-                        <div class="p-6 border rounded-lg bg-emerald-50/30 border-emerald-100/50">
-                            <p class="mb-4 italic leading-relaxed text-emerald-900">
-                                Onsite yurts are currently fully booked. Here are some lovely options nearby:
-                            </p>
-                            <ul class="grid grid-cols-1 gap-4 font-sans text-sm md:grid-cols-2">
-                                <li class="flex items-center gap-2 text-emerald-800">
-                                    <span class="w-1.5 h-1.5 bg-amber-600 rounded-full"></span>
-                                    Premier Inn, Oswestry
+                {% elif hotels %}
+                    <!-- Not allowed to stay onsite at all -->
+                    <div class="p-6 space-y-4 border rounded-lg bg-emerald-50/30 border-emerald-100/50">
+                        <p class="italic leading-relaxed text-emerald-900">
+                            Onsite accommodation is currently fully booked. Here are some lovely hotel options nearby for your stay:
+                        </p>
+                        <ul class="grid grid-cols-1 gap-4 font-sans text-sm md:grid-cols-2">
+                            {% for hotel in hotels %}
+                                <li class="flex flex-col gap-1 p-3 bg-white border rounded border-emerald-100/50">
+                                    <div class="flex items-center gap-2 font-medium text-emerald-900">
+                                        <span class="w-1.5 h-1.5 bg-amber-600 rounded-full"></span>
+                                        {{ hotel.name }}
+                                    </div>
+                                    <div class="pl-3.5 text-xs text-neutral-500">
+                                        {{ hotel.address_line1 }}{% if hotel.address_line2 %}, {{ hotel.address_line2 }}{% endif %}, {{ hotel.city }}, {{ hotel.postcode }}
+                                    </div>
+                                    {% if hotel.website %}
+                                        <a href="{{ hotel.website }}" target="_blank" class="pl-3.5 text-xs text-amber-600 hover:text-amber-700 underline">Visit Website</a>
+                                    {% endif %}
                                 </li>
-                                <li class="flex items-center gap-2 text-emerald-800">
-                                    <span class="w-1.5 h-1.5 bg-amber-600 rounded-full"></span>
-                                    The Wynnstay Hotel
-                                </li>
-                                <li class="flex items-center gap-2 text-emerald-800">
-                                    <span class="w-1.5 h-1.5 bg-amber-600 rounded-full"></span>
-                                    Sweeney Hall Hotel
-                                </li>
-                            </ul>
-                        </div>
-                        {% form_field type="radio" name="staying_preference" value=staying_preference choices=staying_preference_choices_no_yurt label="Preference" required=True %}
+                            {% endfor %}
+                        </ul>
                     </div>
                 {% endif %}
             </div>
@@ -67,13 +93,13 @@
                      x-transition:enter-end="opacity-100 transform translate-y-0"
                      class="pt-6 pl-8 space-y-8 border-l-2 border-amber-600/20">
                     <div class="space-y-4">
-                        <p class="text-sm font-serif italic text-emerald-900 leading-relaxed">
+                        <p class="font-serif text-sm italic leading-relaxed text-emerald-900">
                             If you're staying the night after the reception, we'd love to have you join us for some more fun the next day! We know some of you will be travelling a long way and want to make the most of your trip, so we're planning to have some food and activities on Saturday. If you're around, we'd love for you to join us!
                         </p>
-                        <p class="text-sm font-serif italic text-emerald-900 leading-relaxed">
+                        <p class="font-serif text-sm italic leading-relaxed text-emerald-900">
                             The barn is happy to provide breakfast and an evening meal on the day after the reception for those who are staying. If you'd like to join us for either (or both!) of those, please let us know below so we can get an accurate headcount for the caterers. This part isn't free, however if you want to bring your own food there is a kitchenette you can use to store and heat it up!
                         </p>
-                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 md:gap-4">
+                        <div class="grid grid-cols-1 gap-3 sm:grid-cols-2 md:gap-4">
                             {% form_field type="checkbox" name="morning_meal_day_after_reception" label="Saturday Morning English Breakfast (£12pp)" value=morning_meal_day_after_reception %}
                             {% form_field type="checkbox" name="evening_meal_day_after_reception" label="Saturday Evening Pizza (£10pp)" value=evening_meal_day_after_reception %}
                         </div>

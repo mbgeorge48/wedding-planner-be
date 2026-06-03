@@ -181,6 +181,7 @@ class BasicsView(RSVPMixin):
             "groom": self.groom.firstname,
             "invited_to_ceremony": self.guest.invited_to_ceremony,
             "invited_to_reception": self.guest.invited_to_reception,
+            "evening_only_reception": self.guest.evening_only_reception,
             "allowed_plus_one": self.guest.allowed_plus_one,
             "ceremony_venue": self.ceremony_venue,
             "reception_venue": self.reception_venue,
@@ -318,6 +319,7 @@ class AccommodationView(RSVPMixin):
                 c for c in models.RSVP.StayingPreferences.choices if c[0] != "YURT"
             ],
             "meal_choices": models.RSVP.DayAfterReceptionMeal.choices,
+            "hotels": models.Venue.objects.filter(type=models.Venue.Type.HOTEL),
         }
 
         return render(request, "components/rsvp/form/accommodation.html", data)
