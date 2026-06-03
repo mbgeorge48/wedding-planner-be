@@ -1,10 +1,8 @@
 {% extends "base.html" %}
 {% load static %}
-
 {% block title %}
     FAQs | {{ block.super }}
 {% endblock title %}
-
 {% block content %}
     <main id="faq"
           class="flex flex-col items-center justify-start min-h-screen p-4 pt-12 bg-stone-50">
@@ -13,11 +11,11 @@
                 <h1 class="font-serif text-4xl md:text-5xl text-emerald-900">Frequently Asked Questions</h1>
                 <p class="font-serif text-lg italic text-amber-600">Everything you need to know</p>
             </div>
-
             <div class="p-8 space-y-8 bg-white border rounded-lg shadow-2xl md:p-12 border-emerald-100/50">
                 <div class="space-y-6">
                     {% for faq in faqs %}
-                        <div x-data="{ open: false }" class="pb-6 border-b border-emerald-50 last:border-0 last:pb-0">
+                        <div x-data="{ open: false }"
+                             class="pb-6 border-b border-emerald-50 last:border-0 last:pb-0">
                             <button @click="open = !open"
                                     class="flex items-center justify-between w-full text-left group focus:outline-none">
                                 <h3 class="font-serif text-xl font-medium transition-colors text-emerald-900 group-hover:text-amber-700">
@@ -35,9 +33,7 @@
                                  x-transition:enter-start="opacity-0 transform -translate-y-2"
                                  x-transition:enter-end="opacity-100 transform translate-y-0"
                                  class="mt-4">
-                                <div class="space-y-4 font-serif text-lg leading-relaxed text-emerald-800">
-                                    {{ faq.answer|linebreaks }}
-                                </div>
+                                <div class="space-y-4 font-serif text-lg leading-relaxed text-emerald-800">{{ faq.answer|linebreaks }}</div>
                             </div>
                         </div>
                     {% empty %}
@@ -47,7 +43,6 @@
                     {% endfor %}
                 </div>
             </div>
-
             <div class="mt-8 text-center">
                 <a href="{% url 'home' %}"
                    class="font-sans text-sm font-semibold tracking-widest uppercase transition text-emerald-800 hover:text-amber-700">Back to Home</a>

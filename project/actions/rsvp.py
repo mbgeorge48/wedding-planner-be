@@ -20,6 +20,7 @@ def update_rsvp_basics(
     plus_one_firstname: Optional[str] = None,
     plus_one_lastname: Optional[str] = None,
     plus_one_email: Optional[str] = None,
+    plus_one_phone: Optional[str] = None,
 ) -> models.RSVP:
     """
     Updates the basic RSVP information for a guest, including their contact details
@@ -44,6 +45,7 @@ def update_rsvp_basics(
                 firstname=plus_one_firstname or "",
                 lastname=plus_one_lastname or "",
                 email=plus_one_email or "",
+                phone=plus_one_phone or "",
                 type=models.Person.Type.STANDARD,
                 allowed_plus_one=False,
                 invited_to_ceremony=guest.invited_to_ceremony,
@@ -68,6 +70,7 @@ def update_rsvp_basics(
             rsvp.plus_one.firstname = plus_one_firstname or rsvp.plus_one.firstname
             rsvp.plus_one.lastname = plus_one_lastname or rsvp.plus_one.lastname
             rsvp.plus_one.email = plus_one_email or rsvp.plus_one.email
+            rsvp.plus_one.phone = plus_one_phone or rsvp.plus_one.phone
             rsvp.plus_one.save()
     else:
         # If plus_one is False, remove existing plus one if it exists
