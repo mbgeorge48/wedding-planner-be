@@ -22,11 +22,13 @@
                             {% if guest.invited_to_ceremony %}
                                 <div class="flex items-center justify-between border-b border-emerald-50/50 pb-1">
                                     <span class="text-sm text-neutral-500">Ceremony</span>
-                                    <span class="font-serif text-lg italic {% if rsvp.can_come_to_ceremony %}text-emerald-600{% else %}text-rose-600{% endif %}">
-                                        {% if rsvp.can_come_to_ceremony %}
+                                    <span class="font-serif text-lg italic {% if rsvp.can_come_to_ceremony == True %}text-emerald-600{% elif rsvp.can_come_to_ceremony == False %}text-rose-600{% else %}text-amber-600{% endif %}">
+                                        {% if rsvp.can_come_to_ceremony == True %}
                                             Attending
-                                        {% else %}
+                                        {% elif rsvp.can_come_to_ceremony == False %}
                                             Declined
+                                        {% else %}
+                                            Pending
                                         {% endif %}
                                     </span>
                                 </div>
@@ -34,11 +36,13 @@
                             {% if guest.invited_to_reception %}
                                 <div class="flex items-center justify-between border-b border-emerald-50/50 pb-1">
                                     <span class="text-sm text-neutral-500">Reception</span>
-                                    <span class="font-serif text-lg italic {% if rsvp.can_come_to_reception %}text-emerald-600{% else %}text-rose-600{% endif %}">
-                                        {% if rsvp.can_come_to_reception %}
+                                    <span class="font-serif text-lg italic {% if rsvp.can_come_to_reception == True %}text-emerald-600{% elif rsvp.can_come_to_reception == False %}text-rose-600{% else %}text-amber-600{% endif %}">
+                                        {% if rsvp.can_come_to_reception == True %}
                                             Attending
-                                        {% else %}
+                                        {% elif rsvp.can_come_to_reception == False %}
                                             Declined
+                                        {% else %}
+                                            Pending
                                         {% endif %}
                                     </span>
                                 </div>
