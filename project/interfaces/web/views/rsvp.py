@@ -201,6 +201,7 @@ class BasicsView(RSVPMixin):
                 rsvp_data["plus_one_firstname"] = rsvp.plus_one.firstname
                 rsvp_data["plus_one_lastname"] = rsvp.plus_one.lastname
                 rsvp_data["plus_one_email"] = rsvp.plus_one.email
+                rsvp_data["plus_one_phone"] = rsvp.plus_one.phone
 
         data = {**data, **rsvp_data}
         return render(request, "components/rsvp/form/basics.html", data)
@@ -220,8 +221,8 @@ class BasicsView(RSVPMixin):
                 plus_one_firstname=form.cleaned_data["plus_one_firstname"],
                 plus_one_lastname=form.cleaned_data["plus_one_lastname"],
                 plus_one_email=form.cleaned_data["plus_one_email"],
+                plus_one_phone=form.cleaned_data["plus_one_phone"],
             )
-
         return redirect("rsvp_dietary")
 
 

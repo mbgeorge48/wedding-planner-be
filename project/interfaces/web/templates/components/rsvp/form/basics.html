@@ -10,7 +10,7 @@
             </div>
             <div class="grid grid-cols-1 gap-6 md:grid-cols-2">
                 {% form_field name="email" label="Email Address" type="email" value=email errors=form_errors.email %}
-                {% form_field name="phone" label="Phone Number" type="tel" value=phone errors=form_errors.phone %}
+                {% form_field name="phone" label="Phone Number" type="tel" value=phone errors=form_errors.phone pattern="[0-9\s\-()+]{7,20}" %}
             </div>
         </section>
         {% if allowed_plus_one %}
@@ -31,7 +31,7 @@
                     {% form_field name="plus_one_lastname" label="Plus One Last Name" value=plus_one_lastname errors=form_errors.plus_one_lastname %}
                     <div class="grid grid-cols-1 gap-4 md:gap-6 md:col-span-2 md:grid-cols-2">
                         {% form_field name="plus_one_email" label="Plus One Email" type="email" value=plus_one_email errors=form_errors.plus_one_email %}
-                        {% form_field name="plus_one_phone" label="Plus One Phone" type="tel" value=plus_one_phone errors=form_errors.plus_one_phone %}
+                        {% form_field name="plus_one_phone" label="Plus One Phone" type="tel" value=plus_one_phone errors=form_errors.plus_one_phone pattern="[0-9\s\-()+]{7,20}" title="Please enter a valid phone number." %}
                     </div>
                 </div>
             </section>

@@ -1,5 +1,6 @@
 {% extends "components/rsvp/form/form_wrapper.html" %}
 {% load button_tag %}
+{% url 'rsvp_basics' as rsvp_basics_url %}
 {% block step_content %}
     <div class="space-y-10">
         <section class="space-y-6">
@@ -19,6 +20,10 @@
                 {% endif %}
             </div>
         </section>
-        <div class="flex justify-end pt-8">{% button text="Continue to Accommodation" type="submit" %}</div>
+        <div class="flex items-center justify-between pt-8">
+            <a href="{% url 'rsvp_basics' %}"
+               class="font-sans text-sm font-semibold tracking-widest uppercase transition text-emerald-800 hover:text-amber-700">Back to Basics</a>
+            {% button text="Continue to Accommodation" type="submit" %}
+        </div>
     </div>
 {% endblock step_content %}
