@@ -148,12 +148,9 @@ class RSVPManageView(View):
         ).first()
 
         if not admin:
-            return redirect(
-                "rsvp",
-                {"error": "incorrect permissions to access the manage page"},
-            )
+            return redirect("rsvp")
 
-        rsvp_data = models.RSVP.objects.all()
+        rsvp_data = models.RSVP.objects.all().select_related("guest", "plus_one").prefetch_related("dietary_requirements")
 
         return render(
             request,
