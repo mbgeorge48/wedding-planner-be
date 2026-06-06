@@ -1,0 +1,20 @@
+{% extends "base.html" %}
+{% load static %}
+{% load button_tag %}
+
+{% block title %}Server Error - {{ block.super }}{% endblock %}
+
+{% block content %}
+<main class="relative flex items-center justify-center min-h-screen bg-gray-50">
+    <div class="container px-4 mx-auto text-center">
+        <div class="max-w-xl mx-auto">
+            <h1 class="mb-4 font-serif text-6xl font-bold text-emerald-900">500</h1>
+            <h2 class="mb-6 font-serif text-3xl font-semibold text-amber-600 italic">Something went wrong</h2>
+            <p class="mb-10 text-lg text-gray-600 font-sans">
+                An unexpected error occurred on our server. We've been notified and are looking into it.
+            </p>
+            {% button text="Return Home" url_name="home" %}
+        </div>
+    </div>
+</main>
+{% endblock %}
