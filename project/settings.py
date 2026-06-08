@@ -89,6 +89,7 @@ TEMPLATES = [
                 "django.contrib.auth.context_processors.auth",
                 "django.contrib.messages.context_processors.messages",
                 "project.settings.debug_context_processor",
+                "project.interfaces.web.context_processors.wedding",
             ],
         },
     },
