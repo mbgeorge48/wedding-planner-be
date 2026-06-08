@@ -40,8 +40,8 @@
                     <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
                         {{ rsvp.plus_one.firstname }} {{ rsvp.plus_one.lastname }}
                     </td>
-                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                        {{ rsvp.song_suggestion|truncatechars:30 }}
+                    <td class="px-6 py-4 text-sm text-gray-500 max-w-xs break-words">
+                        {{ rsvp.song_suggestion }}
                     </td>
                     <td class="px-6 py-4 text-sm text-gray-500">
                         <ul class="list-disc list-inside">
