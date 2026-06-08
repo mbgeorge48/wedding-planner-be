@@ -152,6 +152,12 @@ class RSVPManageView(View):
 
         rsvp_data = models.RSVP.objects.all().select_related("guest", "plus_one").prefetch_related("dietary_requirements")
 
+        totals = {
+            "ceremony": rsvp_data.filter(can_come_to_ceremony=True).count(),
+            "reception": rsvp_data.filter(can_come_to_reception=True).count(),
+            "staying_onsite": rsvp_data.exclude(staying_preference="").exclude(staying_preference="HOTEL").count(),
+        }
+
         return render(
             request,
             self.template_name,
@@ -159,6 +165,7 @@ class RSVPManageView(View):
                 "name": admin.firstname,
                 "guest_code": request.session.get("guest_code"),
                 "rsvp_data": rsvp_data,
+                "totals": totals,
             },
         )
 

@@ -17,6 +17,21 @@
                 </div>
             </div>
 
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-8">
+                <div class="bg-white p-6 rounded-lg shadow-sm border border-gray-200">
+                    <h3 class="text-sm font-medium text-gray-500 uppercase">Ceremony</h3>
+                    <p class="mt-2 text-3xl font-semibold text-emerald-600">{{ totals.ceremony }}</p>
+                </div>
+                <div class="bg-white p-6 rounded-lg shadow-sm border border-gray-200">
+                    <h3 class="text-sm font-medium text-gray-500 uppercase">Reception</h3>
+                    <p class="mt-2 text-3xl font-semibold text-emerald-600">{{ totals.reception }}</p>
+                </div>
+                <div class="bg-white p-6 rounded-lg shadow-sm border border-gray-200">
+                    <h3 class="text-sm font-medium text-gray-500 uppercase">Staying On-site</h3>
+                    <p class="mt-2 text-3xl font-semibold text-emerald-600">{{ totals.staying_onsite }}</p>
+                </div>
+            </div>
+
             <div class="bg-white shadow-md rounded-lg overflow-hidden border border-gray-200">
                 {% include "components/rsvp/rsvp_table.html" with rsvp_data=rsvp_data %}
             </div>
