@@ -155,7 +155,8 @@ class RSVPManageView(View):
         totals = {
             "ceremony": rsvp_data.filter(can_come_to_ceremony=True).count(),
             "reception": rsvp_data.filter(can_come_to_reception=True).count(),
-            "staying_onsite": rsvp_data.exclude(staying_preference="").exclude(staying_preference="HOTEL").count(),
+            "yurts": rsvp_data.filter(staying_preference=models.RSVP.StayingPreferences.YURT).count(),
+            "camping": rsvp_data.filter(staying_preference=models.RSVP.StayingPreferences.CAMPING).count(),
         }
 
         return render(
