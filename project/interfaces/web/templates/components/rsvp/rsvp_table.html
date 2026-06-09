@@ -13,14 +13,14 @@
             </tr>
         </thead>
         <tbody class="bg-white divide-y divide-gray-200">
-            {% regroup rsvp_data by guest.group as group_list %}
-            {% for group in group_list %}
-                <tr class="bg-gray-100">
-                    <td colspan="8" class="px-6 py-2 text-xs font-bold text-gray-600 uppercase tracking-wider">
-                        {% if group.grouper %}Group: {{ group.grouper.id|truncatechars:8 }}{% else %}No Group{% endif %}
-                    </td>
-                </tr>
-                {% for rsvp in group.list %}
+            {% for rsvp in rsvp_data %}
+                {% ifchanged rsvp.guest.group %}
+                    <tr class="bg-gray-100">
+                        <td colspan="8" class="px-6 py-2 text-xs font-bold text-gray-600 uppercase tracking-wider">
+                            {% if rsvp.guest.group %}Group: {{ rsvp.guest.group.id|truncatechars:8 }}{% else %}No Group{% endif %}
+                        </td>
+                    </tr>
+                {% endifchanged %}
                 <tr class="hover:bg-gray-50">
                     <td class="px-6 py-4 whitespace-nowrap">
                         <div class="text-sm font-medium text-gray-900">{{ rsvp.guest.firstname }} {{ rsvp.guest.lastname }}</div>
@@ -72,7 +72,6 @@
                         {% endif %}
                     </td>
                 </tr>
-                {% endfor %}
             {% empty %}
                 <tr>
                     <td colspan="8" class="px-6 py-4 whitespace-nowrap text-sm text-gray-500 text-center">No RSVPs found.</td>

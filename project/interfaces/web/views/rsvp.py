@@ -150,13 +150,22 @@ class RSVPManageView(View):
         if not admin:
             return redirect("rsvp")
 
-        rsvp_data = models.RSVP.objects.all().select_related("guest", "plus_one", "guest__group").prefetch_related("dietary_requirements").order_by("guest__group_id", "guest__lastname", "guest__firstname")
+        rsvp_data = (
+            models.RSVP.objects.all()
+            .select_related("guest", "plus_one", "guest__group")
+            .prefetch_related("dietary_requirements")
+            .order_by("guest__group_id", "guest__lastname", "guest__firstname")
+        )
 
         totals = {
             "ceremony": rsvp_data.filter(can_come_to_ceremony=True).count(),
             "reception": rsvp_data.filter(can_come_to_reception=True).count(),
-            "yurts": rsvp_data.filter(staying_preference=models.RSVP.StayingPreferences.YURT).count(),
-            "camping": rsvp_data.filter(staying_preference=models.RSVP.StayingPreferences.CAMPING).count(),
+            "yurts": rsvp_data.filter(
+                staying_preference=models.RSVP.StayingPreferences.YURT
+            ).count(),
+            "camping": rsvp_data.filter(
+                staying_preference=models.RSVP.StayingPreferences.CAMPING
+            ).count(),
         }
 
         return render(
