@@ -63,8 +63,6 @@ class RSVPView(RSVPMixin):
             guest = models.Person.objects.filter(invite_code=guest_code).first()
             if isinstance(guest, models.Person):
                 rsvp = models.RSVP.objects.filter(guest=guest).first()
-                # Get other members from the guest's group
-                group_members = models.Person.objects.none()
                 if guest.group:
                     group_members = guest.group.members.exclude(id=guest.id)
 
@@ -154,7 +152,7 @@ class RSVPManageView(View):
             models.RSVP.objects.all()
             .select_related("guest", "plus_one", "guest__group")
             .prefetch_related("dietary_requirements")
-            .order_by("guest__group_id", "guest__lastname", "guest__firstname")
+            .order_by("guest__group__created", "guest__lastname", "guest__firstname")
         )
 
         totals = {
