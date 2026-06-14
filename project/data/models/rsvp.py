@@ -27,7 +27,7 @@ class RSVP(models.Model):
         "data.Person",
         on_delete=models.PROTECT,
         default=None,
-        related_name="guest",
+        related_name="rsvp",
     )
 
     can_come_to_ceremony = models.BooleanField(blank=True, null=True)
