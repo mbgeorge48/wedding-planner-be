@@ -7,9 +7,7 @@
     <main id="rsvp-manage"
           class="flex flex-col items-center w-full px-4 py-6 font-serif">
         <div class="w-full max-w-6xl">
-            <div class="flex items-center justify-between mb-6">
-                <h1 class="text-3xl font-bold text-gray-800">RSVP Management</h1>
-            </div>
+                <h1 class="items-center mb-6 text-3xl font-bold text-gray-800">RSVP Management</h1>
             <div class="grid grid-cols-1 gap-4 mb-8 md:grid-cols-4">
                 <div class="p-4 bg-white border border-gray-200 rounded-lg shadow">
                     <h3 class="font-medium text-gray-500 uppercase">Ceremony</h3>
@@ -27,7 +25,7 @@
                         Invited: <span class="font-bold text-emerald-900">{{ overall_totals.invited_to_reception_daytime }}</span> Daytime / <span class="font-bold text-emerald-900">{{ overall_totals.invited_to_reception_evening }}</span> Evening
                     </h4>
                     <p class="text-xs font-medium text-gray-500 uppercase">
-                        <span class="text-2xl font-bold text-emerald-900">{{ overall_totals.invited_to_reception_daytime }}</span> Daytime / <span class="text-2xl font-bold text-emerald-900">{{ overall_totals.invited_to_reception_evening }}</span> Evening
+                        <span class="text-2xl font-bold text-emerald-900">{{ rsvp_totals.can_come_to_reception_daytime }}</span> Daytime / <span class="text-2xl font-bold text-emerald-900">{{ rsvp_totals.can_come_to_reception_eveining }}</span> Evening
                     </p>
                 </div>
                 <div class="p-4 bg-white border border-gray-200 rounded-lg shadow">
