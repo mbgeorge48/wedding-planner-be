@@ -4,39 +4,104 @@
     RSVP Manage
 {% endblock title %}
 {% block content %}
-    <main id="rsvp-manage" class="flex flex-col m-6 items-center font-serif w-full">
+    <main id="rsvp-manage"
+          class="flex flex-col items-center w-full px-4 py-6 font-serif">
         <div class="w-full max-w-6xl">
-            <div class="flex justify-between items-center mb-6">
+            <div class="flex items-center justify-between mb-6">
                 <h1 class="text-3xl font-bold text-gray-800">RSVP Management</h1>
-                <div class="flex items-center gap-4">
-                    <span class="text-gray-600">Hello, {{ name }}</span>
-                    <form method="post" action="{% url 'signout' %}">
-                        {% csrf_token %}
-                        <button type="submit" class="text-red-600 hover:text-red-800 font-semibold">Sign out</button>
-                    </form>
+            </div>
+            <div class="grid grid-cols-1 gap-4 mb-8 md:grid-cols-4">
+                <div class="p-4 bg-white border border-gray-200 rounded-lg shadow">
+                    <h3 class="font-medium text-gray-500 uppercase">Ceremony</h3>
+                    <h4 class="ml-2 text-xs font-medium text-gray-500 uppercase ">
+                        Invited: <span class="font-bold text-emerald-900">{{ overall_totals.invited_to_ceremony }}</span>
+                    </h4>
+                    <div>
+                        <p class="text-2xl font-bold text-emerald-900">
+                            {{ rsvp_totals.can_come_to_ceremony }} <span class="text-xs font-medium text-gray-500 uppercase">Yeses</span>
+                        </p>
+                    </div>
+                    <hr class="my-2">
+                    <h3 class="font-medium text-gray-500 uppercase">Reception</h3>
+                    <h4 class="ml-2 text-xs font-medium text-gray-500 uppercase">
+                        Invited: <span class="font-bold text-emerald-900">{{ overall_totals.invited_to_reception_daytime }}</span> Daytime / <span class="font-bold text-emerald-900">{{ overall_totals.invited_to_reception_evening }}</span> Evening
+                    </h4>
+                    <p class="text-xs font-medium text-gray-500 uppercase">
+                        <span class="text-2xl font-bold text-emerald-900">{{ overall_totals.invited_to_reception_daytime }}</span> Daytime / <span class="text-2xl font-bold text-emerald-900">{{ overall_totals.invited_to_reception_evening }}</span> Evening
+                    </p>
+                </div>
+                <div class="p-4 bg-white border border-gray-200 rounded-lg shadow">
+                    <h3 class="font-medium text-gray-500 uppercase">Staying Preferences</h3>
+                    {% for key, value in staying_preferences.items %}
+                        <p class="text-sm font-medium text-gray-500 uppercase">
+                            <span class="text-2xl font-bold text-emerald-900">{{ value }}</span> {{ key|default:"Unknown" }}
+                        </p>
+                    {% endfor %}
+                </div>
+                {% comment %} Staying Day After {% endcomment %}
+                <div class="p-4 bg-white border border-gray-200 rounded-lg shadow">
+                    <h3 class="font-medium text-gray-500 uppercase">Staying Day After</h3>
+                    <h4 class="ml-2 text-xs font-medium text-gray-500 uppercase ">
+                        Invited: <span class="font-semibold text-emerald-900">{{ overall_totals.allowed_to_stay_night_after_reception }}</span>
+                    </h4>
+                    <p class="text-2xl font-bold text-emerald-900">
+                        {{ rsvp_totals.staying_night_after_reception }} <span class="text-xs font-medium text-gray-500 uppercase">Staying</span>
+                    </p>
+                </div>
+                {% comment %} Day After Meals {% endcomment %}
+                <div class="p-4 bg-white border border-gray-200 rounded-lg shadow">
+                    <h3 class="font-medium text-gray-500 uppercase">Day After Meals</h3>
+                    <p class="text-2xl font-bold text-emerald-900">
+                        {{ rsvp_totals.morning_meal_day_after_reception }} <span class="text-xs font-medium text-gray-500 uppercase">Morning meal</span>
+                    </p>
+                    <p class="text-2xl font-bold text-emerald-900">
+                        {{ rsvp_totals.evening_meal_day_after_reception }} <span class="text-xs font-medium text-gray-500 uppercase">Evening meal</span>
+                    </p>
                 </div>
             </div>
-
-            <div class="grid grid-cols-1 md:grid-cols-4 gap-4 mb-8">
-                <div class="bg-white p-4 rounded-lg shadow border border-gray-200">
-                    <h3 class="text-gray-500 text-sm font-medium uppercase">Ceremony</h3>
-                    <p class="text-2xl font-bold text-gray-800">{{ totals.ceremony }}</p>
-                </div>
-                <div class="bg-white p-4 rounded-lg shadow border border-gray-200">
-                    <h3 class="text-gray-500 text-sm font-medium uppercase">Reception</h3>
-                    <p class="text-2xl font-bold text-gray-800">{{ totals.reception }}</p>
-                </div>
-                <div class="bg-white p-4 rounded-lg shadow border border-gray-200">
-                    <h3 class="text-gray-500 text-sm font-medium uppercase">Yurts</h3>
-                    <p class="text-2xl font-bold text-gray-800">{{ totals.yurts }}</p>
-                </div>
-                <div class="bg-white p-4 rounded-lg shadow border border-gray-200">
-                    <h3 class="text-gray-500 text-sm font-medium uppercase">Camping</h3>
-                    <p class="text-2xl font-bold text-gray-800">{{ totals.camping }}</p>
-                </div>
+            {% comment %} Song Suggestions {% endcomment %}
+            <div x-data="{ open: false }"
+                 class="p-4 mb-8 bg-white border border-gray-200 rounded-lg shadow">
+                <button @click="open = !open"
+                        class="flex items-center justify-between w-full focus:outline-none">
+                    <h3 class="font-medium text-gray-500 uppercase">Song Suggestions</h3>
+                    <span class="text-gray-500 transition-transform duration-200"
+                          :class="{ 'rotate-180': open }">
+                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+                        </svg>
+                    </span>
+                </button>
+                <ul x-show="open" x-transition class="pl-2 mt-4 list-disc list-inside">
+                    {% for entry in song_suggestions %}
+                        <li class="my-1 text-sm font-medium text-gray-500 uppercase">
+                            <span class="font-bold text-emerald-900">{{ entry.0 }}</span> - {{ entry.1 }}
+                        </li>
+                    {% endfor %}
+                </ul>
             </div>
-
-            <div class="bg-white shadow-md rounded-lg overflow-hidden border border-gray-200">
+            {% comment %} Saturday Suggestions {% endcomment %}
+            <div x-data="{ open: false }"
+                 class="p-4 mb-8 bg-white border border-gray-200 rounded-lg shadow">
+                <button @click="open = !open"
+                        class="flex items-center justify-between w-full focus:outline-none">
+                    <h3 class="font-medium text-gray-500 uppercase">Saturday Suggestions</h3>
+                    <span class="text-gray-500 transition-transform duration-200"
+                          :class="{ 'rotate-180': open }">
+                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+                        </svg>
+                    </span>
+                </button>
+                <ul x-show="open" x-transition class="pl-2 mt-4 list-disc list-inside">
+                    {% for entry in day_after_reception_suggestions %}
+                        <li class="my-1 text-sm font-medium text-gray-500 uppercase">
+                            <span class="font-bold text-emerald-900">{{ entry.0 }}</span> - {{ entry.1 }}
+                        </li>
+                    {% endfor %}
+                </ul>
+            </div>
+            <div class="overflow-hidden bg-white border border-gray-200 rounded-lg shadow-md">
                 {% include "components/rsvp/rsvp_table.html" with rsvp_data=rsvp_data %}
             </div>
         </div>
