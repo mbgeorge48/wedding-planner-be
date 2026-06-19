@@ -1,6 +1,8 @@
+from collections import Counter
 from typing import cast
 
 from django.core import exceptions
+from django.db.models import Count, Q
 from django.shortcuts import redirect, render
 from django.views import View
 
@@ -63,8 +65,6 @@ class RSVPView(RSVPMixin):
             guest = models.Person.objects.filter(invite_code=guest_code).first()
             if isinstance(guest, models.Person):
                 rsvp = models.RSVP.objects.filter(guest=guest).first()
-                # Get other members from the guest's group
-                group_members = models.Person.objects.none()
                 if guest.group:
                     group_members = guest.group.members.exclude(id=guest.id)
 
@@ -154,19 +154,68 @@ class RSVPManageView(View):
             models.RSVP.objects.all()
             .select_related("guest", "plus_one", "guest__group")
             .prefetch_related("dietary_requirements")
-            .order_by("guest__group_id", "guest__lastname", "guest__firstname")
+            .order_by("guest__group__created", "guest__lastname")
         )
 
-        totals = {
-            "ceremony": rsvp_data.filter(can_come_to_ceremony=True).count(),
-            "reception": rsvp_data.filter(can_come_to_reception=True).count(),
-            "yurts": rsvp_data.filter(
-                staying_preference=models.RSVP.StayingPreferences.YURT
-            ).count(),
-            "camping": rsvp_data.filter(
-                staying_preference=models.RSVP.StayingPreferences.CAMPING
-            ).count(),
-        }
+        overall_totals = models.Person.objects.aggregate(
+            invited_to_ceremony=Count("id", filter=Q(invited_to_ceremony=True)),
+            invited_to_reception_daytime=Count(
+                "id",
+                filter=Q(invited_to_reception=True) & Q(evening_only_reception=False),
+            ),
+            invited_to_reception_evening=Count(
+                "id",
+                filter=Q(invited_to_reception=True) & Q(evening_only_reception=True),
+            ),
+            evening_only_reception=Count("id", filter=Q(evening_only_reception=True)),
+            allowed_to_stay_onsite=Count("id", filter=Q(allowed_to_stay_onsite=True)),
+            allowed_to_stay_in_yurt=Count("id", filter=Q(allowed_to_stay_in_yurt=True)),
+            allowed_to_stay_night_after_reception=Count(
+                "id", filter=Q(allowed_to_stay_night_after_reception=True)
+            ),
+            guests_invited=Count("id"),
+        )
+
+        rsvp_totals = rsvp_data.aggregate(
+            can_come_to_ceremony=Count("id", filter=Q(can_come_to_ceremony=True)),
+            can_come_to_reception_daytime=Count(
+                "id",
+                filter=Q(can_come_to_reception=True)
+                & Q(guest__evening_only_reception=False),
+            ),
+            can_come_to_reception_eveining=Count(
+                "id",
+                filter=Q(can_come_to_reception=True)
+                & Q(guest__evening_only_reception=True),
+            ),
+            staying_night_after_reception=Count(
+                "id", filter=Q(staying_night_after_reception=True)
+            ),
+            morning_meal_day_after_reception=Count(
+                "id", filter=Q(morning_meal_day_after_reception=True)
+            ),
+            evening_meal_day_after_reception=Count(
+                "id", filter=Q(evening_meal_day_after_reception=True)
+            ),
+        )
+
+        staying_preferences = dict(
+            Counter(rsvp.staying_preference for rsvp in rsvp_data)
+        )
+        song_suggestions = [
+            (r.song_suggestion, f"{r.guest.firstname} {r.guest.lastname}")
+            for r in rsvp_data
+            if r.song_suggestion
+        ]
+
+        day_after_reception_suggestions = [
+            (
+                r.day_after_reception_suggestion,
+                f"{r.guest.firstname} {r.guest.lastname}",
+            )
+            for r in rsvp_data
+            if r.day_after_reception_suggestion
+        ]
 
         return render(
             request,
@@ -175,7 +224,11 @@ class RSVPManageView(View):
                 "name": admin.firstname,
                 "guest_code": request.session.get("guest_code"),
                 "rsvp_data": rsvp_data,
-                "totals": totals,
+                "staying_preferences": staying_preferences,
+                "song_suggestions": song_suggestions,
+                "day_after_reception_suggestions": day_after_reception_suggestions,
+                "overall_totals": overall_totals,
+                "rsvp_totals": rsvp_totals,
             },
         )
 
@@ -277,9 +330,9 @@ class DietaryView(RSVPMixin):
             rsvp_data["selected_other_detail"] = selected_other_detail
             rsvp_data["plus_one_selected_categories"] = plus_one_selected_categories
             if rsvp.plus_one:
-                rsvp_data[
-                    "plus_one_selected_other_detail"
-                ] = plus_one_selected_other_detail
+                rsvp_data["plus_one_selected_other_detail"] = (
+                    plus_one_selected_other_detail
+                )
 
         data = {
             "step": "Dietary",

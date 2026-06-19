@@ -144,8 +144,12 @@ def update_rsvp_accommodation(
     """
     Updates accommodation and post-reception preferences for a guest.
     """
+
     if staying_preference is not None:
         rsvp.staying_preference = staying_preference
+    elif staying_preference is None and not rsvp.guest.allowed_to_stay_onsite:
+        rsvp.staying_preference = models.RSVP.StayingPreference.HOTEL
+
     if staying_night_after_reception is not None:
         rsvp.staying_night_after_reception = staying_night_after_reception
     if morning_meal_day_after_reception is not None:
@@ -157,3 +161,15 @@ def update_rsvp_accommodation(
 
     rsvp.save()
     return rsvp
+
+
+# Unused
+def rsvp_is_complete(rsvp: models.RSVP) -> bool:
+    if rsvp.can_come_to_ceremony is None or rsvp.can_come_to_reception is None:
+        return False
+    if not rsvp.dietary_requirements.exists():
+        return False
+    if not rsvp.staying_preference:
+        return False
+
+    return True

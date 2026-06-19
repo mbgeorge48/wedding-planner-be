@@ -1,14 +1,14 @@
 {% if group_members %}
     <div class="w-full max-w-4xl mx-auto mb-8 animate-fade-in">
-        <div class="p-6 bg-white border border-emerald-100 rounded-xl shadow-sm">
-            <h3 class="font-serif text-lg text-emerald-900 mb-4">Other members of your group:</h3>
-            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 md:gap-4">
+        <div class="p-6 bg-white border shadow-sm border-emerald-100 rounded-xl">
+            <h3 class="mb-4 font-serif text-lg text-emerald-900">Other members of your group:</h3>
+            <div class="grid grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-3 md:gap-4">
                 {% for member in group_members %}
-                    <div class="flex items-center justify-between p-4 bg-emerald-50/50 border border-emerald-100 rounded-lg group hover:border-amber-500 transition-colors">
+                    <div class="flex items-center justify-between p-4 transition-colors border rounded-lg bg-emerald-50/50 border-emerald-100 group hover:border-amber-500">
                         <div class="flex flex-col">
                             <span class="font-serif text-emerald-900">{{ member.firstname }}</span>
                             <span class="text-xs text-neutral-400">
-                                {% if member.guest.exists %}
+                                {% if member.rsvp %}
                                     RSVP'd
                                 {% else %}
                                     Pending
@@ -19,7 +19,7 @@
                             {% csrf_token %}
                             <input type="hidden" name="guest_id" value="{{ member.id }}">
                             <button type="submit"
-                                    class="text-xs font-sans font-bold tracking-widest uppercase text-emerald-700 hover:text-amber-700 transition-colors">
+                                    class="font-sans text-xs font-bold tracking-widest uppercase transition-colors text-emerald-700 hover:text-amber-700">
                                 Switch
                             </button>
                         </form>

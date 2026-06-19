@@ -48,3 +48,4 @@ qr_codes/
 *.png
 faqs.json
 *.zip
+*backup.sql

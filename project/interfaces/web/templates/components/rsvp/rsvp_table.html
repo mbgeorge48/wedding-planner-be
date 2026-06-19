@@ -2,69 +2,85 @@
     <table class="min-w-full divide-y divide-gray-200">
         <thead class="bg-gray-50">
             <tr>
-                <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Guest</th>
-                <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Ceremony</th>
-                <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Reception</th>
-                <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Plus One</th>
-                <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Song</th>
-                <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Dietary</th>
-                <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Stay</th>
-                <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Day After</th>
+                <th scope="col"
+                    class="px-6 py-3 text-xs font-medium tracking-wider text-left text-gray-500 uppercase">Guest</th>
+                <th scope="col"
+                    class="px-6 py-3 text-xs font-medium tracking-wider text-left text-gray-500 uppercase">
+                    Ceremony
+                </th>
+                <th scope="col"
+                    class="px-6 py-3 text-xs font-medium tracking-wider text-left text-gray-500 uppercase">
+                    Reception
+                </th>
+                <th scope="col"
+                    class="px-6 py-3 text-xs font-medium tracking-wider text-left text-gray-500 uppercase">Dietary</th>
+                <th scope="col"
+                    class="px-6 py-3 text-xs font-medium tracking-wider text-left text-gray-500 uppercase">Stay</th>
+                <th scope="col"
+                    class="px-6 py-3 text-xs font-medium tracking-wider text-left text-gray-500 uppercase">
+                    Day After
+                </th>
             </tr>
         </thead>
         <tbody class="bg-white divide-y divide-gray-200">
             {% for rsvp in rsvp_data %}
                 {% ifchanged rsvp.guest.group %}
                     <tr class="bg-gray-100">
-                        <td colspan="8" class="px-6 py-2 text-xs font-bold text-gray-600 uppercase tracking-wider">
-                            {% if rsvp.guest.group %}Group: {{ rsvp.guest.group.id|truncatechars:8 }}{% else %}No Group{% endif %}
+                        <td colspan="9"
+                            class="px-6 py-2 text-sm font-bold tracking-wider text-gray-700 uppercase">
+                            {% if rsvp.guest.group %}
+                                {{ rsvp.guest.lastname }}'s
+                            {% else %}
+                                No Group
+                            {% endif %}
                         </td>
                     </tr>
                 {% endifchanged %}
                 <tr class="hover:bg-gray-50">
-                    <td class="px-6 py-4 whitespace-nowrap">
+                    <td class="px-6 py-4 whitespace-nowrap border-l-4 {% if rsvp.can_come_to_reception %}border-green-500{% elif rsvp.can_come_to_reception == False %}border-red-500{% else %}border-gray-300{% endif %}">
                         <div class="text-sm font-medium text-gray-900">{{ rsvp.guest.firstname }} {{ rsvp.guest.lastname }}</div>
-                        <div class="text-sm text-gray-500">{{ rsvp.guest.email|default:"" }}</div>
+                        {% if rsvp.guest.email %}<div class="text-sm text-gray-500">{{ rsvp.guest.email|default:"" }}</div>{% endif %}
+                        {% if rsvp.guest.phone %}<div class="text-sm text-gray-500">{{ rsvp.guest.phone|default:"" }}</div>{% endif %}
+                        {% if rsvp.guest.evening_only_reception %}<div class="text-sm text-red-800">Evening Only</div>{% endif %}
                     </td>
                     <td class="px-6 py-4 whitespace-nowrap">
                         {% if rsvp.can_come_to_ceremony %}
-                            <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-green-100 text-green-800">Yes</span>
+                            <span class="inline-flex px-2 text-xs font-semibold leading-5 text-green-800 bg-green-100 rounded-full">Yes</span>
                         {% elif rsvp.can_come_to_ceremony == False %}
-                            <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-red-100 text-red-800">No</span>
+                            <span class="inline-flex px-2 text-xs font-semibold leading-5 text-red-800 bg-red-100 rounded-full">No</span>
                         {% else %}
-                            <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-gray-100 text-gray-800">Pending</span>
+                            <span class="inline-flex px-2 text-xs font-semibold leading-5 text-gray-800 bg-gray-100 rounded-full">Pending</span>
                         {% endif %}
                     </td>
                     <td class="px-6 py-4 whitespace-nowrap">
                         {% if rsvp.can_come_to_reception %}
-                            <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-green-100 text-green-800">Yes</span>
+                            <span class="inline-flex px-2 text-xs font-semibold leading-5 text-green-800 bg-green-100 rounded-full">Yes</span>
                         {% elif rsvp.can_come_to_reception == False %}
-                            <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-red-100 text-red-800">No</span>
+                            <span class="inline-flex px-2 text-xs font-semibold leading-5 text-red-800 bg-red-100 rounded-full">No</span>
                         {% else %}
-                            <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-gray-100 text-gray-800">Pending</span>
+                            <span class="inline-flex px-2 text-xs font-semibold leading-5 text-gray-800 bg-gray-100 rounded-full">Pending</span>
                         {% endif %}
-                    </td>
-                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                        {{ rsvp.plus_one.firstname }} {{ rsvp.plus_one.lastname }}
-                    </td>
-                    <td class="px-6 py-4 text-sm text-gray-500 max-w-xs break-words">
-                        {{ rsvp.song_suggestion }}
                     </td>
                     <td class="px-6 py-4 text-sm text-gray-500">
                         <ul class="list-disc list-inside">
-                        {% for diet in rsvp.dietary_requirements.all %}
-                            <li>{{ diet.category }}{% if diet.detail %}: {{ diet.detail }}{% endif %}</li>
-                        {% endfor %}
+                            {% for option in rsvp.dietary_requirements.all %}
+                                {% if option.category != "NONE" %}
+                                    <li>
+                                        {{ option.get_category_display }}
+                                        {% if option.detail %}: {{ option.detail }}{% endif %}
+                                    </li>
+                                {% endif %}
+                            {% endfor %}
                         </ul>
                     </td>
-                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                        {{ rsvp.get_staying_preference_display }}
-                    </td>
+                    <td class="px-6 py-4 text-sm text-gray-500 whitespace-nowrap">{{ rsvp.get_staying_preference_display }}</td>
                     <td class="px-6 py-4 text-sm text-gray-500">
                         {% if rsvp.staying_night_after_reception %}
                             <div class="text-xs">
-                                <strong>Stay:</strong> Yes<br>
-                                <strong>Breakfast:</strong> {{ rsvp.morning_meal_day_after_reception|yesno:"Yes,No" }}<br>
+                                <strong>Stay:</strong> Yes
+                                <br>
+                                <strong>Breakfast:</strong> {{ rsvp.morning_meal_day_after_reception|yesno:"Yes,No" }}
+                                <br>
                                 <strong>Dinner:</strong> {{ rsvp.evening_meal_day_after_reception|yesno:"Yes,No" }}
                             </div>
                         {% else %}
@@ -74,7 +90,8 @@
                 </tr>
             {% empty %}
                 <tr>
-                    <td colspan="8" class="px-6 py-4 whitespace-nowrap text-sm text-gray-500 text-center">No RSVPs found.</td>
+                    <td colspan="9"
+                        class="px-6 py-4 text-sm text-center text-gray-500 whitespace-nowrap">No RSVPs found.</td>
                 </tr>
             {% endfor %}
         </tbody>
