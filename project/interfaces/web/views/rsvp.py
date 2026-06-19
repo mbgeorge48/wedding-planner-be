@@ -1,10 +1,10 @@
-from typing import cast
 from collections import Counter
+from typing import cast
 
 from django.core import exceptions
+from django.db.models import Count, Q
 from django.shortcuts import redirect, render
 from django.views import View
-from django.db.models import Count, Q
 
 from project.actions import rsvp as rsvp_actions
 from project.data import models

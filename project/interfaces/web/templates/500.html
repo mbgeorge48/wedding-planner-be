@@ -1,7 +1,9 @@
 {% extends "base.html" %}
 {% load static %}
 {% load button_tag %}
-{% block title %}Server Error - {{ block.super }}{% endblock title %}
+{% block title %}
+    Server Error - {{ block.super }}
+{% endblock title %}
 {% block content %}
     <main class="relative flex items-center justify-center min-h-screen bg-gray-50">
         <div class="container px-4 mx-auto text-center">
