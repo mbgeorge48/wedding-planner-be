@@ -62,7 +62,7 @@
                         {% endif %}
                     </td>
                     <td class="px-6 py-4 text-sm text-gray-500">
-                        <ul class="list-disc list-inside">
+                        <ul class="list-disc list-outside">
                             {% for option in rsvp.dietary_requirements.all %}
                                 {% if option.category != "NONE" %}
                                     <li>
