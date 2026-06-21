@@ -41,6 +41,8 @@ class Wedding(models.Model):
     evening_only_start_time = models.TimeField()
     description = models.TextField(blank=True)
 
+    is_rsvp_open = models.BooleanField(default=True)
+
     def save(self, *args, **kwargs):
         if not self.pk and models.Wedding.objects.exists():
             raise Exception("Only one Wedding instance is allowed.")
