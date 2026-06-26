@@ -99,8 +99,29 @@
                     {% endfor %}
                 </ul>
             </div>
-            <div class="overflow-hidden bg-white border border-gray-200 rounded-lg shadow-md">
+            <div class="mb-8 overflow-hidden bg-white border border-gray-200 rounded-lg shadow-md">
                 {% include "components/rsvp/rsvp_table.html" with rsvp_data=rsvp_data %}
+            </div>
+            {% comment %} People who haven't responded {% endcomment %}
+            <div x-data="{ open: false }"
+                 class="p-4 mb-8 bg-white border border-gray-200 rounded-lg shadow">
+                <button @click="open = !open"
+                        class="flex items-center justify-between w-full focus:outline-none">
+                    <h3 class="font-medium text-gray-500 uppercase">Yet to Respond</h3>
+                    <span class="text-gray-500 transition-transform duration-200"
+                          :class="{ 'rotate-180': open }">
+                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+                        </svg>
+                    </span>
+                </button>
+                <ul x-show="open" x-transition class="pl-2 mt-4 list-disc list-inside">
+                    {% for person in yet_to_rsvp %}
+                        <li class="my-1 text-sm font-medium text-gray-500 titlecase">
+                            <span class="font-bold text-emerald-900">{{ person.firstname }} {{ person.lastname }}</span>
+                        </li>
+                    {% endfor %}
+                </ul>
             </div>
         </div>
     </main>

@@ -182,6 +182,7 @@ class RSVPManageView(View):
             ),
             guests_invited=Count("id"),
         )
+        yet_to_rsvp = models.Person.objects.filter(rsvp__isnull=True)
 
         rsvp_totals = rsvp_data.aggregate(
             can_come_to_ceremony=Count("id", filter=Q(can_come_to_ceremony=True)),
@@ -236,6 +237,7 @@ class RSVPManageView(View):
                 "day_after_reception_suggestions": day_after_reception_suggestions,
                 "overall_totals": overall_totals,
                 "rsvp_totals": rsvp_totals,
+                "yet_to_rsvp": yet_to_rsvp,
             },
         )
 
