@@ -7,7 +7,7 @@ class RSVP(models.Model):
     class StayingPreferences(models.TextChoices):
         YURT = "YURT", "Yurt"
         CAMPING = "CAMPING", "Camping"
-        HOTEL = "HOTEL", "Hotel"
+        HOTEL = "HOTEL", "Hotel/BnB"
 
     class DayAfterReceptionMeal(models.TextChoices):
         SELF = "SELF", "Self-catered"
