@@ -391,9 +391,14 @@ class AccommodationView(RSVPMixin):
             "morning_meal_day_after_reception": rsvp.morning_meal_day_after_reception,
             "evening_meal_day_after_reception": rsvp.evening_meal_day_after_reception,
             "day_after_reception_suggestion": rsvp.day_after_reception_suggestion,
-            "staying_preference_choices": models.RSVP.StayingPreferences.choices,
+            "staying_preference_choices": [
+                (c[0], "Hotel/BnB" if c[0] == "HOTEL" else c[1])
+                for c in models.RSVP.StayingPreferences.choices
+            ],
             "staying_preference_choices_no_yurt": [
-                c for c in models.RSVP.StayingPreferences.choices if c[0] != "YURT"
+                (c[0], "Hotel/BnB" if c[0] == "HOTEL" else c[1])
+                for c in models.RSVP.StayingPreferences.choices
+                if c[0] != "YURT"
             ],
             "meal_choices": models.RSVP.DayAfterReceptionMeal.choices,
             "hotels": models.Venue.objects.filter(type=models.Venue.Type.HOTEL),
