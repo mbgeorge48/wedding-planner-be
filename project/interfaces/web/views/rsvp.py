@@ -161,7 +161,7 @@ class RSVPManageView(View):
             models.RSVP.objects.all()
             .select_related("guest", "plus_one", "guest__group")
             .prefetch_related("dietary_requirements")
-            .order_by("guest__group__created", "guest__lastname")
+            .order_by("-modified", "guest__group__created", "guest__lastname")
         )
 
         overall_totals = models.Person.objects.aggregate(
