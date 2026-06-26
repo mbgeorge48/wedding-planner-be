@@ -30,13 +30,17 @@ class RSVPMixin(View):
         guest = models.Person.objects.filter(invite_code=code).first()
         wedding = models.Wedding.objects.first()
 
-        if not (wedding and wedding.ceremony_venue and wedding.reception_venue):
-            return redirect("rsvp")
-
         self.guest = cast("Person", guest)
         self.wedding = cast("Wedding", wedding)
         self.bride = cast("Person", self.wedding.bride)
         self.groom = cast("Person", self.wedding.groom)
+
+        if self.wedding and not self.wedding.is_rsvp_open:
+            if request.resolver_match and request.resolver_match.url_name not in (
+                "rsvp",
+                "rsvp_switch",
+            ):
+                return redirect("rsvp")
 
         return super().dispatch(request, *args, **kwargs)
 
@@ -70,7 +74,10 @@ class RSVPView(RSVPMixin):
 
         data = {
             "bride": self.bride.firstname,
+            "bride_email": self.bride.email,
             "groom": self.groom.firstname,
+            "groom_email": self.groom.email,
+            "is_rsvp_open": self.wedding.is_rsvp_open,
             "guest": guest,
             "rsvp": rsvp,
             "group_members": group_members,
@@ -175,6 +182,7 @@ class RSVPManageView(View):
             ),
             guests_invited=Count("id"),
         )
+        yet_to_rsvp = models.Person.objects.filter(rsvp__isnull=True)
 
         rsvp_totals = rsvp_data.aggregate(
             can_come_to_ceremony=Count("id", filter=Q(can_come_to_ceremony=True)),
@@ -229,6 +237,7 @@ class RSVPManageView(View):
                 "day_after_reception_suggestions": day_after_reception_suggestions,
                 "overall_totals": overall_totals,
                 "rsvp_totals": rsvp_totals,
+                "yet_to_rsvp": yet_to_rsvp,
             },
         )
 

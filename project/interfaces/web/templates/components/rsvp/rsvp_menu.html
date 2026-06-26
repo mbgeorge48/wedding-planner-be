@@ -6,62 +6,76 @@
         <h1 class="mb-2 font-serif text-3xl md:mb-3 md:text-4xl text-emerald-900">Hello {{ guest.firstname }}</h1>
         <p class="font-serif text-base italic md:text-lg text-amber-600">Please complete each section below</p>
     </div>
-    <div class="grid grid-cols-1 gap-4 md:gap-6 md:grid-cols-2 lg:grid-cols-3">
-        <!-- Personal Details -->
-        <a href="{{ rsvp_basics_url }}"
-           class="flex flex-col items-center p-6 md:p-8 space-y-4 text-center transition-all duration-300 bg-white border shadow-sm md:shadow-md group rounded-xl border-emerald-100 hover:border-amber-500 hover:-translate-y-1 active:scale-[0.98]">
-            <div class="p-3 transition-colors duration-300 rounded-full md:p-4 bg-emerald-50 text-emerald-900 group-hover:bg-amber-600 group-hover:text-white">
-                <svg xmlns="http://www.w3.org/2000/svg"
-                     fill="none"
-                     viewBox="0 0 24 24"
-                     stroke-width="1.5"
-                     stroke="currentColor"
-                     class="w-8 h-8">
-                    <path stroke-linecap="round" stroke-linejoin="round" d="M15 19.128a9.38 9.38 0 0 0 2.625.372 9.337 9.337 0 0 0 4.121-.952 4.125 4.125 0 0 0-7.533-2.493M15 19.128v-.003c0-1.113-.285-2.16-.786-3.07M15 19.128v.106A12.318 12.318 0 0 1 8.624 21c-2.331 0-4.512-.645-6.374-1.766l-.001-.109a6.375 6.375 0 0 1 11.964-3.07M12 6.375a3.375 3.375 0 1 1-6.75 0 3.375 3.375 0 0 1 6.75 0Zm8.25 2.25a2.625 2.625 0 1 1-5.25 0 2.625 2.625 0 0 1 5.25 0Z" />
-                </svg>
-            </div>
-            <div>
-                <h3 class="font-serif text-lg transition-colors text-emerald-900 group-hover:text-amber-700">Basics</h3>
-                <p class="mt-1 font-sans text-xs tracking-widest uppercase text-neutral-400">Contact & Details</p>
-            </div>
-        </a>
-        <!-- Dietary -->
-        <a href="{{ rsvp_dietary_url }}"
-           class="flex flex-col items-center p-8 space-y-4 text-center transition-all duration-300 bg-white border shadow-md group rounded-xl border-emerald-100 hover:border-amber-500 hover:-translate-y-1">
-            <div class="p-4 transition-colors duration-300 rounded-full bg-emerald-50 text-emerald-900 group-hover:bg-amber-600 group-hover:text-white">
-                <svg xmlns="http://www.w3.org/2000/svg"
-                     fill="none"
-                     viewBox="0 0 24 24"
-                     stroke-width="1.5"
-                     stroke="currentColor"
-                     class="w-8 h-8">
-                    <path stroke-linecap="round" stroke-linejoin="round" d="M9.813 15.904 9 18.75l-.813-2.846a4.5 4.5 0 0 0-3.09-3.09L2.25 12l2.846-.813a4.5 4.5 0 0 0 3.09-3.09L9 5.25l.813 2.846a4.5 4.5 0 0 0 3.09 3.09L15.75 12l-2.846.813a4.5 4.5 0 0 0-3.09 3.09ZM18.259 8.715 18 9.75l-.259-1.035a3.375 3.375 0 0 0-2.455-2.456L14.25 6l1.036-.259a3.375 3.375 0 0 0 2.455-2.456L18 2.25l.259 1.035a3.375 3.375 0 0 0 2.456 2.456L21.75 6l-1.035.259a3.375 3.375 0 0 0-2.456 2.456ZM16.894 20.567 16.5 21.75l-.394-1.183a2.25 2.25 0 0 0-1.423-1.423L13.5 18.75l1.183-.394a2.25 2.25 0 0 0 1.423-1.423l.394-1.183.394 1.183a2.25 2.25 0 0 0 1.423 1.423l1.183.394-1.183.394a2.25 2.25 0 0 0-1.423 1.423Z" />
-                </svg>
-            </div>
-            <div>
-                <h3 class="font-serif text-lg transition-colors text-emerald-900 group-hover:text-amber-700">Dietary</h3>
-                <p class="mt-1 font-sans text-xs tracking-widest uppercase text-neutral-400">Food Preferences</p>
-            </div>
-        </a>
-        <!-- Accommodation -->
-        <a href="{{ rsvp_accommodation_url }}"
-           class="flex flex-col items-center p-8 space-y-4 text-center transition-all duration-300 bg-white border shadow-md group rounded-xl border-emerald-100 hover:border-amber-500 hover:-translate-y-1">
-            <div class="p-4 transition-colors duration-300 rounded-full bg-emerald-50 text-emerald-900 group-hover:bg-amber-600 group-hover:text-white">
-                <svg xmlns="http://www.w3.org/2000/svg"
-                     fill="none"
-                     viewBox="0 0 24 24"
-                     stroke-width="1.5"
-                     stroke="currentColor"
-                     class="w-8 h-8">
-                    <path stroke-linecap="round" stroke-linejoin="round" d="m2.25 12 8.954-8.955c.44-.439 1.152-.439 1.591 0L21.75 12M4.5 9.75v10.125c0 .621.504 1.125 1.125 1.125H9.75v-4.875c0-.621.504-1.125 1.125-1.125h2.25c.621 0 1.125.504 1.125 1.125V21h4.125c.621 0 1.125-.504 1.125-1.125V9.75M8.25 21h8.25" />
-                </svg>
-            </div>
-            <div>
-                <h3 class="font-serif text-lg transition-colors text-emerald-900 group-hover:text-amber-700">Stay</h3>
-                <p class="mt-1 font-sans text-xs tracking-widest uppercase text-neutral-400">Where to Sleep</p>
-            </div>
-        </a>
-    </div>
+    {% if is_rsvp_open %}
+        <div class="grid grid-cols-1 gap-4 md:gap-6 md:grid-cols-2 lg:grid-cols-3">
+            <!-- Personal Details -->
+            <a href="{{ rsvp_basics_url }}"
+               class="flex flex-col items-center p-6 md:p-8 space-y-4 text-center transition-all duration-300 bg-white border shadow-sm md:shadow-md group rounded-xl border-emerald-100 hover:border-amber-500 hover:-translate-y-1 active:scale-[0.98]">
+                <div class="p-3 transition-colors duration-300 rounded-full md:p-4 bg-emerald-50 text-emerald-900 group-hover:bg-amber-600 group-hover:text-white">
+                    <svg xmlns="http://www.w3.org/2000/svg"
+                         fill="none"
+                         viewBox="0 0 24 24"
+                         stroke-width="1.5"
+                         stroke="currentColor"
+                         class="w-8 h-8">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M15 19.128a9.38 9.38 0 0 0 2.625.372 9.337 9.337 0 0 0 4.121-.952 4.125 4.125 0 0 0-7.533-2.493M15 19.128v-.003c0-1.113-.285-2.16-.786-3.07M15 19.128v.106A12.318 12.318 0 0 1 8.624 21c-2.331 0-4.512-.645-6.374-1.766l-.001-.109a6.375 6.375 0 0 1 11.964-3.07M12 6.375a3.375 3.375 0 1 1-6.75 0 3.375 3.375 0 0 1 6.75 0Zm8.25 2.25a2.625 2.625 0 1 1-5.25 0 2.625 2.625 0 0 1 5.25 0Z" />
+                    </svg>
+                </div>
+                <div>
+                    <h3 class="font-serif text-lg transition-colors text-emerald-900 group-hover:text-amber-700">Basics</h3>
+                    <p class="mt-1 font-sans text-xs tracking-widest uppercase text-neutral-400">Contact & Details</p>
+                </div>
+            </a>
+            <!-- Dietary -->
+            <a href="{{ rsvp_dietary_url }}"
+               class="flex flex-col items-center p-8 space-y-4 text-center transition-all duration-300 bg-white border shadow-md group rounded-xl border-emerald-100 hover:border-amber-500 hover:-translate-y-1">
+                <div class="p-4 transition-colors duration-300 rounded-full bg-emerald-50 text-emerald-900 group-hover:bg-amber-600 group-hover:text-white">
+                    <svg xmlns="http://www.w3.org/2000/svg"
+                         fill="none"
+                         viewBox="0 0 24 24"
+                         stroke-width="1.5"
+                         stroke="currentColor"
+                         class="w-8 h-8">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M9.813 15.904 9 18.75l-.813-2.846a4.5 4.5 0 0 0-3.09-3.09L2.25 12l2.846-.813a4.5 4.5 0 0 0 3.09-3.09L9 5.25l.813 2.846a4.5 4.5 0 0 0 3.09 3.09L15.75 12l-2.846.813a4.5 4.5 0 0 0-3.09 3.09ZM18.259 8.715 18 9.75l-.259-1.035a3.375 3.375 0 0 0-2.455-2.456L14.25 6l1.036-.259a3.375 3.375 0 0 0 2.455-2.456L18 2.25l.259 1.035a3.375 3.375 0 0 0 2.456 2.456L21.75 6l-1.035.259a3.375 3.375 0 0 0-2.456 2.456ZM16.894 20.567 16.5 21.75l-.394-1.183a2.25 2.25 0 0 0-1.423-1.423L13.5 18.75l1.183-.394a2.25 2.25 0 0 0 1.423-1.423l.394-1.183.394 1.183a2.25 2.25 0 0 0 1.423 1.423l1.183.394-1.183.394a2.25 2.25 0 0 0-1.423 1.423Z" />
+                    </svg>
+                </div>
+                <div>
+                    <h3 class="font-serif text-lg transition-colors text-emerald-900 group-hover:text-amber-700">Dietary</h3>
+                    <p class="mt-1 font-sans text-xs tracking-widest uppercase text-neutral-400">Food Preferences</p>
+                </div>
+            </a>
+            <!-- Accommodation -->
+            <a href="{{ rsvp_accommodation_url }}"
+               class="flex flex-col items-center p-8 space-y-4 text-center transition-all duration-300 bg-white border shadow-md group rounded-xl border-emerald-100 hover:border-amber-500 hover:-translate-y-1">
+                <div class="p-4 transition-colors duration-300 rounded-full bg-emerald-50 text-emerald-900 group-hover:bg-amber-600 group-hover:text-white">
+                    <svg xmlns="http://www.w3.org/2000/svg"
+                         fill="none"
+                         viewBox="0 0 24 24"
+                         stroke-width="1.5"
+                         stroke="currentColor"
+                         class="w-8 h-8">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="m2.25 12 8.954-8.955c.44-.439 1.152-.439 1.591 0L21.75 12M4.5 9.75v10.125c0 .621.504 1.125 1.125 1.125H9.75v-4.875c0-.621.504-1.125 1.125-1.125h2.25c.621 0 1.125.504 1.125 1.125V21h4.125c.621 0 1.125-.504 1.125-1.125V9.75M8.25 21h8.25" />
+                    </svg>
+                </div>
+                <div>
+                    <h3 class="font-serif text-lg transition-colors text-emerald-900 group-hover:text-amber-700">Stay</h3>
+                    <p class="mt-1 font-sans text-xs tracking-widest uppercase text-neutral-400">Where to Sleep</p>
+                </div>
+            </a>
+        </div>
+    {% else %}
+        <div class="w-full p-4 text-center bg-white border border-gray-200 rounded-lg shadow">
+            <h3 class="mb-6 font-medium text-gray-500 uppercase">RSVP Closed</h3>
+            <p class="mb-2 text-sm font-medium text-gray-500">
+                RSVP is currently closed. Please contact the couple if you have any questions or if you need to make any changes.
+            </p>
+            <p class="text-sm font-medium text-gray-500">
+                Send an email to <a href="mailto:{{ bride_email }}"
+    class="underline transition-colors text-emerald-800 hover:text-amber-700 underline-offset-8">{{ bride }}</a> or <a href="mailto:{{ groom_email }}"
+    class="underline transition-colors text-emerald-800 hover:text-amber-700 underline-offset-8">{{ groom }}</a>.
+            </p>
+        </div>
+    {% endif %}
     <div class="mt-12 text-center">
         <form method="post" action="{% url 'signout' %}">
             {% csrf_token %}
