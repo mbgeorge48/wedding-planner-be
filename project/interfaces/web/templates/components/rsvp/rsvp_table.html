@@ -1,4 +1,4 @@
-<div class="overflow-x-auto"
+<div class="w-full"
      x-data="{ filterCermony: 'all', filterReception: 'all', filterStayingPreference: 'all', filterDayAfter: 'all', matchRow(ceremony, reception, staying_preference, day_after) { let keyCermony = this.filterCermony === 'all' || ceremony === this.filterCermony; let keyReception = this.filterReception === 'all' || reception === this.filterReception; let keyStayingPreference = this.filterStayingPreference === 'all' || staying_preference === this.filterStayingPreference; let keyDayAfter = this.filterDayAfter === 'all' || day_after === this.filterDayAfter;  return keyCermony && keyReception && keyStayingPreference && keyDayAfter; } }">
     <div class="px-4 pt-4 mb-4" x-data="{ open: true }">
         <button @click="open = !open"
@@ -18,7 +18,6 @@
                 <label class="block mb-1 text-xs font-semibold tracking-wider text-gray-600 uppercase">Cermony:</label>
                 <select x-model="filterCermony"
                         class="block w-full px-3 py-2 text-sm text-gray-700 transition duration-150 ease-in-out bg-white border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500">
-                    >
                     <option value="all">All</option>
                     <option value="yes">Yes</option>
                     <option value="no">No</option>
@@ -28,7 +27,6 @@
                 <label class="block mb-1 text-xs font-semibold tracking-wider text-gray-600 uppercase">Reception:</label>
                 <select x-model="filterReception"
                         class="block w-full px-3 py-2 text-sm text-gray-700 transition duration-150 ease-in-out bg-white border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500">
-                    >
                     <option value="all">All</option>
                     <option value="yes">Yes</option>
                     <option value="no">No</option>
@@ -38,7 +36,6 @@
                 <label class="block mb-1 text-xs font-semibold tracking-wider text-gray-600 uppercase">Staying Preference:</label>
                 <select x-model="filterStayingPreference"
                         class="block w-full px-3 py-2 text-sm text-gray-700 transition duration-150 ease-in-out bg-white border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500">
-                    >
                     <option value="all">All</option>
                     <option value="yurt">Yurt</option>
                     <option value="camp">Camp</option>
@@ -50,7 +47,6 @@
                 <label class="block mb-1 text-xs font-semibold tracking-wider text-gray-600 uppercase">Day After:</label>
                 <select x-model="filterDayAfter"
                         class="block w-full px-3 py-2 text-sm text-gray-700 transition duration-150 ease-in-out bg-white border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500">
-                    >
                     <option value="all">All</option>
                     <option value="yes">Yes</option>
                     <option value="no">No</option>
@@ -63,102 +59,110 @@
             </button>
         </div>
     </div>
-    <table class="min-w-full divide-y divide-gray-200">
-        <thead class="bg-gray-50">
-            <tr>
-                <th scope="col"
-                    class="px-6 py-3 text-xs font-medium tracking-wider text-left text-gray-500 uppercase">Guest</th>
-                <th scope="col"
-                    class="px-6 py-3 text-xs font-medium tracking-wider text-left text-gray-500 uppercase">
-                    Ceremony
-                </th>
-                <th scope="col"
-                    class="px-6 py-3 text-xs font-medium tracking-wider text-left text-gray-500 uppercase">
-                    Reception
-                </th>
-                <th scope="col"
-                    class="px-6 py-3 text-xs font-medium tracking-wider text-left text-gray-500 uppercase">Dietary</th>
-                <th scope="col"
-                    class="px-6 py-3 text-xs font-medium tracking-wider text-left text-gray-500 uppercase">Stay</th>
-                <th scope="col"
-                    class="px-6 py-3 text-xs font-medium tracking-wider text-left text-gray-500 uppercase">
-                    Day After
-                </th>
-            </tr>
-        </thead>
-        <tbody class="bg-white divide-y divide-gray-200">
-            {% for rsvp in rsvp_data %}
-                {% ifchanged rsvp.guest.group %}
-                    <tr class="bg-gray-100">
-                        <td colspan="9"
-                            class="px-6 py-2 text-sm font-bold tracking-wider text-gray-700 uppercase">
-                            {% if rsvp.guest.group %}
-                                {{ rsvp.guest.lastname }}'s
+    <div class="w-full overflow-x-auto">
+        <table class="min-w-full divide-y divide-gray-200">
+            <thead class="bg-gray-50">
+                <tr>
+                    <th scope="col"
+                        class="px-6 py-3 text-xs font-medium tracking-wider text-left text-gray-500 uppercase">
+                        Guest
+                    </th>
+                    <th scope="col"
+                        class="px-6 py-3 text-xs font-medium tracking-wider text-left text-gray-500 uppercase">
+                        Ceremony
+                    </th>
+                    <th scope="col"
+                        class="px-6 py-3 text-xs font-medium tracking-wider text-left text-gray-500 uppercase">
+                        Reception
+                    </th>
+                    <th scope="col"
+                        class="px-6 py-3 text-xs font-medium tracking-wider text-left text-gray-500 uppercase">
+                        Dietary
+                    </th>
+                    <th scope="col"
+                        class="px-6 py-3 text-xs font-medium tracking-wider text-left text-gray-500 uppercase">
+                        Stay
+                    </th>
+                    <th scope="col"
+                        class="px-6 py-3 text-xs font-medium tracking-wider text-left text-gray-500 uppercase">
+                        Day After
+                    </th>
+                </tr>
+            </thead>
+            <tbody class="bg-white divide-y divide-gray-200">
+                {% for rsvp in rsvp_data %}
+                    {% ifchanged rsvp.guest.group %}
+                        <tr class="bg-gray-100">
+                            <td colspan="6"
+                                class="px-6 py-2 text-sm font-bold tracking-wider text-gray-700 uppercase">
+                                {% if rsvp.guest.group %}
+                                    {{ rsvp.guest.lastname }}'s
+                                {% else %}
+                                    No Group
+                                {% endif %}
+                            </td>
+                        </tr>
+                    {% endifchanged %}
+                    <tr x-show="matchRow('{{ rsvp.can_come_to_ceremony|yesno:'yes,no,unknown' }}', '{{ rsvp.can_come_to_reception|yesno:'yes,no,unknown' }}', '{{ rsvp.staying_preference|lower }}', '{{ rsvp.staying_night_after_reception|yesno:'yes,no' }}')"
+                        class="hover:bg-gray-50">
+                        <td class="px-6 py-4 whitespace-nowrap border-l-4 {% if rsvp.can_come_to_reception %}border-green-500{% elif rsvp.can_come_to_reception == False %}border-red-500{% else %}border-gray-300{% endif %}">
+                            <div class="text-sm font-medium text-gray-900">{{ rsvp.guest.firstname }} {{ rsvp.guest.lastname }}</div>
+                            {% if rsvp.guest.email %}<div class="text-sm text-gray-500">{{ rsvp.guest.email|default:"" }}</div>{% endif %}
+                            {% if rsvp.guest.phone %}<div class="text-sm text-gray-500">{{ rsvp.guest.phone|default:"" }}</div>{% endif %}
+                            {% if rsvp.guest.evening_only_reception %}<div class="text-sm text-red-800">Evening Only</div>{% endif %}
+                        </td>
+                        <td class="px-6 py-4 whitespace-nowrap">
+                            {% if rsvp.can_come_to_ceremony %}
+                                <span class="inline-flex px-2 text-xs font-semibold leading-5 text-green-800 bg-green-100 rounded-full">Yes</span>
+                            {% elif rsvp.can_come_to_ceremony == False %}
+                                <span class="inline-flex px-2 text-xs font-semibold leading-5 text-red-800 bg-red-100 rounded-full">No</span>
                             {% else %}
-                                No Group
+                                <span class="inline-flex px-2 text-xs font-semibold leading-5 text-gray-800 bg-gray-100 rounded-full">Pending</span>
+                            {% endif %}
+                        </td>
+                        <td class="px-6 py-4 whitespace-nowrap">
+                            {% if rsvp.can_come_to_reception %}
+                                <span class="inline-flex px-2 text-xs font-semibold leading-5 text-green-800 bg-green-100 rounded-full">Yes</span>
+                            {% elif rsvp.can_come_to_reception == False %}
+                                <span class="inline-flex px-2 text-xs font-semibold leading-5 text-red-800 bg-red-100 rounded-full">No</span>
+                            {% else %}
+                                <span class="inline-flex px-2 text-xs font-semibold leading-5 text-gray-800 bg-gray-100 rounded-full">Pending</span>
+                            {% endif %}
+                        </td>
+                        <td class="px-6 py-4 text-sm text-gray-500">
+                            <ul class="list-disc list-outside">
+                                {% for option in rsvp.dietary_requirements.all %}
+                                    {% if option.category != "NONE" %}
+                                        <li>
+                                            {{ option.get_category_display }}
+                                            {% if option.detail %}: {{ option.detail }}{% endif %}
+                                        </li>
+                                    {% endif %}
+                                {% endfor %}
+                            </ul>
+                        </td>
+                        <td class="px-6 py-4 text-sm text-gray-500 whitespace-nowrap">{{ rsvp.get_staying_preference_display }}</td>
+                        <td class="px-6 py-4 text-sm text-gray-500">
+                            {% if rsvp.staying_night_after_reception %}
+                                <div class="text-xs">
+                                    <strong>Stay:</strong> Yes
+                                    <br>
+                                    <strong>Breakfast:</strong> {{ rsvp.morning_meal_day_after_reception|yesno:"Yes,No" }}
+                                    <br>
+                                    <strong>Dinner:</strong> {{ rsvp.evening_meal_day_after_reception|yesno:"Yes,No" }}
+                                </div>
+                            {% else %}
+                                No
                             {% endif %}
                         </td>
                     </tr>
-                {% endifchanged %}
-                <tr x-show="matchRow('{{ rsvp.can_come_to_ceremony|yesno:'yes,no,unknown' }}', '{{ rsvp.can_come_to_reception|yesno:'yes,no,unknown' }}', '{{ rsvp.staying_preference|lower }}', '{{ rsvp.staying_night_after_reception|yesno:'yes,no' }}')"
-                    class="hover:bg-gray-50">
-                    <td class="px-6 py-4 whitespace-nowrap border-l-4 {% if rsvp.can_come_to_reception %}border-green-500{% elif rsvp.can_come_to_reception == False %}border-red-500{% else %}border-gray-300{% endif %}">
-                        <div class="text-sm font-medium text-gray-900">{{ rsvp.guest.firstname }} {{ rsvp.guest.lastname }}</div>
-                        {% if rsvp.guest.email %}<div class="text-sm text-gray-500">{{ rsvp.guest.email|default:"" }}</div>{% endif %}
-                        {% if rsvp.guest.phone %}<div class="text-sm text-gray-500">{{ rsvp.guest.phone|default:"" }}</div>{% endif %}
-                        {% if rsvp.guest.evening_only_reception %}<div class="text-sm text-red-800">Evening Only</div>{% endif %}
-                    </td>
-                    <td class="px-6 py-4 whitespace-nowrap">
-                        {% if rsvp.can_come_to_ceremony %}
-                            <span class="inline-flex px-2 text-xs font-semibold leading-5 text-green-800 bg-green-100 rounded-full">Yes</span>
-                        {% elif rsvp.can_come_to_ceremony == False %}
-                            <span class="inline-flex px-2 text-xs font-semibold leading-5 text-red-800 bg-red-100 rounded-full">No</span>
-                        {% else %}
-                            <span class="inline-flex px-2 text-xs font-semibold leading-5 text-gray-800 bg-gray-100 rounded-full">Pending</span>
-                        {% endif %}
-                    </td>
-                    <td class="px-6 py-4 whitespace-nowrap">
-                        {% if rsvp.can_come_to_reception %}
-                            <span class="inline-flex px-2 text-xs font-semibold leading-5 text-green-800 bg-green-100 rounded-full">Yes</span>
-                        {% elif rsvp.can_come_to_reception == False %}
-                            <span class="inline-flex px-2 text-xs font-semibold leading-5 text-red-800 bg-red-100 rounded-full">No</span>
-                        {% else %}
-                            <span class="inline-flex px-2 text-xs font-semibold leading-5 text-gray-800 bg-gray-100 rounded-full">Pending</span>
-                        {% endif %}
-                    </td>
-                    <td class="px-6 py-4 text-sm text-gray-500">
-                        <ul class="list-disc list-outside">
-                            {% for option in rsvp.dietary_requirements.all %}
-                                {% if option.category != "NONE" %}
-                                    <li>
-                                        {{ option.get_category_display }}
-                                        {% if option.detail %}: {{ option.detail }}{% endif %}
-                                    </li>
-                                {% endif %}
-                            {% endfor %}
-                        </ul>
-                    </td>
-                    <td class="px-6 py-4 text-sm text-gray-500 whitespace-nowrap">{{ rsvp.get_staying_preference_display }}</td>
-                    <td class="px-6 py-4 text-sm text-gray-500">
-                        {% if rsvp.staying_night_after_reception %}
-                            <div class="text-xs">
-                                <strong>Stay:</strong> Yes
-                                <br>
-                                <strong>Breakfast:</strong> {{ rsvp.morning_meal_day_after_reception|yesno:"Yes,No" }}
-                                <br>
-                                <strong>Dinner:</strong> {{ rsvp.evening_meal_day_after_reception|yesno:"Yes,No" }}
-                            </div>
-                        {% else %}
-                            No
-                        {% endif %}
-                    </td>
-                </tr>
-            {% empty %}
-                <tr>
-                    <td colspan="9"
-                        class="px-6 py-4 text-sm text-center text-gray-500 whitespace-nowrap">No RSVPs found.</td>
-                </tr>
-            {% endfor %}
-        </tbody>
-    </table>
+                {% empty %}
+                    <tr>
+                        <td colspan="6"
+                            class="px-6 py-4 text-sm text-center text-gray-500 whitespace-nowrap">No RSVPs found.</td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
 </div>

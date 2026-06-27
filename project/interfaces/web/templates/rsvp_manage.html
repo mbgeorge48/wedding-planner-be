@@ -146,6 +146,7 @@
                     {% for person in yet_to_rsvp %}
                         <li class="my-1 text-sm font-medium text-gray-500 titlecase">
                             <span class="font-bold text-emerald-900">{{ person.firstname }} {{ person.lastname }}</span>
+                            {% if person.internal_notes %}- {{ person.internal_notes }}{% endif %}
                         </li>
                     {% endfor %}
                 </ul>
