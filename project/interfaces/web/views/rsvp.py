@@ -161,7 +161,7 @@ class RSVPManageView(View):
             models.RSVP.objects.all()
             .select_related("guest", "plus_one", "guest__group")
             .prefetch_related("dietary_requirements")
-            .order_by("-modified", "guest__group__created", "guest__lastname")
+            .order_by("guest__group__created", "guest__lastname", "-modified")
         )
 
         overall_totals = models.Person.objects.aggregate(
@@ -182,7 +182,11 @@ class RSVPManageView(View):
             ),
             guests_invited=Count("id"),
         )
-        yet_to_rsvp = models.Person.objects.filter(rsvp__isnull=True)
+        yet_to_rsvp = (
+            models.Person.objects.filter(rsvp__isnull=True, is_active=True)
+            .order_by("group__created", "lastname")
+            .values("firstname", "lastname", "internal_notes")
+        )
 
         rsvp_totals = rsvp_data.aggregate(
             can_come_to_ceremony=Count("id", filter=Q(can_come_to_ceremony=True)),

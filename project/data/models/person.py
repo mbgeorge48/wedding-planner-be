@@ -20,11 +20,13 @@ class Person(models.Model):
     modified = models.DateTimeField(auto_now=True)
 
     invite_code = models.CharField(max_length=10, unique=True, null=True)
+    is_active = models.BooleanField(default=True)
 
     firstname = models.CharField(max_length=255)
     lastname = models.CharField(max_length=255)
     email = models.CharField(max_length=255, null=True)
     phone = models.CharField(max_length=17, null=True)
+    internal_notes = models.CharField(max_length=255, null=True, blank=True)
 
     type = models.CharField(
         max_length=50,
@@ -45,17 +47,13 @@ class Person(models.Model):
     invited_to_reception = models.BooleanField(default=False)
     evening_only_reception = models.BooleanField(default=False)
 
-    # unused
-    children = models.IntegerField(default=0)
-    pets = models.IntegerField(default=0)
-
     allowed_plus_one = models.BooleanField(default=False)
     allowed_to_stay_onsite = models.BooleanField(default=False)
     allowed_to_stay_in_yurt = models.BooleanField(default=False)
     allowed_to_stay_night_after_reception = models.BooleanField(default=False)
 
     class Meta:
-        ordering = ["firstname"]
+        ordering = ["lastname", "firstname"]
 
     def __str__(self):
         return f"{self.firstname} {self.lastname}, {self.type.title}"
