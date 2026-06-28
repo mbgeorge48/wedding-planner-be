@@ -161,8 +161,10 @@ class RSVPManageView(View):
             models.RSVP.objects.all()
             .select_related("guest", "plus_one", "guest__group")
             .prefetch_related("dietary_requirements")
-            .order_by("-modified", "guest__group__created", "guest__lastname")
+            .order_by("guest__group__created", "guest__lastname")
         )
+
+        rsvp_data_recent_changes = rsvp_data.order_by("-modified")[:10]
 
         overall_totals = models.Person.objects.aggregate(
             invited_to_ceremony=Count("id", filter=Q(invited_to_ceremony=True)),
@@ -236,6 +238,7 @@ class RSVPManageView(View):
                 "name": admin.firstname,
                 "guest_code": request.session.get("guest_code"),
                 "rsvp_data": rsvp_data,
+                "rsvp_data_recent_changes": rsvp_data_recent_changes,
                 "staying_preferences": staying_preferences,
                 "song_suggestions": song_suggestions,
                 "day_after_reception_suggestions": day_after_reception_suggestions,

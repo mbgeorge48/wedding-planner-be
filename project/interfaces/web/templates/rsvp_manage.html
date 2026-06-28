@@ -24,7 +24,7 @@
                      class="p-4 bg-white border border-gray-200 rounded-lg shadow">
                     <h5>Most recent changes</h5>
                     <ul>
-                        {% for rsvp in rsvp_data|slice:":10" %}
+                        {% for rsvp in rsvp_data_recent_changes %}
                             <li class="my-1 text-sm font-medium text-gray-500 titlecase">
                                 <span class="font-bold text-emerald-900">{{ rsvp.guest.firstname }} {{ rsvp.guest.lastname }}</span> - {{ rsvp.modified|date:"SHORT_DATETIME_FORMAT" }}
                             </li>
