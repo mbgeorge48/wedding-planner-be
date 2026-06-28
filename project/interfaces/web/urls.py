@@ -12,6 +12,7 @@ from .views import (
     ScheduleView,
     SignoutView,
     SwitchGuestView,
+    RSVPGroupViewer,
 )
 
 urlpatterns = [
@@ -19,6 +20,7 @@ urlpatterns = [
     path("rsvp/", RSVPView.as_view(), name="rsvp"),
     path("rsvp/switch/", SwitchGuestView.as_view(), name="rsvp_switch"),
     path("rsvp/manage/", RSVPManageView.as_view(), name="rsvp_manage"),
+    path("rsvp/manage/groups/", RSVPGroupViewer.as_view(), name="rsvp_manage_groups"),
     path("schedule/", ScheduleView.as_view(), name="schedule"),
     path("faq/", FAQView.as_view(), name="faq"),
     path("signout/", SignoutView.as_view(), name="signout"),

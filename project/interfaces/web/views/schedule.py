@@ -11,6 +11,9 @@ class ScheduleView(TemplateView):
 
         wedding = models.Wedding.objects.first()
 
+        if not wedding or not wedding.bride or not wedding.groom:
+            return context
+
         wedding_data = {
             "id": wedding.id,
             "bride": wedding.bride.firstname,
@@ -18,6 +21,7 @@ class ScheduleView(TemplateView):
             "date": wedding.date,
         }
 
+        # Placeholders
         context = {
             "page_title": "Welcome to the Wedding Planner",  # placeholders
             "guest_count": 42,  # placeholders

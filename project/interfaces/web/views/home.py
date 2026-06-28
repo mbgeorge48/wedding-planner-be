@@ -22,14 +22,6 @@ class HomeView(TemplateView):
                 }
             )
 
-        # placeholders
-        context.update(
-            {
-                "page_title": "Welcome to the Wedding Planner",
-                "guest_count": 42,
-            }
-        )
-
         return context
 
 

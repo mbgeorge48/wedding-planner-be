@@ -1,0 +1,13 @@
+{% extends "base.html" %}
+{% load static %}
+{% block title %}
+    RSVP Groups
+{% endblock title %}
+{% block content %}
+    <main id="rsvp-group-viewer"
+          class="flex flex-col items-center w-full px-4 py-6 font-serif">
+            {{ groups }}
+
+            {{ people_not_in_groups }}
+    </main>
+{% endblock content %}
