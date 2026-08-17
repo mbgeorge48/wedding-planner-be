@@ -4,7 +4,11 @@
 <div class="w-full max-w-4xl px-2 mx-auto animate-fade-in">
     <div class="mb-10 text-center md:mb-12">
         <h1 class="mb-2 font-serif text-3xl md:mb-3 md:text-4xl text-emerald-900">Hello {{ guest.firstname }}</h1>
-        <p class="font-serif text-base italic md:text-lg text-amber-600">Please complete each section below</p>
+        {% if is_rsvp_open %}
+            <p class="font-serif text-base italic md:text-lg text-amber-600">Please complete each section below</p>
+        {% else %}
+            <p class="font-serif text-base italic md:text-lg text-amber-600">RSVP is currently closed</p>
+        {% endif %}
     </div>
     {% if is_rsvp_open %}
         <div class="grid grid-cols-1 gap-4 md:gap-6 md:grid-cols-2 lg:grid-cols-3">
