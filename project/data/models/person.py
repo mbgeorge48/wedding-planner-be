@@ -42,6 +42,13 @@ class Person(models.Model):
         blank=True,
         related_name="members",
     )
+    table_number = models.ForeignKey(
+        "data.ReceptionTable",
+        on_delete=models.SET_NULL,
+        null=True,
+        blank=True,
+        related_name="table_guests",
+    )
 
     invited_to_ceremony = models.BooleanField(default=False)
     invited_to_reception = models.BooleanField(default=False)

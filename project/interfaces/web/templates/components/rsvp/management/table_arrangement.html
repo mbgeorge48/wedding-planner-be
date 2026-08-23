@@ -1,0 +1,32 @@
+{% extends "base.html" %}
+{% block title %}
+    Table Arrangements
+{% endblock title %}
+{% block content %}
+    <main id="rsvp-table-arrangements" 
+          class="flex flex-col items-center w-full px-4 py-8 font-serif bg-gray-50/50 min-h-screen">
+        <div class="w-full max-w-6xl animate-fade-in">
+            <!-- Header -->
+            <div class="flex flex-col md:flex-row md:items-center md:justify-between border-b border-gray-200 pb-5 mb-6">
+                <div>
+                    <h1 class="text-3xl font-bold text-gray-900">Table Arrangements</h1>
+                    <p class="text-sm text-gray-500 mt-1">Organize your daytime guests into reception tables.</p>
+                </div>
+                <div class="mt-4 md:mt-0 flex items-center space-x-3">
+                    <a href="{% url 'rsvp_manage' %}" 
+                       class="inline-flex items-center text-sm font-medium text-gray-600 hover:text-gray-900 bg-white border border-gray-300 px-4 py-2 rounded-xl shadow-sm hover:bg-gray-50 transition-all duration-150">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 mr-1.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18" />
+                        </svg>
+                        Back to RSVP Dashboard
+                    </a>
+                </div>
+            </div>
+
+            <!-- Table arrangements content container (handles all HTMX updates) -->
+            <div id="table-arrangements-content" hx-headers='{"X-CSRFToken": "{{ csrf_token }}"}'>
+                {% include "components/rsvp/management/tables_content.html" %}
+            </div>
+        </div>
+    </main>
+{% endblock content %}

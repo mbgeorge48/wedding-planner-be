@@ -3,10 +3,9 @@ from .home import HomeView, SignoutView
 
 
 from .rsvp.forms import AccommodationView, BasicsView, DietaryView, PlusOneStateView
-from .rsvp.management import RSVPManageView, RSVPGroupViewer
+from .rsvp.management import RSVPManageView, RSVPGroupViewer, RSVPTableArrangements, RSVPTableSearchGuests
 from .rsvp.home import RSVPView, SwitchGuestView
 
-# from .rsvp_form import PlusOneStateView
 from .schedule import ScheduleView
 
 __all__ = [
@@ -22,4 +21,6 @@ __all__ = [
     "SwitchGuestView",
     "FAQView",
     "RSVPGroupViewer",
+    "RSVPTableArrangements",
+    "RSVPTableSearchGuests",
 ]
