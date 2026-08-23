@@ -32,14 +32,14 @@ class RSVPMixin(View):
 
         self.guest = cast("Person", guest)
         self.wedding = cast("Wedding", wedding)
-        self.bride = cast("Person", self.wedding.bride)
-        self.groom = cast("Person", self.wedding.groom)
+        self.bride = cast("Person", self.wedding.bride) if self.wedding and self.wedding.bride else cast("Person", None)
+        self.groom = cast("Person", self.wedding.groom) if self.wedding and self.wedding.groom else cast("Person", None)
 
-        if self.wedding and not self.wedding.is_rsvp_open:
-            if request.resolver_match and request.resolver_match.url_name not in (
-                "rsvp",
-                "rsvp_switch",
-            ):
+        if request.resolver_match and request.resolver_match.url_name not in (
+            "rsvp",
+            "rsvp_switch",
+        ):
+            if not self.guest or (self.wedding and not self.wedding.is_rsvp_open):
                 return redirect("rsvp")
 
         return super().dispatch(request, *args, **kwargs)
@@ -64,22 +64,28 @@ class RSVPView(RSVPMixin):
 
         guest = None
         rsvp = None
+        plus_one_rsvp = None
         group_members = models.Person.objects.none()
         if guest_code:
             guest = models.Person.objects.filter(invite_code=guest_code).first()
             if isinstance(guest, models.Person):
                 rsvp = models.RSVP.objects.filter(guest=guest).first()
+                if rsvp and rsvp.plus_one:
+                    plus_one_rsvp = models.RSVP.objects.filter(
+                        guest=rsvp.plus_one
+                    ).first()
                 if guest.group:
                     group_members = guest.group.members.exclude(id=guest.id)
 
         data = {
-            "bride": self.bride.firstname,
-            "bride_email": self.bride.email,
-            "groom": self.groom.firstname,
-            "groom_email": self.groom.email,
-            "is_rsvp_open": self.wedding.is_rsvp_open,
+            "bride": self.bride.firstname if self.bride else "",
+            "bride_email": self.bride.email if self.bride else "",
+            "groom": self.groom.firstname if self.groom else "",
+            "groom_email": self.groom.email if self.groom else "",
+            "is_rsvp_open": self.wedding.is_rsvp_open if self.wedding else True,
             "guest": guest,
             "rsvp": rsvp,
+            "plus_one_rsvp": plus_one_rsvp,
             "group_members": group_members,
         }
 
@@ -123,6 +129,9 @@ class RSVPView(RSVPMixin):
         if code and models.Person.objects.filter(invite_code=code).exists():
             guest = models.Person.objects.filter(invite_code=code).get()
             _, created = rsvp_actions.create_rsvp_for_guest(guest)
+
+            if wedding and not wedding.is_rsvp_open:
+                return redirect("rsvp")
 
             return redirect("rsvp" if not created else "rsvp_basics")
 

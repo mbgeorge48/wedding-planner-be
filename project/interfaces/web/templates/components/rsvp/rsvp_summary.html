@@ -66,13 +66,35 @@
                     <!-- Dietary -->
                     <div class="space-y-4">
                         <h3 class="text-xs font-bold tracking-widest uppercase text-emerald-900/40">Dietary</h3>
-                        <div class="flex flex-wrap gap-2">
-                            {% for requirement in rsvp.dietary_requirements.all %}
-                                <span class="px-3 py-1 text-xs font-medium rounded-md bg-emerald-50 text-emerald-700 border border-emerald-100/50"
-                                      title="{{ requirement.detail }}">{{ requirement.get_category_display }}</span>
-                            {% empty %}
-                                <p class="font-serif text-lg italic text-neutral-300">No requirements</p>
-                            {% endfor %}
+                        <div class="space-y-3">
+                            <div>
+                                {% if rsvp.plus_one %}
+                                    <p class="text-xs text-neutral-400 mb-1 font-serif italic">{{ guest.firstname }}:</p>
+                                {% endif %}
+                                <div class="flex flex-wrap gap-2">
+                                    {% for requirement in rsvp.dietary_requirements.all %}
+                                        <span class="px-3 py-1 text-xs font-medium rounded-md bg-emerald-50 text-emerald-700 border border-emerald-100/50">
+                                            {{ requirement.get_category_display }}{% if requirement.detail %}: {{ requirement.detail }}{% endif %}
+                                        </span>
+                                    {% empty %}
+                                        <p class="font-serif text-base italic text-neutral-300">No requirements</p>
+                                    {% endfor %}
+                                </div>
+                            </div>
+                            {% if rsvp.plus_one and plus_one_rsvp %}
+                                <div>
+                                    <p class="text-xs text-neutral-400 mb-1 font-serif italic">{{ rsvp.plus_one.firstname }}:</p>
+                                    <div class="flex flex-wrap gap-2">
+                                        {% for requirement in plus_one_rsvp.dietary_requirements.all %}
+                                            <span class="px-3 py-1 text-xs font-medium rounded-md bg-emerald-50 text-emerald-700 border border-emerald-100/50">
+                                                {{ requirement.get_category_display }}{% if requirement.detail %}: {{ requirement.detail }}{% endif %}
+                                            </span>
+                                        {% empty %}
+                                            <p class="font-serif text-base italic text-neutral-300">No requirements</p>
+                                        {% endfor %}
+                                    </div>
+                                </div>
+                            {% endif %}
                         </div>
                     </div>
                     <!-- Accommodation -->
@@ -111,18 +133,24 @@
                             {% endif %}
                         </div>
                     </div>
+                    <!-- Contact Details -->
+                    <div class="space-y-4">
+                        <h3 class="text-xs font-bold tracking-widest uppercase text-emerald-900/40">Contact Details</h3>
+                        <div class="space-y-1">
+                            <p class="text-sm text-neutral-500">Email: <span class="font-serif text-emerald-900 italic">{{ guest.email|default:"Not provided" }}</span></p>
+                            <p class="text-sm text-neutral-500">Phone: <span class="font-serif text-emerald-900 italic">{{ guest.phone|default:"Not provided" }}</span></p>
+                        </div>
+                    </div>
                     <!-- Song Suggestion -->
                     <div class="space-y-4">
                         <h3 class="text-xs font-bold tracking-widest uppercase text-emerald-900/40">Song Request</h3>
-                        <p class="font-serif text-lg italic text-emerald-900">{{ rsvp.song_suggestion|default:"None" }}</p>
+                        <p class="font-serif text-lg italic text-emerald-900">{{ rsvp.song_suggestion|default:"None requested" }}</p>
                     </div>
                     <!-- Day After Suggestion -->
-                    {% if rsvp.day_after_reception_suggestion %}
-                        <div class="space-y-4">
-                            <h3 class="text-xs font-bold tracking-widest uppercase text-emerald-900/40">Saturday Activity</h3>
-                            <p class="font-serif text-lg italic text-emerald-900 leading-snug">{{ rsvp.day_after_reception_suggestion }}</p>
-                        </div>
-                    {% endif %}
+                    <div class="space-y-4">
+                        <h3 class="text-xs font-bold tracking-widest uppercase text-emerald-900/40">Saturday Activity</h3>
+                        <p class="font-serif text-lg italic text-emerald-900 leading-snug">{{ rsvp.day_after_reception_suggestion|default:"None suggested" }}</p>
+                    </div>
                 </div>
                 <div class="pt-8 mt-10 border-t border-emerald-50 flex items-center justify-between">
                     <p class="text-xs italic text-neutral-400">Last updated {{ rsvp.modified|date:"jS F Y" }}</p>
