@@ -46,6 +46,7 @@ wheels/
 favicon.svg
 qr_codes/
 *.png
+!project/interfaces/web/static/schedule.png
 faqs.json
 *.zip
 *backup.sql
