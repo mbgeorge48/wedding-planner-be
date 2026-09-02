@@ -9,7 +9,9 @@
         <div class="w-full max-w-3xl space-y-8 text-center animate-fade-in">
             <div class="space-y-4">
                 <h1 class="font-serif text-4xl md:text-5xl text-emerald-900">Wedding Schedule</h1>
-                <p class="font-serif text-lg italic text-amber-600">May 23, 2026</p>
+                {% if wedding.date %}
+                    <p class="font-serif text-lg italic text-amber-600">{{ wedding.date|date:"F j, Y" }}</p>
+                {% endif %}
             </div>
             <div class="p-8 md:p-12 space-y-8 overflow-hidden bg-white border rounded-lg shadow-2xl border-emerald-100/50">
                 <div class="p-6 mb-8 -mx-8 md:-mx-12 -mt-8 md:-mt-12 text-white border-b-4 bg-emerald-900 border-amber-600">
@@ -26,25 +28,43 @@
                     <div class="p-6 rounded-lg bg-stone-50 border border-emerald-100/60 space-y-3 group">
                         <div class="flex items-center justify-between">
                             <h3 class="text-xs font-semibold tracking-widest uppercase text-amber-600">The Ceremony</h3>
-                            <span class="font-serif text-sm font-semibold text-emerald-800">3:00 PM</span>
+                            {% if wedding.ceremony_start_time %}
+                                <span class="font-serif text-sm font-semibold text-emerald-800">{{ wedding.ceremony_start_time|time:"g:i A" }}</span>
+                            {% endif %}
                         </div>
-                        <p class="font-serif text-lg font-medium text-emerald-900">Saint Monica Catholic Church</p>
-                        <p class="text-sm text-stone-600 leading-relaxed">
-                            4311 North West 56th St<br />
-                            Oklahoma City, OK 73112
-                        </p>
+                        {% if wedding.ceremony_venue %}
+                            <p class="font-serif text-lg font-medium text-emerald-900">{{ wedding.ceremony_venue.name }}</p>
+                            <p class="text-sm text-stone-600 leading-relaxed">
+                                {{ wedding.ceremony_venue.address_line1 }}
+                                {% if wedding.ceremony_venue.address_line2 %}
+                                    <br />
+                                    {{ wedding.ceremony_venue.address_line2 }}
+                                {% endif %}
+                                <br />
+                                {{ wedding.ceremony_venue.city }}{% if wedding.ceremony_venue.county %}, {{ wedding.ceremony_venue.county }}{% endif %} {{ wedding.ceremony_venue.postcode }}
+                            </p>
+                        {% endif %}
                     </div>
 
                     <div class="p-6 rounded-lg bg-stone-50 border border-emerald-100/60 space-y-3 group">
                         <div class="flex items-center justify-between">
                             <h3 class="text-xs font-semibold tracking-widest uppercase text-amber-600">The Reception</h3>
-                            <span class="font-serif text-sm font-semibold text-emerald-800">5:00 PM</span>
+                            {% if wedding.reception_start_time %}
+                                <span class="font-serif text-sm font-semibold text-emerald-800">{{ wedding.reception_start_time|time:"g:i A" }}</span>
+                            {% endif %}
                         </div>
-                        <p class="font-serif text-lg font-medium text-emerald-900">The Assembly</p>
-                        <p class="text-sm text-stone-600 leading-relaxed">
-                            4000 NW 39th St<br />
-                            Oklahoma City, OK 73112
-                        </p>
+                        {% if wedding.reception_venue %}
+                            <p class="font-serif text-lg font-medium text-emerald-900">{{ wedding.reception_venue.name }}</p>
+                            <p class="text-sm text-stone-600 leading-relaxed">
+                                {{ wedding.reception_venue.address_line1 }}
+                                {% if wedding.reception_venue.address_line2 %}
+                                    <br />
+                                    {{ wedding.reception_venue.address_line2 }}
+                                {% endif %}
+                                <br />
+                                {{ wedding.reception_venue.city }}{% if wedding.reception_venue.county %}, {{ wedding.reception_venue.county }}{% endif %} {{ wedding.reception_venue.postcode }}
+                            </p>
+                        {% endif %}
                     </div>
                 </div>
             </div>
